@@ -1,0 +1,26 @@
+{
+  "name": "ai",
+  "version": "1.5.0",
+  "description": "lizzyfizzy",
+  "main": "dist/index.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "commands": "node --no-warnings --import=tsx --env-file=.env src/scripts/deploy",
+    "dev": "node --no-warnings --import=tsx --env-file=.env --watch src/index.ts"
+  },
+  "author": "Sebastian 'Moonded' Danielzik",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "tsx": "^3.14.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.6.0",
+    "pnpm": ">=8.9.0"
+  }
+}

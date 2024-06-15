@@ -1,0 +1,15 @@
+# Node.js
+.env
+node_modules/
+
+# Docker
+install.sh
+
+# Cache
+.eslintcache
+.prettiercache
+
+# Scanned User Data
+data/scannedUsers.json
+.vscode/settings.json
+env/bot.env
