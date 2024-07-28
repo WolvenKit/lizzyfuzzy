@@ -1,6 +1,5 @@
 import { event } from "../../utils";
 import Tesseract from "tesseract.js";
-// import type { GuildBasedChannel, TextChannel } from "discord.js";
 
 export default event("messageCreate", async ({ log, client }, Message) => {
   try {
