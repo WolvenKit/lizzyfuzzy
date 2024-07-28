@@ -14,6 +14,9 @@ import userUnban from './log/userUnban';
 
 import quote from './quote/quote';
 
+import image from './help/image'
+import message from './help/message'
+
 const events: Event<any>[] = [
   ready,
   commandTrigger,
@@ -28,6 +31,8 @@ const events: Event<any>[] = [
   userRemove,
   userUnban,
   quote,
+  image,
+  message,
 ];
 
 export default events;
