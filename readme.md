@@ -36,3 +36,10 @@ A simple discord bot for the Cyberpunk Modding Community discord server written 
 | /api/discord/user  | Provides information of a user/users                             | Needs search params of `server=server_ID` and json array of user ids |
 | /api/discord/roles | Provides information about all the available roles on the Server | Needs search params of `server=server_ID`                            |
 | /\*                | All Routes                                                       | Every Request requires Authorization via Bearer + Token              |
+
+## Help Functions
+
+| Function            | Description                                                                                      | Requirements |
+| ------------------- | ------------------------------------------------------------------------------------------------ | ------------ |
+| Image to Text       | Convers screenshot images to text and checks for support query reason                            |              |
+| Message File Upload | Checks an uploaded file, specifically log file for their type and information about the problems |              |
