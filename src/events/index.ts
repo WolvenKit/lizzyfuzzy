@@ -39,8 +39,8 @@ const developmentEvents: Event<any>[] = [
   // userRemove,
   // userUnban,
   quote,
-  image,
-  message,
+  // image,
+  // message,
   guildjoin,
 ];
 
