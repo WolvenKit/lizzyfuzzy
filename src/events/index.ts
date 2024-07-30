@@ -1,7 +1,7 @@
 import { Event } from '../types';
 import ready from './util/ready';
-import commandTrigger from './log/commandTrigger';
 import interactionCreate from './util/interactionCreate';
+import commandTrigger from './log/commandTrigger';
 import messageDelete from './log/messageDelete';
 import messageUpdate from './log/messageUpdate';
 import threadCreate from './log/threadCreate';
@@ -27,17 +27,17 @@ const productionEvents: Event<any>[] = [
 
 const developmentEvents: Event<any>[] = [
   ready,
-  commandTrigger,
   interactionCreate,
-  messageDelete,
-  messageUpdate,
-  threadCreate,
-  threadDelete,
-  threadUpdate,
-  userBan,
-  userJoined,
-  userRemove,
-  userUnban,
+  // commandTrigger,
+  // messageDelete,
+  // messageUpdate,
+  // threadCreate,
+  // threadDelete,
+  // threadUpdate,
+  // userBan,
+  // userJoined,
+  // userRemove,
+  // userUnban,
   quote,
   image,
   message,
