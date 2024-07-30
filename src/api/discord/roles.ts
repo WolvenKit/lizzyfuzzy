@@ -24,6 +24,16 @@ router.get("/", (req, res) => {
       }),
   ];
   res.send(send);
+
+  const time = new Date().toLocaleTimeString(
+    'en-US',
+    { hour12: true,
+      timeStyle: 'medium'
+
+     }
+  );
+
+  console.log(`[${time}]`, "Roles sent");
 });
 
 export default router;

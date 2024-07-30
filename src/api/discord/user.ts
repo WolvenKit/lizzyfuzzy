@@ -41,7 +41,16 @@ router.post("/", async (req, res) => {
     })
   );
 
+  const time = new Date().toLocaleTimeString(
+    'en-US',
+    { hour12: true,
+      timeStyle: 'medium'
+
+     }
+  );
+
   res.send(users);
+  console.log(`[${time}]`, "Users sent");
 });
 
 export default router;
