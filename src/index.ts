@@ -38,7 +38,7 @@ const client = new Client({
   presence: {
     activities: [
       {
-        name: "Welcome darkness my old friend",
+        name: "I put the bin into the bin.",
         type: ActivityType.Custom,
       },
     ],

@@ -23,12 +23,20 @@ export default event("messageCreate", async ({ log, client }, Message) => {
                 /(\[RED4ext\])\s(\[info\])\s(Loading game's addresses from)\s(.*)/
               );
 
-              const Paths = [];
+              const Paths = [
+                "fitgirl",
+                "dodi",
+                "dodirepack",
+                "elamigos",
+                "cryberpunk",
+                "dodi-repacks",
+              ];
 
-              if (GamePath?.[4].includes)
+              if (Paths.some((path) => GamePath?.[4].includes(path))) {
                 return Message.reply(
-                  "It looks like you have a problem with red4ext. Please use the <#1266871506542002306> channel for support."
+                  "It looks like you are using a cracked version of the game. Please buy the game to get support. ?rule3"
                 );
+              }
             }
             if (channel.name !== "red4ext-support") {
               return Message.reply(
