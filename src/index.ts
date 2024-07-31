@@ -60,8 +60,8 @@ client.on("ready", () => {
     rs.redirect("/api");
   });
 
-  const windowMS = Number(process.env.APi_Rate_Window) * 1000 || 60 * 1000;
-  const requests = Number(process.env.API_Max_Requests) || 10;
+  const windowMS = Number(process.env.API_RATE_WINDOW) * 1000 || 60 * 1000;
+  const requests = Number(process.env.API_MAX_REQUESTS) || 10;
 
   const limit = rateLimit({
     windowMs: windowMS, // 1 minute
