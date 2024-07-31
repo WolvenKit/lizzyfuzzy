@@ -16,23 +16,4 @@ export default event("ready", async ({ log }, client) => {
     `I'm currently in ${client.channels.cache.size} channels and serving ${client.users.cache.size} users!`
   );
   log(`Run the command "Servers" for a list of servers I'm in!`);
-
-  //  periodicaly check for internet connection
-  dns.resolve("www.google.com", function (err: any) {
-    if (err) {
-      log("No internet connection!");
-    } else {
-      log("Internet connection is available!");
-    }
-  });
-
-  setInterval(() => {
-    dns.resolve("www.google.com", function (err: any) {
-      if (err) {
-        log("No internet connection!");
-      } else {
-        log("Internet connection is available!");
-      }
-    });
-  }, 600000);
 });
