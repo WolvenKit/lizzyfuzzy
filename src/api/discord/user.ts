@@ -8,9 +8,16 @@ router.post("/", async (req, res) => {
     return res.status(400).send("Invalid query");
   }
 
+  const Server = req.query.server.trim();
+
   const UserArray = req.body as string[];
 
-  if (!UserArray || !Array.isArray(UserArray) || UserArray.length === 0 || UserArray.some((user) => typeof user !== "string")) {
+  if (
+    !UserArray ||
+    !Array.isArray(UserArray) ||
+    UserArray.length === 0 ||
+    UserArray.some((user) => typeof user !== "string")
+  ) {
     return res.status(400).send("Invalid query");
   }
 
@@ -29,7 +36,7 @@ router.post("/", async (req, res) => {
         ID: fetchedUser.id,
         Bot: fetchedUser.bot,
         Roles: fetchedUser.client.guilds.cache
-          .get(req.query.server as string)
+          .get(Server)
           ?.members.cache.get(fetchedUser.id)
           ?.roles.cache.map((role) => {
             return {
@@ -41,16 +48,13 @@ router.post("/", async (req, res) => {
     })
   );
 
-  const time = new Date().toLocaleTimeString(
-    'en-US',
-    { hour12: true,
-      timeStyle: 'medium'
-
-     }
-  );
+  const time = new Date().toLocaleTimeString("en-US", {
+    hour12: true,
+    timeStyle: "medium",
+  });
 
   res.send(users);
-  console.log(`[${time}]`, "Users sent");
+  console.log(`[${time}] `, "Users sent");
 });
 
 export default router;

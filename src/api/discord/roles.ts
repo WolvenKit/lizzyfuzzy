@@ -6,9 +6,10 @@ router.get("/", (req, res) => {
   if (!req.query.server || typeof req.query.server !== "string") {
     return res.status(400).send("Invalid query");
   }
+
   const send = [
     client.guilds.cache
-      .get(req.query.server as string)
+      .get(req.query.server.trim() as string)
       ?.roles.cache.map((role) => {
         return {
           Role: role.name,
@@ -25,15 +26,13 @@ router.get("/", (req, res) => {
   ];
   res.send(send);
 
-  const time = new Date().toLocaleTimeString(
-    'en-US',
-    { hour12: true,
-      timeStyle: 'medium'
 
-     }
-  );
+  const time = new Date().toLocaleTimeString("en-US", {
+    hour12: true,
+    timeStyle: "medium",
+  });
 
-  console.log(`[${time}]`, "Roles sent");
+  console.log(`[${time}] `, "Roles sent");
 });
 
 export default router;
