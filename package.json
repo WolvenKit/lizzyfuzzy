@@ -8,7 +8,8 @@
   "scripts": {
     "commands": "node --no-warnings --import=tsx --env-file=.env src/scripts/deploy",
     "dev": "node --no-warnings --import=tsx --env-file=.env --watch src/index.ts",
-    "prisma": "prisma migrate deploy"
+    "prisma": "prisma migrate deploy",
+    "prod": "prisma migrate deploy & node --no-warnings --import=tsx --env-file=.env src/index.ts"
   },
   "author": "Sebastian 'Moonded' Danielzik",
   "license": "ISC",
