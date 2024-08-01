@@ -6,14 +6,14 @@ const meta = new SlashCommandBuilder()
   .setDescription('Provides information about the user.')
   .addUserOption(option =>
     option
-      .setName('whotarget')
+      .setName('target')
       .setDescription('The user to provide information about.')
       .setRequired(true)
   )
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
-  const target = interaction.options.getUser('whotarget');
+  const target = interaction.options.getUser('target');
 
   if (target) {
     const guildMember = interaction.guild?.members.fetch(target.id);
