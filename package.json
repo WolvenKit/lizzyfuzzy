@@ -12,10 +12,13 @@
   "author": "Sebastian 'Moonded' Danielzik",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "5.17.0",
     "@types/express": "^4.17.21",
+    "@types/pg": "^8.11.6",
     "discord.js": "^14.14.1",
     "express": "^4.19.2",
     "express-rate-limit": "^7.4.0",
+    "prisma": "^5.17.0",
     "tesseract.js": "^5.1.0"
   },
   "devDependencies": {

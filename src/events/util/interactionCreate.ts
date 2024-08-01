@@ -1,15 +1,15 @@
-import { ChatInputCommandInteraction } from 'discord.js';
-import commands from '../../commands';
-import { Command } from '../../types';
-import { EditReply, event, Reply } from '../../utils';
+import { ChatInputCommandInteraction } from "discord.js";
+import commands from "../../commands";
+import { Command } from "../../types";
+import { EditReply, event, Reply } from "../../utils";
 
 const allCommands = commands.map(({ commands }) => commands).flat();
 const allCommandsMap = new Map<string, Command>(
-  allCommands.map(c => [c.meta.name, c])
+  allCommands.map((c) => [c.meta.name, c])
 );
 
 export default event(
-  'interactionCreate',
+  "interactionCreate",
   async ({ log, client }, Interaction) => {
     let interaction = Interaction;
     // if (!Interaction.isChatInputCommand()) return;
@@ -19,7 +19,7 @@ export default event(
       const commandName = interaction.commandName;
       const command = allCommandsMap.get(commandName);
 
-      if (!command) throw new Error('Command not found');
+      if (!command) throw new Error("Command not found");
 
       await command.exec({
         client,
@@ -30,14 +30,13 @@ export default event(
       });
 
       log(`Command "${command.meta.name}" executed`);
-      
     } catch (error) {
-      log('[Command Error]', error);
+      log("[Command Error]", error);
 
       if (interaction.deferred)
-        return interaction.editReply(EditReply.error('Something went wrong'));
+        return interaction.editReply(EditReply.error("Something went wrong"));
 
-      return interaction.reply(Reply.error('Something went wrong'));
+      return interaction.reply(Reply.error("Something went wrong"));
     }
   }
 );

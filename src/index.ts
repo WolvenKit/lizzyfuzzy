@@ -12,6 +12,15 @@ import rateLimit from "express-rate-limit";
 
 import apiToken from "./utils/apiToken";
 
+import { PrismaClient } from "@prisma/client";
+export const prisma = new PrismaClient();
+
+// Time value for logging
+const time = new Date().toLocaleTimeString("en-US", {
+  hour12: true,
+  timeStyle: "medium",
+});
+
 const client = new Client({
   shards: "auto",
   intents: [
@@ -67,7 +76,6 @@ client.on("ready", () => {
     windowMs: windowMS, // 1 minute
     max: requests, // 10 requests,
     message: "You are being rate limited",
-
   });
 
   app.use(limit);
@@ -76,17 +84,7 @@ client.on("ready", () => {
   app.use(apiToken);
   app.use("/api", Routes);
 
-
-
   app.listen(3000, () => {
-
-    const time = new Date().toLocaleTimeString(
-      'en-US',
-      { hour12: true,
-        timeStyle: 'medium'
-
-       }
-    );
     console.log(`[${time}] `, "API started and is running on port 3000");
   });
 });
