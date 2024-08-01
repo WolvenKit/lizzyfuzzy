@@ -7,7 +7,7 @@ import { command } from "../../utils";
 const meta = new SlashCommandBuilder()
   .setName("init")
   .setDescription("dev command")
-  .setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
+  .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
   const Welcome =

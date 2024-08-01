@@ -56,7 +56,6 @@ export default command(meta, async ({ interaction }) => {
           }
         )
         .setTimestamp()
-        .setFooter({ text: 'Provided by NOVA Ai' });
 
       await interaction.reply({ embeds: [whoEmbed] });
     }
