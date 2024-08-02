@@ -4,6 +4,9 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import { command } from "../../utils";
+import client from "prom-client"
+
+const gauge = new client.Gauge({ name: 'uptime', help: 'Uptime of the bot' });
 
 const meta = new SlashCommandBuilder()
   .setName("info")
@@ -11,6 +14,7 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
+  gauge.inc(1)
   const uptime = interaction.client.uptime
     ? formatUptime(interaction.client.uptime)
     : "N/A";

@@ -84,7 +84,8 @@ client.on("ready", () => {
   app.use(apiToken);
   app.use("/api", Routes);
 
-  app.listen(3000, () => {
-    console.log(`[${time}] `, "API started and is running on port 3000");
+
+  app.listen(3001, () => {
+    console.log(`[${time}] `, "API started and is running on port 3001");
   });
 });
