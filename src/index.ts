@@ -78,7 +78,7 @@ client.on("ready", () => {
     message: "You are being rate limited",
   });
 
-  // app.use(limit);
+  app.use(limit);
   app.use(express.json());
 
   app.use(apiToken);
