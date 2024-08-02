@@ -4,9 +4,12 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import { command } from "../../utils";
-import client from "prom-client"
+import client from "prom-client";
 
-const gauge = new client.Gauge({ name: 'uptime', help: 'Uptime of the bot' });
+const gauge = new client.Counter({
+  name: "command_info_usage",
+  help: "Usage of the Info command",
+});
 
 const meta = new SlashCommandBuilder()
   .setName("info")
@@ -14,7 +17,7 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
-  gauge.inc(1)
+  gauge.inc(1);
   const uptime = interaction.client.uptime
     ? formatUptime(interaction.client.uptime)
     : "N/A";

@@ -2,14 +2,26 @@ import express from "express";
 import client from "../../index";
 import { User } from "discord.js";
 import { prisma } from "src";
+import prm_client from "prom-client";
 
 const router = express.Router();
+
+const gauge_time_user = new prm_client.Gauge({
+  name: "api_user_time",
+  help: "Time taken to get roles",
+});
+
+const gauge_count_user = new prm_client.Gauge({
+  name: "api_user_use_count",
+  help: "Time taken to get roles",
+});
 
 router.post("/", async (req, res) => {
   if (!req.query.server || typeof req.query.server !== "string") {
     return res.status(400).send("Invalid query");
   }
-
+  gauge_time_user.setToCurrentTime();
+  const end_user = gauge_time_user.startTimer();
   const Server = req.query.server.trim();
 
   const UserArray = req.body as string[];
@@ -56,14 +68,27 @@ router.post("/", async (req, res) => {
   });
 
   res.send(users);
+  end_user();
+  gauge_count_user.inc(1);
   console.log(`[${time}] `, "Users sent");
+});
+
+const gauge_time_detail = new prm_client.Gauge({
+  name: "api_detail_time",
+  help: "Time taken to get roles",
+});
+
+const gauge_count_detail = new prm_client.Gauge({
+  name: "api_detail_use_count",
+  help: "Time taken to get roles",
 });
 
 router.post("/details", async (req, res) => {
   if (!req.query.server || typeof req.query.server !== "string") {
     return res.status(400).send("Invalid query");
   }
-
+  gauge_time_detail.setToCurrentTime();
+  const end_detail = gauge_time_user.startTimer();
   const UserArray = req.body as string[];
   console.log(UserArray);
 
@@ -85,6 +110,8 @@ router.post("/details", async (req, res) => {
   });
 
   res.send(Users);
+  end_detail();
+  gauge_count_detail.inc(1);
 });
 
 export default router;

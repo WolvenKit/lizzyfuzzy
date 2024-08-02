@@ -1,6 +1,17 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import {
+  PermissionFlagsBits,
+  SlashCommandBuilder,
+  EmbedBuilder,
+} from "discord.js";
 import { command } from "../../utils";
 import { prisma } from "src";
+
+import client from "prom-client";
+
+const gauge = new client.Counter({
+  name: "command_link_usage",
+  help: "Usage of the link command",
+});
 
 const meta = new SlashCommandBuilder()
   .setName("link")
@@ -35,6 +46,7 @@ const meta = new SlashCommandBuilder()
   );
 
 export default command(meta, async ({ interaction }) => {
+  gauge.inc(1);
   const info = {
     User: interaction.user.globalName,
     Id: interaction.user.id,
@@ -66,10 +78,31 @@ export default command(meta, async ({ interaction }) => {
     },
   });
 
-  console.log(upsert);
-
   interaction.reply({
-    content: JSON.stringify(info, null, 2),
+    embeds: [
+      new EmbedBuilder().addFields(
+        {
+          name: "NexusMods",
+          value: info.NexusMods,
+          inline: true,
+        },
+        {
+          name: "GitHub",
+          value: info.GitHub,
+          inline: true,
+        },
+        {
+          name: "Theme",
+          value: info.Theme,
+          inline: true,
+        },
+        {
+          name: "Description",
+          value: info.Description,
+          inline: true,
+        }
+      ),
+    ],
     ephemeral: true,
   });
 });
