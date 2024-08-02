@@ -46,6 +46,7 @@ router.post("/", async (req, res) => {
       }
       return {
         Username: fetchedUser.username,
+        Image: fetchedUser.displayAvatarURL(),
         Discriminator: fetchedUser.discriminator,
         ID: fetchedUser.id,
         Bot: fetchedUser.bot,

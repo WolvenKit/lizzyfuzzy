@@ -13,32 +13,34 @@ const gauge_count = new prm_client.Gauge({
   help: "Time taken to get roles",
 });
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   if (!req.query.server || typeof req.query.server !== "string") {
     return res.status(400).send("Invalid query");
   }
   gauge_time.setToCurrentTime();
   const end = gauge_time.startTimer();
 
-  const send = [
-    client.guilds.cache
-      .get(req.query.server.trim() as string)
-      ?.roles.cache.map((role) => {
-        return {
-          Role: role.name,
-          Members: role.members.map((member) => {
-            return {
-              Username: member.user.username,
-              Discriminator: member.user.discriminator,
-              ID: member.user.id,
-              Bot: member.user.bot,
-            };
-          }),
-        };
-      }),
-  ];
+  // console.log(await client.guilds.cache.get(req.query.server.trim() as string)?.roles.fetch())
 
-  res.send(send);
+  // const send = [
+  //   ,
+  //   ?.roles.cache.map((role) => {
+  //     return {
+  //       Role: role.name,
+  //       Members: role.members.map((member) => {
+  //         return {
+  //           Username: member.user.username,
+  //           Discriminator: member.user.discriminator,
+  //           ID: member.user.id,
+  //           Bot: member.user.bot,
+  //         };
+  //       }),
+  //     };
+  //   }),
+  // ];
+
+  // res.send(await client.guilds.cache.get(req.query.server.trim() as string)?.roles.fetch());
+  res.send(await client.guilds.cache.get(req.query.server.trim() as string)?.members.fetch());
   end();
   gauge_count.inc(1);
 
