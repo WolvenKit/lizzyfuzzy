@@ -12,7 +12,7 @@ import userJoined from './log/userJoined';
 import userRemove from './log/userRemove';
 import userUnban from './log/userUnban';
 
-import quote from './quote/quote';
+// import quote from './quote/quote';
 
 import image from './help/image'
 import message from './help/message'
@@ -21,7 +21,7 @@ import guildjoin from './util/guildJoin';
 
 const productionEvents: Event<any>[] = [
   ready,
-  quote,
+  // quote,
   guildjoin,
 ];
 
