@@ -1,9 +1,11 @@
 services:
   lizzy:
-    image: lizzy
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: moonded/lizzyfuzzy
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    volumes:
+      - "./.env:/.env"
     ports:
       - "3001:3001"
     depends_on:
