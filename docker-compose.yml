@@ -1,0 +1,41 @@
+services:
+  lizzy:
+    image: lizzy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    networks:
+      - lizzy
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: prod
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lizzy
+    ports:
+      - "5432:5432"
+    networks:
+      - lizzy
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - lizzy
+
+  prometheus:
+    image: prom/prometheus
+    # ports:
+    #   - "9090:9090"
+    networks:
+      - lizzy
+
+networks:
+  lizzy:
+    driver: bridge
