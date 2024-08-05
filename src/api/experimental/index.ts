@@ -15,7 +15,7 @@ router.get("/users", async (req, res) => {
 
   res.send(
     await client.guilds.cache
-      .get(req.query.server.trim() as string)
+      .get(req.query.server.trim())
       ?.members.fetch()
   );
 
@@ -34,7 +34,7 @@ router.get("/roles", async (req, res) => {
 
   res.send(
     await client.guilds.cache
-      .get(req.query.server.trim() as string)
+      .get(req.query.server.trim())
       ?.roles.fetch()
   );
 
@@ -52,7 +52,7 @@ router.get("/web", async (req, res) => {
   }
 
   const Members = await client.guilds.cache
-    .get(req.query.server.trim() as string)
+    .get(req.query.server.trim())
     ?.members.fetch();
 
   const Users = await prisma.user.findMany();

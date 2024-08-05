@@ -1,4 +1,4 @@
-import { Interaction, TextChannel, GuildMember } from 'discord.js';
+import { Interaction } from 'discord.js';
 import { event } from '../../utils';
 
 export default event(

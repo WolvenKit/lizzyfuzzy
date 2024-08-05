@@ -1,4 +1,4 @@
-import { event, GetDataFromMessageLink } from "../../utils";
+import { event } from "../../utils";
 import type { GuildBasedChannel, TextChannel } from "discord.js";
 
 export default event("messageCreate", async ({ log, client }, Message) => {

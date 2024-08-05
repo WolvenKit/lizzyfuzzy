@@ -19,10 +19,8 @@ export default command(meta, async ({ interaction }) => {
   const Interaction =
     interaction as unknown as MessageContextMenuCommandInteraction;
 
-  //   const match = Interaction.targetMessage?.content.match(/\d+/g);
-  const match = Interaction.targetMessage?.content.match(
-    /(<:|<a:)([a-zA-Z]+)(:)(\d+)(>)/
-  );
+  const emojiRegex = /(<:|<a:)([a-zA-Z]+)(:)(\d+)(>)/;
+  const match = emojiRegex.exec(Interaction.targetMessage?.content || "");
 
   console.log(match);
 

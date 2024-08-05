@@ -3,17 +3,14 @@ import {
   EmbedBuilder,
   GuildAuditLogs,
   GuildAuditLogsEntry,
-  GuildBan,
   TextChannel,
   User,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "../../utils";
 
-export default event('guildBanAdd', async ({ log, client }, Ban) => {
+export default event("guildBanAdd", async ({ log, client }, Ban) => {
   try {
-    const ban = Ban as GuildBan;
-
-    const auditLog = (await ban.guild.fetchAuditLogs({
+    const auditLog = (await Ban.guild.fetchAuditLogs({
       type: AuditLogEvent.MemberBanAdd,
     })) as GuildAuditLogs;
 
@@ -21,18 +18,18 @@ export default event('guildBanAdd', async ({ log, client }, Ban) => {
     const executor = entry.executor as User;
 
     const embed = new EmbedBuilder()
-      .setTitle(':red_circle: User banned')
-      .setThumbnail(ban.user.displayAvatarURL())
+      .setTitle(":red_circle: User Banned")
+      .setThumbnail(Ban.user.displayAvatarURL())
       .setColor(0x2b2d31)
       .addFields(
-        { name: 'User', value: `<@${ban.user.id}>`, inline: true },
-        { name: 'Banned By', value: `<@${executor.id}>`, inline: true },
+        { name: "User", value: `<@${Ban.user.id}>`, inline: true },
+        { name: "Banned By", value: `<@${executor.id}>`, inline: true },
         {
-          name: 'Reason',
-          value: entry.reason ? `${entry.reason}` : 'No Reason Given',
+          name: "Reason",
+          value: entry.reason ? `${entry.reason}` : "No Reason Given",
         }
       )
-      .setFooter({ text: `User ID: ${ban.user.id}` })
+      .setFooter({ text: `User ID: ${Ban.user.id}` })
       .setTimestamp();
 
     const logChannel = client.channels.cache.get(
@@ -40,6 +37,6 @@ export default event('guildBanAdd', async ({ log, client }, Ban) => {
     ) as TextChannel;
     logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
   } catch (error) {
-    log('[Event Error]', error);
+    log("[Event Error]", error);
   }
 });

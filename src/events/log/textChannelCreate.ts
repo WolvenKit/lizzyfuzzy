@@ -31,7 +31,7 @@ export default event('channelCreate', async ({ log, client }, channel) => {
         },
         {
           name: ':green_book: Category Name',
-          value: Channel.parent?.name || 'No Category',
+          value: Channel.parent?.name ?? 'No Category',
           inline: true,
         },
         { name: ':tools: Created By', value: `<@${executor.id}>`, inline: true }

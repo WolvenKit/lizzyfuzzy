@@ -31,7 +31,7 @@ export default event('channelUpdate', async ({ log, client }, channel) => {
         },
         {
           name: ':green_book: Category Name',
-          value: Channel.parent?.name || 'No Category',
+          value: Channel.parent?.name ?? 'No Category',
           inline: true,
         },
         { name: ':gear: Updated By', value: `<@${executor.id}>`, inline: true }

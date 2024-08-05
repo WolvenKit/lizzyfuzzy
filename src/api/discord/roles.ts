@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 
   const send = [
     client.guilds.cache
-      .get(req.query.server.trim() as string)
+      .get(req.query.server.trim())
       ?.roles.cache.map((role) => {
         return {
           Role: role.name,

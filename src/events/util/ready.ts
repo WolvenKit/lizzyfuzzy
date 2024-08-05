@@ -1,8 +1,14 @@
 import { event } from "../../utils";
-import dns from "dns";
 const date = new Date().getHours();
-const time =
-  date < 12 ? "Good Morning" : date < 18 ? "Good Afternoon" : "Good Night";
+
+let time;
+if (date < 12) {
+  time = "Good Morning";
+} else if (date < 18) {
+  time = "Good Afternoon";
+} else {
+  time = "Good Night";
+}
 
 export default event("ready", async ({ log }, client) => {
   process.on("uncaughtException", (error) => {

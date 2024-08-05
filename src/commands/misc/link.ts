@@ -50,13 +50,13 @@ export default command(meta, async ({ interaction }) => {
   const info = {
     User: interaction.user.globalName,
     Id: interaction.user.id,
-    NexusMods: interaction.options.getString("nexusmods") || "None",
-    GitHub: interaction.options.getString("github") || "None",
-    Theme: interaction.options.getString("theme") || "default",
-    Description: interaction.options.getString("description") || "None",
+    NexusMods: interaction.options.getString("nexusmods") ?? "None",
+    GitHub: interaction.options.getString("github") ?? "None",
+    Theme: interaction.options.getString("theme") ?? "default",
+    Description: interaction.options.getString("description") ?? "None",
   };
 
-  const upsert = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: {
       userid: interaction.user.id,
     },
