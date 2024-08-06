@@ -1,4 +1,5 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from "discord.js";
+import type { UserContextMenuCommandInteraction } from "discord.js";
 import { command } from "../../utils";
 import client from "prom-client";
 
@@ -12,9 +13,12 @@ const meta = new ContextMenuCommandBuilder()
   .setType(ApplicationCommandType.User);
 
 export default command(meta, async ({ interaction }) => {
+  if ( !interaction.isUserContextMenuCommand ) return;
   gauge.inc(1);
+  const Interaction = interaction as unknown as UserContextMenuCommandInteraction;
+
   interaction.reply({
-    content: interaction.user.displayAvatarURL(),
+    content: Interaction.targetUser.displayAvatarURL(),
     ephemeral: false,
   });
 });
