@@ -23,32 +23,3 @@ model User {
   description String @default("")
 }
 
-model GlobalSettings {
-  id               String @id @default(cuid())
-  api_max_requests Int
-  api_rate_window  Int
-}
-
-model Server {
-  id       String         @id @default(cuid())
-  serverid String         @unique
-  settings ServerSettings @relation(fields: [id], references: [id])
-}
-
-model ServerSettings {
-  servers       Server[]
-  isProduction  Boolean   @default(false)
-  id            String    @id @default(cuid())
-  channelsID    String[]  @default([])
-  categoriesID  String[]  @default([])
-  rolesID       String[]  @default([])
-  help_category String    @default("")
-  Command       Command[]
-}
-
-model Command {
-  id             String          @id @default(cuid())
-  name           String          @unique
-  active         Boolean         @default(true)
-  ServerSettings ServerSettings? @relation(fields: [id], references: [id])
-}
