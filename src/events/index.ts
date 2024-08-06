@@ -45,5 +45,3 @@ const developmentEvents: Event<any>[] = [
 ];
 
 export default process.env.NODE_ENV === 'production' ? productionEvents : developmentEvents;
-
-// export default events;
