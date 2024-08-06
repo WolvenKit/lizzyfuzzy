@@ -21,7 +21,7 @@ import guildjoin from './util/guildJoin';
 
 const productionEvents: Event<any>[] = [
   ready,
-  quote,
+  // quote,
   guildjoin,
 ];
 
@@ -38,7 +38,7 @@ const developmentEvents: Event<any>[] = [
   // userJoined,
   // userRemove,
   // userUnban,
-  quote,
+  // quote,
   // image,
   // message,
   guildjoin,
