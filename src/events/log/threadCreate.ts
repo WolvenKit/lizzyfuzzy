@@ -10,6 +10,7 @@ import {
 import { event } from '../../utils';
 
 export default event('threadCreate', async ({ log, client }, Thread) => {
+  if (process.env.LOGS !== "true") return;
   try {
     if (Thread.parent?.type === 0) {
       const thread = Thread as ThreadChannel;

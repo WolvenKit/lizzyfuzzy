@@ -1,47 +1,44 @@
-import { Event } from '../types';
-import ready from './util/ready';
-import interactionCreate from './util/interactionCreate';
-import commandTrigger from './log/commandTrigger';
-import messageDelete from './log/messageDelete';
-import messageUpdate from './log/messageUpdate';
-import threadCreate from './log/threadCreate';
-import threadDelete from './log/threadDelete';
-import threadUpdate from './log/threadUpdate';
-import userBan from './log/userBan';
-import userJoined from './log/userJoined';
-import userRemove from './log/userRemove';
-import userUnban from './log/userUnban';
+import { Event } from "../types";
+import ready from "./util/ready";
+import interactionCreate from "./util/interactionCreate";
 
-import quote from './quote/quote';
+import messageDelete from "./log/messageDelete";
+import messageUpdate from "./log/messageUpdate";
+import threadCreate from "./log/threadCreate";
+import threadDelete from "./log/threadDelete";
+import threadUpdate from "./log/threadUpdate";
+import userBan from "./log/userBan";
+import userJoined from "./log/userJoined";
+import userRemove from "./log/userRemove";
+import userUnban from "./log/userUnban";
 
-import image from './help/image'
-import message from './help/message'
+import quote from "./quote/quote";
 
-import guildjoin from './util/guildJoin';
+import image from "./help/image";
+import message from "./help/message";
 
-const productionEvents: Event<any>[] = [
-  ready,
-  quote,
-  guildjoin,
-];
+import guildjoin from "./util/guildJoin";
+
+const productionEvents: Event<any>[] = [ready, quote, guildjoin, image];
 
 const developmentEvents: Event<any>[] = [
   ready,
   interactionCreate,
-  // commandTrigger,
-  // messageDelete,
-  // messageUpdate,
-  // threadCreate,
-  // threadDelete,
-  // threadUpdate,
-  // userBan,
-  // userJoined,
-  // userRemove,
-  // userUnban,
+  messageDelete,
+  messageUpdate,
+  threadCreate,
+  threadDelete,
+  threadUpdate,
+  userBan,
+  userJoined,
+  userRemove,
+  userUnban,
   quote,
-  // image,
-  // message,
+  image,
+  message,
   guildjoin,
 ];
 
-export default process.env.NODE_ENV === 'production' ? productionEvents : developmentEvents;
+export default process.env.NODE_ENV === "production"
+  ? productionEvents
+  : developmentEvents;

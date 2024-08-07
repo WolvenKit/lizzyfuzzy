@@ -4,6 +4,7 @@ import { event } from '../../utils';
 export default event(
   'messageUpdate',
   async ({ log, client }, OldMessage, NewMessage) => {
+    if (process.env.LOGS !== "true") return;
     try {
       const oldMessage = OldMessage as Message;
       const newMessage = NewMessage as Message;

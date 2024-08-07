@@ -2,6 +2,7 @@ import { EmbedBuilder, TextChannel } from "discord.js";
 import { event } from "../../utils";
 
 export default event("guildMemberAdd", async ({ log, client }, Member) => {
+  if (process.env.LOGS !== "true") return;
   try {
     const embed = new EmbedBuilder()
       .setTitle(":green_circle: User joined")

@@ -9,6 +9,7 @@ import {
 import { event } from "../../utils";
 
 export default event("guildBanRemove", async ({ log, client }, Ban) => {
+  if (process.env.LOGS !== "true") return;
   try {
     const auditLog = (await Ban.guild.fetchAuditLogs({
       type: AuditLogEvent.MemberBanRemove,

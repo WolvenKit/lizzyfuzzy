@@ -10,6 +10,7 @@ import {
 import { event } from '../../utils';
 
 export default event('channelUpdate', async ({ log, client }, channel) => {
+  if (process.env.LOGS !== "true") return;
   try {
     const Channel = channel as CategoryChannel;
     if (channel.type !== 4) return;

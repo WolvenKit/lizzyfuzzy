@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-export default function Token(req: Request, res: Response, next: any) {
+export function apiToken(req: Request, res: Response, next: any) {
   const url = req.originalUrl;
   if (url === "/api/metrics" || url === "/favicon.ico") {
     return next();

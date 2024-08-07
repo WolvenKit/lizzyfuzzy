@@ -6,6 +6,11 @@ declare module 'process' {
         LOG_CHANNEL: string;
         GUILD: string;
         NODE_ENV: 'development' | 'production';
+        JOINLEAVE_CHANNEL_ID: string;
+        LOGS: string;
+        API_RATE_WINDOW: string;
+        API_MAX_REQUESTS: string;
+        API_TOKEN: string;
       }
 
       interface Process extends EventEmitter {

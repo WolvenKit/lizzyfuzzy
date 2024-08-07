@@ -9,6 +9,7 @@ import {
 import { event } from '../../utils';
 
 export default event('channelCreate', async ({ log, client }, channel) => {
+  if (process.env.LOGS !== "true") return;
   try {
     const Channel = channel as TextChannel;
     if (channel.type !== 0) return;

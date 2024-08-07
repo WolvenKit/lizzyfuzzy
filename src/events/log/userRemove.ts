@@ -10,6 +10,7 @@ import {
 import { event } from '../../utils';
 
 export default event('guildMemberRemove', async ({ log, client }, Member) => {
+  if (process.env.LOGS !== "true") return;
   try {
     let userKicked = false;
     let userBanned = false;

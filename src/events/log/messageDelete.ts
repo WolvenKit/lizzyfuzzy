@@ -10,6 +10,7 @@ import {
 import { event } from '../../utils';
 
 export default event('messageDelete', async ({ log, client }, Message) => {
+  if (process.env.LOGS !== "true") return;
   try {
     const message = Message as Message;
     if (message.author.bot) return;

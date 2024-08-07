@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits, ActivityType, Partials } from "discord.js";
-import { registerEvents } from "./utils";
+import { registerEvents, apiToken, envCheck } from "./utils";
 import events from "./events";
 import keys from "./keys";
 import process from "node:process";
@@ -10,10 +10,10 @@ export const app = express();
 
 import rateLimit from "express-rate-limit";
 
-import apiToken from "./utils/apiToken";
-
 import { PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient();
+
+envCheck();
 
 // Time value for logging
 const time = new Date().toLocaleTimeString("en-US", {

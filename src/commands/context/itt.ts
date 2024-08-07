@@ -26,7 +26,8 @@ export default command(meta, async ({ interaction }) => {
     const attachment = attachement.first();
     if (attachment?.contentType?.startsWith("image")) {
       Tesseract.recognize(attachment.url, "eng").then(({ data: { text } }) => {
-        interaction.reply({ content: text, ephemeral: false });
+        // interaction.reply({ content: text, ephemeral: false });
+        console.log(text);
       });
     }
   }

@@ -12,6 +12,7 @@ import { event } from '../../utils';
 export default event(
   'threadUpdate',
   async ({ log, client }, ThreadOld, ThreadNew) => {
+    if (process.env.LOGS !== "true") return;
     try {
       if (ThreadNew.parent?.type === 0) {
         const oldThread = ThreadOld as ThreadChannel;
