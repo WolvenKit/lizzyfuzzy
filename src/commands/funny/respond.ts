@@ -1,7 +1,7 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import type { TextChannel } from "discord.js";
 import { command } from "../../utils";
-// import responses from '../../resources/respond.json'
+import localResponses from "../../resources/respond.json";
 
 const meta = new SlashCommandBuilder()
   .setName("respond")
@@ -16,7 +16,11 @@ export default command(meta, async ({ interaction, client }) => {
       "https://raw.githubusercontent.com/Moonded/responses/main/responses.json"
     );
 
-    const responses = await data.json();
+    let responses = await data.json();
+
+    if (!Array.isArray(responses)) {
+      responses = localResponses;
+    }
 
     return responses[Math.floor(Math.random() * responses.length)];
   }
