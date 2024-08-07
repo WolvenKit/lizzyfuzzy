@@ -8,11 +8,12 @@ const allCommandsMap = new Map<string, Command>(
   allCommands.map((c) => [c.meta.name, c])
 );
 
+
+
 export default event(
   "interactionCreate",
   async ({ log, client }, Interaction) => {
     let interaction = Interaction;
-    // if (!Interaction.isChatInputCommand()) return;
     interaction = interaction as ChatInputCommandInteraction;
 
     try {

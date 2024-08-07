@@ -4,3 +4,4 @@ export * from './replies';
 export * from './error';
 export * from './envCheck';
 export * from './apiToken';
+export * from './prismaUpsert';

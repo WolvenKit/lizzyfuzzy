@@ -10,8 +10,8 @@ export const app = express();
 
 import rateLimit from "express-rate-limit";
 
-import { PrismaClient } from "@prisma/client";
-export const prisma = new PrismaClient();
+// import { PrismaClient } from "@prisma/client";
+// export const prisma = new PrismaClient();
 
 envCheck();
 

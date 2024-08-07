@@ -1,6 +1,6 @@
 import express from "express";
 import client from "../../index";
-import { prisma } from "src";
+import prisma from "../../utils/prismaClient";
 
 const router = express.Router();
 const time = new Date().toLocaleTimeString("en-US", {

@@ -3,9 +3,7 @@ import {
   SlashCommandBuilder,
   EmbedBuilder,
 } from "discord.js";
-import { command } from "../../utils";
-import { prisma } from "src";
-
+import { command, upserUser } from "../../utils";
 import client from "prom-client";
 
 const gauge = new client.Counter({
@@ -45,6 +43,7 @@ const meta = new SlashCommandBuilder()
       .setRequired(true)
   );
 
+
 export default command(meta, async ({ interaction }) => {
   gauge.inc(1);
   const info = {
@@ -56,27 +55,7 @@ export default command(meta, async ({ interaction }) => {
     Description: interaction.options.getString("description") ?? "None",
   };
 
-  await prisma.user.upsert({
-    where: {
-      userid: interaction.user.id,
-    },
-    update: {
-      userid: interaction.user.id,
-      user: interaction.user.username,
-      nexusmods: info.NexusMods,
-      github: info.GitHub,
-      theme: info.Theme,
-      description: info.Description,
-    },
-    create: {
-      userid: interaction.user.id,
-      user: interaction.user.username,
-      nexusmods: info.NexusMods,
-      github: info.GitHub,
-      theme: info.Theme,
-      description: info.Description,
-    },
-  });
+  await upserUser(interaction, info);
 
   interaction.reply({
     embeds: [

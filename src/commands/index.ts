@@ -1,5 +1,4 @@
 import misc from './misc';
 import context from './context';
 
-export default [misc, context];
-// export default []
+export default [misc, context]; 

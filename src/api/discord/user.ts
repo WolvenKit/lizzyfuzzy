@@ -1,7 +1,7 @@
 import express from "express";
 import client from "../../index";
 import { User } from "discord.js";
-import { prisma } from "src";
+import prisma from "../../utils/prismaClient";
 import prm_client from "prom-client";
 
 const router = express.Router();

@@ -1,7 +1,7 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { command } from "../../utils";
 import client from "prom-client";
-import { prisma } from "src";
+import prisma from "../../utils/prismaClient";
 
 const gauge = new client.Counter({
   name: "command_servers_usage",
