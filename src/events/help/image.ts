@@ -4,9 +4,7 @@ import { createWorker } from "tesseract.js";
 export default event("messageCreate", async ({ log, client }, Message) => {
   try {
     if (Message.attachments.size > 0) {
-      const worker = await createWorker("eng", 1, {
-        logger: (m) => console.log(m),
-      });
+      const worker = await createWorker("eng");
 
       const attachment = Message.attachments.first();
       if (attachment?.contentType?.startsWith("image")) {

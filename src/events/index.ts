@@ -19,7 +19,7 @@ import message from "./help/message";
 
 import guildjoin from "./util/guildJoin";
 
-const productionEvents: Event<any>[] = [ready, quote, guildjoin, image];
+const productionEvents: Event<any>[] = [ready, quote, guildjoin];
 
 const developmentEvents: Event<any>[] = [
   ready,

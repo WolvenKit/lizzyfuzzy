@@ -1,4 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import type { TextChannel } from "discord.js";
 import { command } from "../../utils";
 
 const meta = new SlashCommandBuilder()
@@ -46,7 +47,10 @@ export default command(meta, async ({ interaction, client }) => {
     response = randomResponse();
   }
 
-  client.channels.cache.get(interaction.channelId)?.send(response.Message);
+  const channel = client.channels.cache.get(interaction.channelId) as TextChannel;
+  if (channel) {
+    channel.send(response.Message);
+  }
 
   await interaction.reply({ content: "Sent!", ephemeral: true });
 });
