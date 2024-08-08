@@ -8,9 +8,6 @@ router.get("/", async (req, res) => {
   }
 
   const bans = await client.guilds.cache.get(req.query.server)?.bans.fetch()
-
-  console.log(bans)
-
   res.send(bans);
 
   const time = new Date().toLocaleTimeString("en-US", {

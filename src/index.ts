@@ -8,7 +8,12 @@ import express from "express";
 import Routes from "./api/index";
 export const app = express();
 
+import http from "http";
+import https from "https";
+
 import rateLimit from "express-rate-limit";
+
+import fs from "fs";
 
 envCheck();
 
@@ -62,6 +67,11 @@ client.login(keys.clientToken).catch((err) => {
 export default client;
 
 client.on("ready", () => {
+  const privateKey = fs.readFileSync("./src/keys/privkey.pem", "utf-8");
+  const certificate = fs.readFileSync("./src/keys/fullchain.pem", "utf-8");
+
+  const credentials = { key: privateKey, cert: certificate };
+
   app.get("/", (rq, rs) => {
     rs.redirect("/api");
   });
@@ -81,8 +91,14 @@ client.on("ready", () => {
   app.use(apiToken);
   app.use("/api", Routes);
 
+  const httpServer = http.createServer(app);
+  const httpsServer = https.createServer(credentials, app);
 
-  app.listen(3001, () => {
-    console.log(`[${time}] `, "API started and is running on port 3001");
+  httpServer.listen(8080, () => {
+    console.log(`[${time}] `, "HTTP API started and is running on port 8080");
+  });
+
+  httpsServer.listen(8443, () => {
+    console.log(`[${time}] `, "HTTPS API started and is running on port 8443");
   });
 });

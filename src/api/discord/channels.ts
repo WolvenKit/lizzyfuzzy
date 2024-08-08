@@ -7,11 +7,9 @@ router.get("/", async (req, res) => {
     return res.status(400).send("Invalid query");
   }
 
-  const bans = await client.guilds.cache.get(req.query.server)?.channels.fetch()
+  const channels = await client.guilds.cache.get(req.query.server)?.channels.fetch()
 
-  console.log(bans)
-
-  res.send(bans);
+  res.send(channels);
 
   const time = new Date().toLocaleTimeString("en-US", {
     hour12: true,

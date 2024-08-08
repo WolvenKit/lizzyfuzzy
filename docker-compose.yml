@@ -1,13 +1,16 @@
 services:
   lizzy:
-    image: moonded/lizzyfuzzy
+    image: moonded/lizzyfuzzy:latest
     # build:
     #   context: .
     #   dockerfile: Dockerfile
     volumes:
       - "./.env:/.env"
+      - "/etc/letsencrypt/live/backend.redmodding.org/fullchain.pem:./src/keys/fullchain.pem"
+      - "/etc/letsencrypt/live/backend.redmodding.org/privkey.pem:./src/keys/privkey.pem"
     ports:
-      - "3001:3001"
+      - "80:8080"
+      - "443:8443"
     depends_on:
       - db
     networks:
@@ -18,7 +21,7 @@ services:
     environment:
       POSTGRES_DB: prod
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: lizzy
+      POSTGRES_PASSWORD: fe0c836613916e4f97be69054a56798f
     ports:
       - "5432:5432"
     networks:
@@ -38,7 +41,6 @@ services:
     image: grafana/grafana-image-renderer
     ports:
       - "8081:8081"
-
 
   prometheus:
     image: prom/prometheus
