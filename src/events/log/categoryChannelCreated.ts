@@ -7,7 +7,7 @@ import {
   User,
   CategoryChannel,
 } from "discord.js";
-import { event } from "../../utils";
+import { event } from "utils";
 
 export default event("channelCreate", async ({ log, client }, channel) => {
   if (process.env.LOGS !== "true") return;

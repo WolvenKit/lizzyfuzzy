@@ -1,4 +1,4 @@
-import { event } from "../../utils";
+import { event } from "utils";
 import { createWorker } from "tesseract.js";
 
 export default event("messageCreate", async ({ log, client }, Message) => {

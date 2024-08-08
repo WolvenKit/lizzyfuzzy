@@ -3,7 +3,7 @@ import {
   SlashCommandBuilder,
   EmbedBuilder,
 } from "discord.js";
-import { command, upserUser } from "../../utils";
+import { command, upserUser } from "utils";
 import client from "prom-client";
 
 const gauge = new client.Counter({

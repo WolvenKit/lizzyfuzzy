@@ -1,11 +1,11 @@
 import { Client, GatewayIntentBits, ActivityType, Partials } from "discord.js";
-import { registerEvents, apiToken, envCheck } from "./utils";
-import events from "./events";
-import keys from "./keys";
+import { registerEvents, apiToken, envCheck } from "utils";
+import events from "botevents";
+import keys from "keys";
 import process from "node:process";
 
 import express from "express";
-import Routes from "./api/index";
+import Routes from "api";
 export const app = express();
 
 import http from "http";
@@ -17,7 +17,6 @@ import fs from "fs";
 
 envCheck();
 
-// Time value for logging
 const time = new Date().toLocaleTimeString("en-US", {
   hour12: true,
   timeStyle: "medium",

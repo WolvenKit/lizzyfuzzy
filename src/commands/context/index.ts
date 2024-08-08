@@ -1,4 +1,4 @@
-import { category } from "../../utils";
+import { category } from "utils";
 import dds from "./dds";
 import avatar from "./avatar";
 import emoji from "./emoji";

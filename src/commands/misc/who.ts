@@ -3,7 +3,7 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
 } from "discord.js";
-import { command } from "../../utils";
+import { command } from "utils";
 import client from "prom-client";
 
 const gauge = new client.Counter({

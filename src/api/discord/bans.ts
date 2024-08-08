@@ -1,5 +1,5 @@
 import express from "express";
-import client from "../../index";
+import client from "src";
 const router = express.Router();
 
 router.get("/", async (req, res) => {

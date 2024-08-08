@@ -1,5 +1,5 @@
 import { EmbedBuilder, TextChannel } from "discord.js";
-import { event } from "../../utils";
+import { event } from "utils";
 
 export default event("guildMemberAdd", async ({ log, client }, Member) => {
   if (process.env.LOGS !== "true") return;

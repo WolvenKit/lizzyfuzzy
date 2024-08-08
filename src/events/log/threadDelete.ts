@@ -6,10 +6,10 @@ import {
   TextChannel,
   ThreadChannel,
   User,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "utils";
 
-export default event('threadDelete', async ({ log, client }, Thread) => {
+export default event("threadDelete", async ({ log, client }, Thread) => {
   if (process.env.LOGS !== "true") return;
   try {
     if (Thread.parent?.type === 0) {
@@ -23,16 +23,16 @@ export default event('threadDelete', async ({ log, client }, Thread) => {
       const executor = entry.executor as User;
 
       const embed = new EmbedBuilder()
-        .setTitle(':red_circle: Thread Deleted')
+        .setTitle(":red_circle: Thread Deleted")
         .setColor(0x2b2d31)
         .addFields(
           {
-            name: ':thread: Thread',
+            name: ":thread: Thread",
             value: `${thread.name}`,
             inline: true,
           },
           {
-            name: ':wastebasket: Deleted By',
+            name: ":wastebasket: Deleted By",
             value: `<@${executor.id}>`,
             inline: true,
           }
@@ -55,16 +55,16 @@ export default event('threadDelete', async ({ log, client }, Thread) => {
       const executor = entry.executor as User;
 
       const embed = new EmbedBuilder()
-        .setTitle(':red_circle: Forum Post Deleted')
+        .setTitle(":red_circle: Forum Post Deleted")
         .setColor(0x2b2d31)
         .addFields(
           {
-            name: ':bookmark_tabs: Forum Post',
+            name: ":bookmark_tabs: Forum Post",
             value: `${thread.name}`,
             inline: true,
           },
           {
-            name: ':wastebasket: Deleted By',
+            name: ":wastebasket: Deleted By",
             value: `<@${executor.id}>`,
             inline: true,
           }
@@ -78,6 +78,6 @@ export default event('threadDelete', async ({ log, client }, Thread) => {
       logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
     }
   } catch (error) {
-    log('[Event Error]', error);
+    log("[Event Error]", error);
   }
 });

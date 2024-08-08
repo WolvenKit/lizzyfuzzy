@@ -6,10 +6,10 @@ import {
   GuildMember,
   TextChannel,
   User,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "utils";
 
-export default event('guildMemberRemove', async ({ log, client }, Member) => {
+export default event("guildMemberRemove", async ({ log, client }, Member) => {
   if (process.env.LOGS !== "true") return;
   try {
     let userKicked = false;
@@ -17,10 +17,12 @@ export default event('guildMemberRemove', async ({ log, client }, Member) => {
     const member = Member as GuildMember;
     let embed = new EmbedBuilder();
 
-    const auditLog = (await client.guilds.cache.get(process.env.GUILD)?.fetchAuditLogs({
-      limit: 1,
-      type: AuditLogEvent.MemberKick,
-    })) as GuildAuditLogs;
+    const auditLog = (await client.guilds.cache
+      .get(process.env.GUILD)
+      ?.fetchAuditLogs({
+        limit: 1,
+        type: AuditLogEvent.MemberKick,
+      })) as GuildAuditLogs;
 
     const entry = auditLog.entries.first() as GuildAuditLogsEntry;
     const executor = entry.executor as User;
@@ -46,43 +48,43 @@ export default event('guildMemberRemove', async ({ log, client }, Member) => {
 
     if (userKicked && !userBanned) {
       embed = new EmbedBuilder()
-        .setTitle(':red_circle: User kicked')
+        .setTitle(":red_circle: User kicked")
         .setThumbnail(member.user.displayAvatarURL())
         .setColor(0x2b2d31)
         .addFields(
           {
-            name: 'Username',
+            name: "Username",
             value: `${member.user.username}`,
-            inline: true
+            inline: true,
           },
           {
-            name: 'User',
+            name: "User",
             value: `<@${member.user.id}>`,
-            inline: true
+            inline: true,
           },
           {
-            name: 'Kicked By',
+            name: "Kicked By",
             value: `${executor.tag}`,
           },
           {
-            name: 'Reason',
-            value: entry.reason ? `${entry.reason}` : 'No Reason Given',
+            name: "Reason",
+            value: entry.reason ? `${entry.reason}` : "No Reason Given",
           }
         )
         .setFooter({ text: `User ID: ${member.user.id}` })
         .setTimestamp();
     } else if (!userKicked && !userBanned) {
       embed = new EmbedBuilder()
-        .setTitle(':red_circle: User Left')
+        .setTitle(":red_circle: User Left")
         .setThumbnail(member.user.displayAvatarURL())
         .setColor(0x2b2d31)
         .addFields({
-          name: 'Username',
+          name: "Username",
           value: `${member.user.username}`,
-          inline: true
+          inline: true,
         })
         .addFields({
-          name: 'User',
+          name: "User",
           value: `<@${member.user.id}>`,
         })
         .setFooter({ text: `User ID: ${member.user.id}` })
@@ -96,6 +98,6 @@ export default event('guildMemberRemove', async ({ log, client }, Member) => {
     ) as TextChannel;
     logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
   } catch (error) {
-    log('[Event Error]', error);
+    log("[Event Error]", error);
   }
 });

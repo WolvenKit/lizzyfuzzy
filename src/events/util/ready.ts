@@ -1,4 +1,4 @@
-import { event } from "../../utils";
+import { event } from "utils";
 
 export default event("ready", async ({ log }, client) => {
   process.on("uncaughtException", (error) => {

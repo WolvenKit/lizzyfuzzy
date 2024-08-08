@@ -1,6 +1,6 @@
 import express from "express";
-import client from "../../index";
-import prisma from "../../utils/prismaClient";
+import client from "src";
+import { prisma } from "utils";
 
 const router = express.Router();
 const time = new Date().toLocaleTimeString("en-US", {
@@ -14,9 +14,7 @@ router.get("/users", async (req, res) => {
   }
 
   res.send(
-    await client.guilds.cache
-      .get(req.query.server.trim())
-      ?.members.fetch()
+    await client.guilds.cache.get(req.query.server.trim())?.members.fetch()
   );
 
   const time = new Date().toLocaleTimeString("en-US", {
@@ -33,9 +31,7 @@ router.get("/roles", async (req, res) => {
   }
 
   res.send(
-    await client.guilds.cache
-      .get(req.query.server.trim())
-      ?.roles.fetch()
+    await client.guilds.cache.get(req.query.server.trim())?.roles.fetch()
   );
 
   const time = new Date().toLocaleTimeString("en-US", {

@@ -6,10 +6,10 @@ import {
   TextChannel,
   ThreadChannel,
   User,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "utils";
 
-export default event('threadCreate', async ({ log, client }, Thread) => {
+export default event("threadCreate", async ({ log, client }, Thread) => {
   if (process.env.LOGS !== "true") return;
   try {
     if (Thread.parent?.type === 0) {
@@ -22,29 +22,30 @@ export default event('threadCreate', async ({ log, client }, Thread) => {
       const executor = entry.executor as User;
 
       const embed = new EmbedBuilder()
-        .setTitle(':green_circle: Thread Created')
+        .setTitle(":green_circle: Thread Created")
         .setColor(0x2b2d31)
         .addFields(
           {
-            name: ':thread: Thread name',
+            name: ":thread: Thread name",
             value: `${thread.name}`,
             inline: true,
           },
           {
-            name: ':tools: Created By',
+            name: ":tools: Created By",
             value: `<@${executor.id}>`,
             inline: true,
           },
           {
-            name: ':no_entry: Is Private Thread?',
-            value: `${thread.type === 12
-              ? ':no_entry_sign: Is Private'
-              : ':ballot_box_with_check: Is Public'
-              }`,
+            name: ":no_entry: Is Private Thread?",
+            value: `${
+              thread.type === 12
+                ? ":no_entry_sign: Is Private"
+                : ":ballot_box_with_check: Is Public"
+            }`,
             inline: true,
           },
           {
-            name: '\u200b',
+            name: "\u200b",
             value: `[Jump To Thread](${thread.url})`,
           }
         )
@@ -65,29 +66,30 @@ export default event('threadCreate', async ({ log, client }, Thread) => {
       const executor = entry.executor as User;
 
       const embed = new EmbedBuilder()
-        .setTitle(':green_circle: Forum Post Created')
+        .setTitle(":green_circle: Forum Post Created")
         .setColor(0x2b2d31)
         .addFields(
           {
-            name: ':bookmark_tabs: Forum Post',
+            name: ":bookmark_tabs: Forum Post",
             value: `${thread.name}`,
             inline: true,
           },
           {
-            name: ':tools: Created By',
+            name: ":tools: Created By",
             value: `<@${executor.id}>`,
             inline: true,
           },
           {
-            name: ':no_entry: Is Private Post?',
-            value: `${thread.type === 12
-              ? ':no_entry_sign: Is Private'
-              : ':ballot_box_with_check: Is Public'
-              }`,
+            name: ":no_entry: Is Private Post?",
+            value: `${
+              thread.type === 12
+                ? ":no_entry_sign: Is Private"
+                : ":ballot_box_with_check: Is Public"
+            }`,
             inline: true,
           },
           {
-            name: '\u200B',
+            name: "\u200B",
             value: `[Jump To Forum Post](${thread.url})`,
           }
         )
@@ -100,6 +102,6 @@ export default event('threadCreate', async ({ log, client }, Thread) => {
       logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
     }
   } catch (error) {
-    log('[Event Error]', error);
+    log("[Event Error]", error);
   }
 });

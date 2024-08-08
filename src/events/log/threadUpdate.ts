@@ -6,11 +6,11 @@ import {
   TextChannel,
   ThreadChannel,
   User,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "utils";
 
 export default event(
-  'threadUpdate',
+  "threadUpdate",
   async ({ log, client }, ThreadOld, ThreadNew) => {
     if (process.env.LOGS !== "true") return;
     try {
@@ -26,21 +26,21 @@ export default event(
         const executor = entry.executor as User;
 
         const embed = new EmbedBuilder()
-          .setTitle(':yellow_circle: Thread Updated')
+          .setTitle(":yellow_circle: Thread Updated")
           .setColor(0x2b2d31)
           .addFields(
             {
-              name: ':thread: Thread name',
+              name: ":thread: Thread name",
               value: `${newThread.name}`,
               inline: true,
             },
             {
-              name: ':gear: Updated By',
+              name: ":gear: Updated By",
               value: `<@${executor.id}>`,
               inline: true,
             },
             {
-              name: '\u200B',
+              name: "\u200B",
               value: `[Jump To Thread](${newThread.url})`,
             }
           )
@@ -63,21 +63,21 @@ export default event(
         const executor = entry.executor as User;
 
         const embed = new EmbedBuilder()
-          .setTitle(':yellow_circle: Forum Post Updated')
+          .setTitle(":yellow_circle: Forum Post Updated")
           .setColor(0x2b2d31)
           .addFields(
             {
-              name: ':bookmark_tabs: Post name',
+              name: ":bookmark_tabs: Post name",
               value: `${newThread.name}`,
               inline: true,
             },
             {
-              name: ':tools: Updated By',
+              name: ":tools: Updated By",
               value: `<@${executor.id}>`,
               inline: true,
             },
             {
-              name: '\u200B',
+              name: "\u200B",
               value: `[Jump To Forum Post](${newThread.url})`,
             }
           )
@@ -90,7 +90,7 @@ export default event(
         logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
       }
     } catch (error) {
-      log('[Event Error]', error);
+      log("[Event Error]", error);
     }
   }
 );

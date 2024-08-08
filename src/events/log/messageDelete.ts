@@ -6,10 +6,10 @@ import {
   Message,
   TextChannel,
   User,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "utils";
 
-export default event('messageDelete', async ({ log, client }, Message) => {
+export default event("messageDelete", async ({ log, client }, Message) => {
   if (process.env.LOGS !== "true") return;
   try {
     const message = Message as Message;
@@ -26,13 +26,25 @@ export default event('messageDelete', async ({ log, client }, Message) => {
     const executor = entry.executor as User;
 
     const embed = new EmbedBuilder()
-      .setTitle('Message Deleted')
+      .setTitle("Message Deleted")
       .setColor(0x2b2d31)
-      .setDescription(`${message.content || 'No Content'}`)
+      .setDescription(`${message.content || "No Content"}`)
       .addFields(
-        { name: 'Author', value: `<@${message.author.id || "No ID"}>`, inline: true },
-        { name: 'Channel', value: `${message.channel || "No channel"}`, inline: true },
-        { name: 'Deleted By', value: `<@${executor.id || "No id"}>`, inline: true }
+        {
+          name: "Author",
+          value: `<@${message.author.id || "No ID"}>`,
+          inline: true,
+        },
+        {
+          name: "Channel",
+          value: `${message.channel || "No channel"}`,
+          inline: true,
+        },
+        {
+          name: "Deleted By",
+          value: `<@${executor.id || "No id"}>`,
+          inline: true,
+        }
       )
       .setFooter({ text: `Message ID: ${message.id}` })
       .setTimestamp();
@@ -42,6 +54,6 @@ export default event('messageDelete', async ({ log, client }, Message) => {
     ) as TextChannel;
     logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
   } catch (error) {
-    log('[Event Error]', error);
+    log("[Event Error]", error);
   }
 });

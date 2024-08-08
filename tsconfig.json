@@ -11,7 +11,27 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "baseUrl": ".",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "src/*": ["src/*"],
+      "src": ["src"],
+      "api/*": ["src/api/*"],
+      "api": ["src/api"],
+      "commands/*": ["src/commands/*"],
+      "commands": ["src/commands"],
+      "botevents/*": ["src/events/*"],
+      "botevents": ["src/events"],
+      "keys/*": ["src/keys/*"],
+      "keys": ["src/keys"],
+      "resources/*": ["src/resources/*"],
+      "resources": ["src/resources"],
+      "scripts/*": ["src/scripts/*"],
+      "scripts": ["src/scripts"],
+      "types/*": ["src/types/*"],
+      "types": ["src/types"],
+      "utils/*": ["src/utils/*"],
+      "utils": ["src/utils"]
+    }
   },
   "include": ["./**/*"],
   "exclude": ["./plugins/**/*", "./typings/**/*", "./dist/**/*"]

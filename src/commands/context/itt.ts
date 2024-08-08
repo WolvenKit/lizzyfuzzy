@@ -1,6 +1,6 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from "discord.js";
 import type { MessageContextMenuCommandInteraction } from "discord.js";
-import { command } from "../../utils";
+import { command } from "utils";
 import Tesseract from "tesseract.js";
 import client from "prom-client";
 

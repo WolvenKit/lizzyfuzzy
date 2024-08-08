@@ -1,6 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { command } from "../../utils";
-import prisma from "../../utils/prismaClient";
+import { prisma, command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("dev")

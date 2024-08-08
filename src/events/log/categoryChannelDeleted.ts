@@ -6,10 +6,10 @@ import {
   GuildAuditLogsEntry,
   User,
   CategoryChannel,
-} from 'discord.js';
-import { event } from '../../utils';
+} from "discord.js";
+import { event } from "utils";
 
-export default event('channelDelete', async ({ log, client }, channel) => {
+export default event("channelDelete", async ({ log, client }, channel) => {
   if (process.env.LOGS !== "true") return;
   try {
     const Channel = channel as CategoryChannel;
@@ -23,16 +23,16 @@ export default event('channelDelete', async ({ log, client }, channel) => {
     const executor = entry.executor as User;
 
     const embed = new EmbedBuilder()
-      .setTitle(':red_circle: Category Deleted')
+      .setTitle(":red_circle: Category Deleted")
       .setColor(0x2b2d31)
       .addFields(
         {
-          name: ':green_book: Category Name',
+          name: ":green_book: Category Name",
           value: `${Channel.name}`,
           inline: true,
         },
         {
-          name: ':wastebasket: Deleted By',
+          name: ":wastebasket: Deleted By",
           value: `<@${executor.id}>`,
           inline: true,
         }
@@ -45,6 +45,6 @@ export default event('channelDelete', async ({ log, client }, channel) => {
     ) as TextChannel;
     logChannel.send({ embeds: [embed], allowedMentions: { parse: [] } });
   } catch (error) {
-    log('[Event Error]', error);
+    log("[Event Error]", error);
   }
 });

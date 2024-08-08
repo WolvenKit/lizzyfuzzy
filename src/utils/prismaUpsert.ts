@@ -1,4 +1,4 @@
-import prisma from "./prismaClient";
+import { prisma } from "./prismaClient";
 import type { Interaction } from "discord.js";
 
 export const upserUser = async (interaction: Interaction, info: any) => {

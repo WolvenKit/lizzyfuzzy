@@ -1,7 +1,7 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import type { TextChannel } from "discord.js";
-import { command } from "../../utils";
-import localResponses from "../../resources/respond.json";
+import { command } from "utils";
+import localResponses from "resources/respond.json";
 
 const meta = new SlashCommandBuilder()
   .setName("respond")

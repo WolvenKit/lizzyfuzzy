@@ -14,8 +14,4 @@ export function envCheck() {
   checkEnvVariable("API_RATE_WINDOW");
   checkEnvVariable("API_MAX_REQUESTS");
   checkEnvVariable("API_TOKEN");
-// They are Set but not used atm, so we just commenting them out for now
-
-//   checkEnvVariable("JOINLEAVE_CHANNEL_ID");
-//   checkEnvVariable("LOG_CHANNEL");
 }

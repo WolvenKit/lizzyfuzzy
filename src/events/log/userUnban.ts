@@ -6,7 +6,7 @@ import {
   TextChannel,
   User,
 } from "discord.js";
-import { event } from "../../utils";
+import { event } from "utils";
 
 export default event("guildBanRemove", async ({ log, client }, Ban) => {
   if (process.env.LOGS !== "true") return;

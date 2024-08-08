@@ -1,4 +1,4 @@
-import { Event } from "../types";
+import { Event } from "types";
 import ready from "./util/ready";
 import interactionCreate from "./util/interactionCreate";
 

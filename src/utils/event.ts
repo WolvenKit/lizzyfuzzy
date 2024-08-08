@@ -1,4 +1,4 @@
-import { Event, EventExec, EventKeys } from '../types';
+import { Event, EventExec, EventKeys } from 'types';
 import { Client } from 'discord.js';
 
 export function event<T extends EventKeys>(
