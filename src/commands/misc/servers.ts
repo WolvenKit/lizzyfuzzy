@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { command } from "utils";
+import { command, log } from "utils";
 import client from "prom-client";
 
 const gauge = new client.Counter({
@@ -14,7 +14,11 @@ const meta = new SlashCommandBuilder()
 
 export default command(meta, async ({ interaction, client }) => {
   gauge.inc(1);
-  const Servers = [...client.guilds.cache.map((g) => g.id)];
-  console.log(Servers);
+  const Servers = [...client.guilds.cache.map((g) => g)];
+  
+  Servers.forEach((server) => {
+    log(server)
+  });
+
   interaction.reply({ content: "dev", ephemeral: true });
 });

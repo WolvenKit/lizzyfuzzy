@@ -2,7 +2,7 @@ import { event } from "utils";
 
 export default event("ready", async ({ log }, client) => {
   process.on("uncaughtException", (error) => {
-    console.log(`uncaughtException:  ${error} `);
+    log(`uncaughtException:  ${error} `);
   });
 
   log(

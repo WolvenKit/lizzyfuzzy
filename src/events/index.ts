@@ -21,7 +21,6 @@ import guildjoin from "./util/guildJoin";
 
 const productionEvents: Event<any>[] = [
   ready,
-  quote,
   guildjoin,
   interactionCreate,
 ];

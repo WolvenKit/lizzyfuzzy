@@ -1,5 +1,6 @@
 import express from "express";
 import client from "src";
+import { log } from "utils";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -11,12 +12,7 @@ router.get("/", async (req, res) => {
 
   res.send(channels);
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour12: true,
-    timeStyle: "medium",
-  });
-
-  console.log(`[${time}] `, "Roles sent");
+  log("Roles sent");
 });
 
 export default router;

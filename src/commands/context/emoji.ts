@@ -22,8 +22,6 @@ export default command(meta, async ({ interaction }) => {
   const emojiRegex = /(<:|<a:)([a-zA-Z]+)(:)(\d+)(>)/;
   const match = emojiRegex.exec(Interaction.targetMessage?.content || "");
 
-  console.log(match);
-
   if (match?.[1] === "<a:") {
     interaction.reply({
       content: `https://cdn.discordapp.com/emojis/${match?.[4]}.gif`,

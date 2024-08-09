@@ -2,6 +2,7 @@ import express from "express";
 import client from "src";
 const router = express.Router();
 import prm_client from "prom-client";
+import { log } from "utils";
 
 const gauge_time = new prm_client.Gauge({
   name: "api_role_time",
@@ -42,12 +43,7 @@ router.get("/", (req, res) => {
   end();
   gauge_count.inc(1);
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour12: true,
-    timeStyle: "medium",
-  });
-
-  console.log(`[${time}] `, "Roles sent");
+  log("Roles sent");
 });
 
 export default router;

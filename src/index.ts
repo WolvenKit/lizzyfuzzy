@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits, ActivityType, Partials } from "discord.js";
-import { registerEvents, apiToken, envCheck } from "utils";
+import { registerEvents, apiToken, envCheck, log } from "utils";
 import events from "botevents";
 import keys from "keys";
 import process from "node:process";
@@ -17,10 +17,6 @@ import fs from "fs";
 
 envCheck();
 
-const time = new Date().toLocaleTimeString("en-US", {
-  hour12: true,
-  timeStyle: "medium",
-});
 
 const client = new Client({
   shards: "auto",
@@ -94,10 +90,10 @@ client.on("ready", () => {
   const httpsServer = https.createServer(credentials, app);
 
   httpServer.listen(8080, () => {
-    console.log(`[${time}] `, "HTTP API started and is running on port 8080");
+    log("HTTP API started and is running on port 8080");
   });
 
   httpsServer.listen(8443, () => {
-    console.log(`[${time}] `, "HTTPS API started and is running on port 8443");
+    log("HTTPS API started and is running on port 8443");
   });
 });

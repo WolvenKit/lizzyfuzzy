@@ -1,6 +1,6 @@
 import express from "express";
 import client from "src";
-import { prisma } from "utils";
+import { prisma, log } from "utils";
 
 const router = express.Router();
 const time = new Date().toLocaleTimeString("en-US", {
@@ -17,12 +17,7 @@ router.get("/users", async (req, res) => {
     await client.guilds.cache.get(req.query.server.trim())?.members.fetch()
   );
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour12: true,
-    timeStyle: "medium",
-  });
-
-  console.log(`[${time}] `, "Experimental Users sent");
+  log("Experimental Users sent");
 });
 
 router.get("/roles", async (req, res) => {
@@ -34,12 +29,7 @@ router.get("/roles", async (req, res) => {
     await client.guilds.cache.get(req.query.server.trim())?.roles.fetch()
   );
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour12: true,
-    timeStyle: "medium",
-  });
-
-  console.log(`[${time}] `, "Experimental Roles sent");
+  log("Experimental Roles sent");
 });
 
 router.get("/web", async (req, res) => {
@@ -109,12 +99,7 @@ router.get("/web", async (req, res) => {
 
   res.send(data);
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour12: true,
-    timeStyle: "medium",
-  });
-
-  console.log(`[${time}] `, "Experimental Roles sent");
+  log("Experimental Roles sent");
 });
 
 export default router;

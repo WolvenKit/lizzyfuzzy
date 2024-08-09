@@ -1,18 +1,19 @@
-import { REST, Routes, APIUser } from 'discord.js';
-import commands from 'commands';
-import keys from 'keys';
+import { REST, Routes, APIUser } from "discord.js";
+import commands from "commands";
+import keys from "keys";
+import { log } from "utils";
 
 const body = commands
   .map(({ commands }) => commands.map(({ meta }) => meta))
   .flat();
 
-const rest = new REST({ version: '10' }).setToken(keys.clientToken);
+const rest = new REST({ version: "10" }).setToken(keys.clientToken);
 
 async function main() {
   const currentUser = (await rest.get(Routes.user())) as APIUser;
 
   const endpoint =
-    process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV === "production"
       ? Routes.applicationCommands(currentUser.id)
       : Routes.applicationGuildCommands(currentUser.id, keys.guild);
 
@@ -22,13 +23,13 @@ async function main() {
 }
 
 main()
-  .then(user => {
+  .then((user) => {
     const tag = `${user.username}#${user.discriminator}`;
     const response =
-      process.env.NODE_ENV === 'production'
+      process.env.NODE_ENV === "production"
         ? `Successfully released commands in production as ${tag}!`
         : `Successfully registered commands for development in ${keys.guild} as ${tag}`;
 
-    console.log(response);
+    log(response);
   })
   .catch(console.error);

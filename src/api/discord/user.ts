@@ -1,8 +1,9 @@
 import express from "express";
 import client from "src";
 import { User } from "discord.js";
-import { prisma } from "utils";
+import { prisma, log } from "utils";
 import prm_client from "prom-client";
+
 
 const router = express.Router();
 
@@ -63,15 +64,10 @@ router.post("/", async (req, res) => {
     })
   );
 
-  const time = new Date().toLocaleTimeString("en-US", {
-    hour12: true,
-    timeStyle: "medium",
-  });
-
   res.send(users);
   end_user();
   gauge_count_user.inc(1);
-  console.log(`[${time}] `, "Users sent");
+  log("Users sent");
 });
 
 const gauge_time_detail = new prm_client.Gauge({
@@ -91,7 +87,6 @@ router.post("/details", async (req, res) => {
   gauge_time_detail.setToCurrentTime();
   const end_detail = gauge_time_user.startTimer();
   const UserArray = req.body as string[];
-  console.log(UserArray);
 
   if (
     !UserArray ||

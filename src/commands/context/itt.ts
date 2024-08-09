@@ -1,6 +1,6 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from "discord.js";
 import type { MessageContextMenuCommandInteraction } from "discord.js";
-import { command } from "utils";
+import { command, log } from "utils";
 import Tesseract from "tesseract.js";
 import client from "prom-client";
 
@@ -26,7 +26,7 @@ export default command(meta, async ({ interaction }) => {
     const attachment = attachement.first();
     if (attachment?.contentType?.startsWith("image")) {
       Tesseract.recognize(attachment.url, "eng").then(({ data: { text } }) => {
-        console.log(text);
+        log(text);
       });
     }
   }

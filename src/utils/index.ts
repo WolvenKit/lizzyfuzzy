@@ -6,3 +6,4 @@ export * from "./envCheck";
 export * from "./apiToken";
 export * from "./prismaUpsert";
 export * from "./prismaClient";
+export * from "./logging";
