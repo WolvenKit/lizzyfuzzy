@@ -8,3 +8,4 @@ export * from "./prismaUpsert";
 export * from "./prismaClient";
 export * from "./logging";
 export * from "./keys";
+export * from "./github";
