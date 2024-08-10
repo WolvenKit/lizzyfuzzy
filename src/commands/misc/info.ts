@@ -83,7 +83,7 @@ export default command(meta, async ({ interaction }) => {
       },
       {
         name: "Bot Version",
-        value: `0.0.7`,
+        value: `0.0.8`,
         inline: true,
       },
       {
