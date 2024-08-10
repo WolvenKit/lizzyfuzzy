@@ -1,6 +1,4 @@
-import { category } from 'utils';
-import who from './who';
-import info from './info';
-import link from './link';
+import { category } from "utils";
+import info from "./info";
 
-export default category('Misc', [who, info, link]);
+export default category("Misc", [info]);
