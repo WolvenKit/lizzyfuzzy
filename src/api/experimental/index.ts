@@ -95,8 +95,6 @@ router.get("/web", async (req, res) => {
     }[]
   );
 
-  console.dir(data, { depth: null });
-
   res.send(data);
 
   log("Experimental Roles sent");

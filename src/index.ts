@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, ActivityType, Partials } from "discord.js";
+import { Client, ActivityType, Partials } from "discord.js";
 import { registerEvents, apiToken, envCheck, log } from "utils";
 import events from "botevents";
 import keys from "keys";
@@ -20,27 +20,7 @@ envCheck();
 
 const client = new Client({
   shards: "auto",
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildModeration,
-    GatewayIntentBits.GuildEmojisAndStickers,
-    GatewayIntentBits.GuildIntegrations,
-    GatewayIntentBits.GuildWebhooks,
-    GatewayIntentBits.GuildInvites,
-    GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.GuildMessageTyping,
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.DirectMessageReactions,
-    GatewayIntentBits.DirectMessageTyping,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildScheduledEvents,
-    GatewayIntentBits.AutoModerationConfiguration,
-    GatewayIntentBits.AutoModerationExecution,
-  ],
+  intents: 53575421,
   presence: {
     activities: [
       {
