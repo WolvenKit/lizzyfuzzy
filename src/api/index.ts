@@ -9,4 +9,8 @@ router.use("/metrics", metrics);
 router.use("/discord", discord);
 router.use("/experimental", experimental);
 
+router.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+
 export default router;

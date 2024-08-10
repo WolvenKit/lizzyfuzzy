@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 
+const exception = ["/api/metrics", "/api", "/favicon.ico"];
+
 export function apiToken(req: Request, res: Response, next: any) {
   const url = req.originalUrl;
-  if (url === "/api/metrics" || url === "/favicon.ico") {
+  if (exception.includes(url)) {
     return next();
   }
   if (!req.headers.authorization) {
