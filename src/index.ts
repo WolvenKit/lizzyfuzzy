@@ -1,7 +1,6 @@
 import { Client, ActivityType, Partials } from "discord.js";
-import { registerEvents, apiToken, envCheck, log } from "utils";
+import { registerEvents, apiToken, envCheck, log, keys } from "utils";
 import events from "botevents";
-import keys from "keys";
 import process from "node:process";
 
 import express from "express";

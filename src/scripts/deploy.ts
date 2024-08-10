@@ -1,7 +1,6 @@
 import { REST, Routes, APIUser } from "discord.js";
 import commands from "commands";
-import keys from "keys";
-import { log } from "utils";
+import { log, keys } from "utils";
 
 const body = commands
   .map(({ commands }) => commands.map(({ meta }) => meta))

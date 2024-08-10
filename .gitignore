@@ -13,3 +13,5 @@ install.sh
 data/scannedUsers.json
 .vscode/settings.json
 env/bot.env
+
+keys/
