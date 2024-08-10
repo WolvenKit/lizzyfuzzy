@@ -1,30 +1,14 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import { command } from "utils";
-import { App, Octokit } from "octokit";
-import fs from "fs";
+import { command, octokit } from "utils";
 
-const key = fs.readFileSync(
-  "./src/keys/lizzyfuzzy.2024-08-10.private-key.pem",
-  "utf-8"
-);
 
-const app = new App({
-  appId: 966972,
-  privateKey: key,
-  auth: {
-    id: 966972,
-    privateKey: key,
-    installationId: 53666733,
-  },
-  installationId: 53666733,
-});
 
 const meta = new SlashCommandBuilder()
   .setName("core-versions")
   .setDescription("Display the core Mods and their latest versions");
 
 export default command(meta, async ({ interaction }) => {
-  const octokit = await app.getInstallationOctokit(53666733);
+
   const RED4ext = await octokit.request(
     "GET /repos/WopsS/RED4ext/releases/latest"
   );
@@ -45,10 +29,8 @@ export default command(meta, async ({ interaction }) => {
   );
 
   const embed = new EmbedBuilder()
-    .setTitle("Cyberpunk's core mods")
-    .setDescription(
-      `
-## Core mods and frameworks
+    .setTitle("Core mods and frameworks")
+    .setDescription(`
 - [RED4ext - ${RED4ext.data.tag_name}](<https://github.com/WopsS/RED4ext/releases/latest>)
 - [ArchiveXL - ${ArchiveXL.data.tag_name} ](<https://github.com/psiberx/cp2077-archive-xl/releases/latest>)
 - [TweakXL - ${TweakXL.data.tag_name} ](<https://github.com/psiberx/cp2077-tweak-xl/releases/latest>)
