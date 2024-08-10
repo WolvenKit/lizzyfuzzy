@@ -17,10 +17,29 @@ import fs from "fs";
 
 envCheck();
 
-
 const client = new Client({
   shards: "auto",
-  intents: 53575421,
+  intents: [
+    "Guilds",
+    "GuildMembers",
+    "GuildBans",
+    "GuildEmojisAndStickers",
+    "GuildIntegrations",
+    "GuildWebhooks",
+    "GuildInvites",
+    "GuildVoiceStates",
+    "GuildPresences",
+    "GuildMessages",
+    "GuildMessageReactions",
+    "GuildMessageTyping",
+    "DirectMessages",
+    "DirectMessageReactions",
+    "DirectMessageTyping",
+    "MessageContent",
+    "GuildScheduledEvents",
+    "AutoModerationConfiguration",
+    "AutoModerationExecution",
+  ],
   presence: {
     activities: [
       {
