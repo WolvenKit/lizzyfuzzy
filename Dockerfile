@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:slim
 COPY . .
 RUN apt-get update -y && apt-get install -y openssl
 RUN npm install pnpm -g
