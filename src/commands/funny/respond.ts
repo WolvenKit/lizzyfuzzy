@@ -12,15 +12,7 @@ export default command(meta, async ({ interaction, client }) => {
   const user = interaction.member?.user.username;
 
   async function randomResponse() {
-    const data = await fetch(
-      "https://raw.githubusercontent.com/Moonded/responses/main/responses.json"
-    );
-
-    let responses = await data.json();
-
-    if (!Array.isArray(responses)) {
-      responses = localResponses;
-    }
+    let responses = localResponses;
 
     return responses[Math.floor(Math.random() * responses.length)];
   }
@@ -28,7 +20,7 @@ export default command(meta, async ({ interaction, client }) => {
   let response = await randomResponse();
 
   while (response.User !== "everyone" && response.User !== user) {
-    response = randomResponse();
+    response = await randomResponse();
   }
 
   const channel = client.channels.cache.get(

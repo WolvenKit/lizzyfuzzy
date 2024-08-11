@@ -1,6 +1,9 @@
 [
   { "Message": "The fuck you want?", "User": "everyone" },
-  { "Message": "I am here to serve you, creator", "User": "moonded" },
+  {
+    "Message": "I am here to serve you, my creator Moonded.",
+    "User": "moonded"
+  },
   { "Message": "I am V", "User": "projectv" },
   { "Message": "the bin in the bin", "User": "everyone" },
   {
@@ -40,5 +43,13 @@
   {
     "Message": "hello im new here how fix unresolved hash error? useless modders always updating shit without my consent I HAD A REASON TO PIRATE I ALREADY BOUGHT THE GAME this is why the game is DEAD, mod abooz pls demot",
     "User": "everyone"
-  }
+  },
+  {
+    "Message": "In terms of getting people to mod, I'm the world's worst slut",
+    "User": "everyone"
+  },
+  { "Message": "## LINK HARDER", "User": "everyone" },
+  { "Message": "## INTERLINK EVERYTHING", "User": "everyone" },
+  { "Message": "_Psst,_ wanna buy some oranges?", "User": "fronkenzeepa" },
+  { "Message": "What the dog doing?", "User": "moonded" }
 ]
