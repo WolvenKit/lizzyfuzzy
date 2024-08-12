@@ -19,11 +19,14 @@ import message from "./help/message";
 
 import guildjoin from "./util/guildJoin";
 
+import suggestion_handle from "./pub/suggestions_handle";
+
 const productionEvents: Event<any>[] = [
   ready,
   quote,
   guildjoin,
   interactionCreate,
+  suggestion_handle,
 ];
 
 const developmentEvents: Event<any>[] = [
@@ -42,6 +45,7 @@ const developmentEvents: Event<any>[] = [
   image,
   message,
   guildjoin,
+  suggestion_handle,
 ];
 
 export default process.env.NODE_ENV === "production"

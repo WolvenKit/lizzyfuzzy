@@ -13,6 +13,9 @@ const allCommandsMap = new Map<string, Command>(
 export default event(
   "interactionCreate",
   async ({ log, client }, Interaction) => {
+
+    if (!Interaction.isCommand()) return;
+
     let interaction = Interaction;
     interaction = interaction as ChatInputCommandInteraction;
 
