@@ -4,6 +4,8 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   ContextMenuCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
 
 type LoggerFunction = (...args: any[]) => void;
@@ -16,6 +18,8 @@ export interface CommandProps {
 
 export type CommandExec = (props: CommandProps) => Awaitable<unknown>;
 export type CommandMeta =
+  | SlashCommandSubcommandsOnlyBuilder
+  | SlashCommandOptionsOnlyBuilder
   | SlashCommandBuilder
   | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
   | ContextMenuCommandBuilder;
