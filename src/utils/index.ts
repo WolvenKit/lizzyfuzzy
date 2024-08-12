@@ -4,7 +4,7 @@ export * from "./replies";
 export * from "./error";
 export * from "./envCheck";
 export * from "./apiToken";
-export * from "./prismaUpsert";
+export * from "./prismaInteractions";
 export * from "./prismaClient";
 export * from "./logging";
 export * from "./keys";
