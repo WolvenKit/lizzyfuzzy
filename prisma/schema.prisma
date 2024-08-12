@@ -23,3 +23,19 @@ model User {
   description String @default("")
 }
 
+model Suggestions {
+  id         String   @id @default(cuid())
+  user       String
+  userid     String
+  suggestion String
+  status     String   @default("pending")
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Trivia {
+  id         String   @id @default(cuid())
+  question   String
+  answer     String
+  created_at DateTime @default(now())
+}
