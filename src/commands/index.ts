@@ -9,5 +9,5 @@ import dev from "./dev";
 //   ? [misc, context, funny, pub, team]
 //   : [misc, context, funny, pub, team, dev];
 
-export default [misc, context, funny, pub, team];
+export default [misc, context, funny, pub, team ,dev];
 // export default []
