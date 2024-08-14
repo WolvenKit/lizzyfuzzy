@@ -1,5 +1,11 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { command, getRandomTrivia } from "utils";
+import {
+  PermissionFlagsBits,
+  SlashCommandBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+} from "discord.js";
+import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("trivia")
@@ -7,42 +13,22 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction, client }) => {
-  await interaction.reply("Do you want to play trivia?");
+  const confirmButton = new ButtonBuilder()
+    .setCustomId("confirmTrivia")
+    .setLabel("Yes")
+    .setStyle(ButtonStyle.Primary);
+  const cancelButton = new ButtonBuilder()
+    .setCustomId("cancelTrivia")
+    .setLabel("No")
+    .setStyle(ButtonStyle.Danger);
 
-  const collectorFilter = (m: any) => m.author.id === interaction.user.id;
-  const collector = interaction.channel?.createMessageCollector({
-    filter: collectorFilter,
-    time: 15000,
-  });
+  const initalActionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    confirmButton,
+    cancelButton
+  );
 
-  const randomTrivia = await getRandomTrivia();
-
-  collector?.on("collect", async (m) => {
-    if (m.content.toLowerCase() === "yes") {
-      await interaction.editReply("Great! Let's start the game!");
-      await interaction.followUp(randomTrivia.question);
-
-      const collectorFilter = (m: any) => m.author.id === interaction.user.id;
-      const collector = interaction.channel?.createMessageCollector({
-        filter: collectorFilter,
-        time: 15000,
-      });
-
-      collector?.on("collect", async (m) => {
-        if (m.content.toLowerCase() === randomTrivia.answer) {
-          await interaction.editReply("Correct!");
-        } else {
-          await interaction.editReply("Incorrect!");
-        }
-      });
-
-      collector?.on("end", async (collected) => {
-        if (collected.size === 0) {
-          await interaction.editReply("Time's up!");
-        }
-      });
-    } else {
-      await interaction.editReply("Maybe next time!");
-    }
+  await interaction.reply({
+    content: "Do you want to play trivia?",
+    components: [initalActionRow],
   });
 });

@@ -1,14 +1,11 @@
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
 import { command, octokit } from "utils";
-
-
 
 const meta = new SlashCommandBuilder()
   .setName("core-versions")
   .setDescription("Display the core Mods and their latest versions");
 
 export default command(meta, async ({ interaction }) => {
-
   const RED4ext = await octokit.request(
     "GET /repos/WopsS/RED4ext/releases/latest"
   );
@@ -28,9 +25,13 @@ export default command(meta, async ({ interaction }) => {
     "GET /repos/jac3km4/redscript/releases/latest"
   );
 
-  const embed = new EmbedBuilder()
-    .setTitle("Core mods and frameworks")
-    .setDescription(`
+  const data = [
+    {
+      titile: "Core mods and frameworks",
+      description: `
+The core mods are required for many other mods to function at all. They are version-dependent and will not work with older versions of the game.
+If any of your mods depend on one of the following, make sure to always keep these dependencies up-to-date:
+
 - [RED4ext - ${RED4ext.data.tag_name}](<https://github.com/WopsS/RED4ext/releases/latest>)
 - [ArchiveXL - ${ArchiveXL.data.tag_name} ](<https://github.com/psiberx/cp2077-archive-xl/releases/latest>)
 - [TweakXL - ${TweakXL.data.tag_name} ](<https://github.com/psiberx/cp2077-tweak-xl/releases/latest>)
@@ -38,9 +39,10 @@ export default command(meta, async ({ interaction }) => {
 - [Cyber Engine Tweaks - ${cet.data.tag_name} ](<https://github.com/maximegmd/CyberEngineTweaks/releases/latest>)
 - [redscript - ${redscript.data.tag_name} ](<https://github.com/jac3km4/redscript/releases/latest>)
 
-Check [this wiki page](<https://wiki.redmodding.org/cyberpunk-2077-modding/modding-know-how/frameworks>) for more information.`
-    )
-    .setColor("#FF0000");
+Check [this wiki page](<https://wiki.redmodding.org/cyberpunk-2077-modding/modding-know-how/frameworks>) for more information.`,
+      color: 16711680,
+    },
+  ];
 
-  return interaction.reply({ embeds: [embed] });
+  return interaction.reply({ embeds: data });
 });

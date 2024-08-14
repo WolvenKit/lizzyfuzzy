@@ -21,6 +21,8 @@ import guildjoin from "./util/guildJoin";
 
 import suggestion_handle from "./pub/suggestions_handle";
 
+import trivia_handler from "./pub/trivia_handler";
+
 const productionEvents: Event<any>[] = [
   ready,
   quote,
@@ -46,6 +48,7 @@ const developmentEvents: Event<any>[] = [
   message,
   guildjoin,
   suggestion_handle,
+  trivia_handler,
 ];
 
 export default process.env.NODE_ENV === "production"
