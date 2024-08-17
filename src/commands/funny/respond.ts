@@ -1,7 +1,6 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import type { TextChannel } from "discord.js";
-import { command } from "utils";
-import localResponses from "resources/respond.json";
+import { command, prisma } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("respond")
@@ -11,23 +10,19 @@ const meta = new SlashCommandBuilder()
 export default command(meta, async ({ interaction, client }) => {
   const user = interaction.member?.user.username;
 
-  async function randomResponse() {
-    let responses = localResponses;
+  const data = await prisma.quotes.findMany();
 
-    return responses[Math.floor(Math.random() * responses.length)];
-  }
+  let response = data[Math.floor(Math.random() * data.length)];
 
-  let response = await randomResponse();
-
-  while (response.User !== "everyone" && response.User !== user) {
-    response = await randomResponse();
+  while (response.responder !== "everyone" && response.responder !== user) {
+    response = data[Math.floor(Math.random() * data.length)];
   }
 
   const channel = client.channels.cache.get(
     interaction.channelId
   ) as TextChannel;
   if (channel) {
-    channel.send(response.Message);
+    channel.send(response.quote);
   }
 
   await interaction.reply({ content: "Sent!", ephemeral: true });

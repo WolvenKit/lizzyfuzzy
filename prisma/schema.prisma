@@ -39,3 +39,9 @@ model Trivia {
   answer     String
   created_at DateTime @default(now())
 }
+
+model Quotes {
+  id        String @id @default(cuid())
+  quote     String
+  responder String
+}

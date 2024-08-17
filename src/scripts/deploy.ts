@@ -22,12 +22,13 @@ async function main() {
 }
 
 main()
-  .then((user) => {
+  .then(async (user) => {
     const tag = `${user.username}#${user.discriminator}`;
+    const guild = await rest.get(Routes.guild(keys.guild)) as any;
     const response =
       process.env.NODE_ENV === "production"
         ? `Successfully released commands in production as ${tag}!`
-        : `Successfully registered commands for development in ${keys.guild} as ${tag}`;
+        : `Successfully registered commands for development in ${guild.name} as ${tag}`;
 
     log(response);
   })
