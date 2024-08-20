@@ -45,3 +45,11 @@ model Quotes {
   quote     String
   responder String
 }
+
+model Pass {
+  id       String @id @default(cuid())
+  username String @unique
+  token    String
+  salt     String
+  jwt      String
+}
