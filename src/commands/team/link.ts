@@ -19,10 +19,13 @@ const meta = new SlashCommandBuilder()
     option
       .setName("nexusmods")
       .setDescription("NexusMods Username")
-      .setRequired(true)
+      .setRequired(false)
   )
   .addStringOption((option) =>
-    option.setName("github").setDescription("GitHub Username").setRequired(true)
+    option
+      .setName("github")
+      .setDescription("GitHub Username")
+      .setRequired(false)
   )
   .addStringOption((option) =>
     option
@@ -41,8 +44,17 @@ const meta = new SlashCommandBuilder()
       .setDescription("Short description about yourself")
       .setMaxLength(2012)
       .setRequired(true)
+  )
+  .addStringOption((option) =>
+    option
+      .setName("username")
+      .addChoices(
+        { name: "Uppercase", value: "uppercase" },
+        { name: "Lowercase", value: "lowercase" }
+      )
+      .setDescription("Choose your username style")
+      .setRequired(false)
   );
-
 
 export default command(meta, async ({ interaction }) => {
   gauge.inc(1);
