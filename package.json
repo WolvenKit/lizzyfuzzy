@@ -15,9 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "5.17.0",
+    "@types/jsonwebtoken": "^9.0.6",
     "discord.js": "^14.15.3",
     "express": "^4.19.2",
     "express-rate-limit": "^7.4.0",
+    "jsonwebtoken": "^9.0.2",
     "octokit": "^4.0.2",
     "prisma": "^5.18.0",
     "prom-client": "^15.1.3",

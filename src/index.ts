@@ -14,6 +14,8 @@ import rateLimit from "express-rate-limit";
 
 import fs from "fs";
 
+import jwt from "jsonwebtoken";
+
 envCheck();
 
 const client = new Client({
@@ -60,6 +62,9 @@ client.login(keys.clientToken).catch((err) => {
 export default client;
 
 client.on("ready", () => {
+  const admin = jwt.sign({ username: "admin" }, process.env.API_TOKEN);
+  log(admin);
+
   const privateKey = fs.readFileSync("./src/keys/privkey.pem", "utf-8");
   const certificate = fs.readFileSync("./src/keys/fullchain.pem", "utf-8");
 
