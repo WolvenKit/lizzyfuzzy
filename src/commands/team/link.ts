@@ -65,6 +65,7 @@ export default command(meta, async ({ interaction }) => {
     GitHub: interaction.options.getString("github") ?? "None",
     Theme: interaction.options.getString("theme") ?? "default",
     Description: interaction.options.getString("description") ?? "None",
+    Username: interaction.options.getString("username") ?? "uppercase",
   };
 
   await upserUser(interaction, info);

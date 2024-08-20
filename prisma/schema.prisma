@@ -21,6 +21,7 @@ model User {
   github      String @default("")
   theme       String @default("default")
   description String @default("")
+  style       String @default("")
 }
 
 model Suggestions {
