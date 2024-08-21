@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
   const tokens = sha512(body.password + salt);
 
   const token = jwt.sign(body, process.env.API_TOKEN);
-  console.log(token);
 
   const user = await prisma.pass.findUnique({
     where: {
@@ -36,8 +35,6 @@ router.get("/", async (req, res) => {
       jwt: token,
     },
   });
-
-  console.log(data);
 
   return res.send(token);
 });
