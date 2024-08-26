@@ -6,15 +6,8 @@ services:
     #   dockerfile: Dockerfile
     volumes:
       - "./.env:/.env"
-      - "/etc/letsencrypt/live/backend.redmodding.org/fullchain.pem:./src/keys/fullchain.pem"
-      - "/etc/letsencrypt/live/backend.redmodding.org/privkey.pem:./src/keys/privkey.pem"
-    ports:
-      - "80:8080"
-      - "443:8443"
     depends_on:
-      - db
-    networks:
-      - lizzy
+      - api
 
   db:
     image: postgres:latest
@@ -24,33 +17,15 @@ services:
       POSTGRES_PASSWORD: fe0c836613916e4f97be69054a56798f
     ports:
       - "5432:5432"
-    networks:
-      - lizzy
 
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    environment:
-      GF_RENDERING_SERVER_URL: http://host.docker.internal:8081/render
-      GF_RENDERING_CALLBACK_URL: http://host.docker.internal:3000/
-      GF_LOG_FILTERS: rendering:debug
-    networks:
-      - lizzy
-  renderer:
-    image: grafana/grafana-image-renderer
-    ports:
-      - "8081:8081"
-
-  prometheus:
-    image: prom/prometheus
-    ports:
-      - "9090:9090"
+  api:
+    image: moonded/lizzyapi:latest
     volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-    networks:
-      - lizzy
-
-networks:
-  lizzy:
-    driver: bridge
+      - "./.env:/.env"
+      - "/etc/letsencrypt/live/backend.redmodding.org/fullchain.pem:./src/keys/fullchain.pem"
+      - "/etc/letsencrypt/live/backend.redmodding.org/privkey.pem:./src/keys/privkey.pem"
+    ports:
+      - "80:8080"
+      - "443:8443"
+    depends_on:
+      - db
