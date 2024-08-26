@@ -5,4 +5,4 @@ import pub from "./public";
 import team from "./team";
 import dev from "./dev";
 
-export default [misc, context, funny, pub, team, dev];
+export default [misc, context, funny, pub, team];
