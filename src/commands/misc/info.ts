@@ -76,7 +76,7 @@ export default command(meta, async ({ interaction }) => {
       },
       {
         name: "Bot Version",
-        value: `0.1.1`,
+        value: `1.0.0`,
         inline: true,
       },
       {
