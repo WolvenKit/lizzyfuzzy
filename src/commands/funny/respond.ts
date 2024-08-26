@@ -10,7 +10,7 @@ const meta = new SlashCommandBuilder()
 export default command(meta, async ({ interaction, client }) => {
   const user = interaction.member?.user.username;
 
-  const data = await fetch(process.env.API_ENDPOINT + "/bot/commands/quotes", {
+  const data = await fetch(process.env.API_ENDPOINT + "/endpoint/response", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
