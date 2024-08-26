@@ -4,12 +4,6 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { command } from "utils";
-import client from "prom-client";
-
-const gauge = new client.Counter({
-  name: "command_who_usage",
-  help: "Usage of the who command",
-});
 
 const meta = new SlashCommandBuilder()
   .setName("who")
@@ -23,7 +17,6 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
-  gauge.inc(1);
   const target = interaction.options.getUser("target");
 
   if (target) {

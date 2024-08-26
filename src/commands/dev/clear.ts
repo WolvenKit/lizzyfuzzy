@@ -1,6 +1,6 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import type { TextChannel } from "discord.js";
-import { prisma, command } from "utils";
+import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("clear")

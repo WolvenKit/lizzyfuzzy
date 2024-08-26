@@ -1,6 +1,6 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import type { TextChannel } from "discord.js";
-import { command, prisma } from "utils";
+import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("respond")
@@ -10,20 +10,43 @@ const meta = new SlashCommandBuilder()
 export default command(meta, async ({ interaction, client }) => {
   const user = interaction.member?.user.username;
 
-  const data = await prisma.quotes.findMany();
+  const data = await fetch(process.env.API_ENDPOINT + "/bot/commands/quotes", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${process.env.BOT_TOKEN}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return data;
+    });
 
-  let response = data[Math.floor(Math.random() * data.length)];
+  if (data) {
+    let response = data[Math.floor(Math.random() * data.length)];
 
-  while (response.responder !== "everyone" && response.responder !== user) {
-    response = data[Math.floor(Math.random() * data.length)];
+    while (response.responder !== "everyone" && response.responder !== user) {
+      response = data[Math.floor(Math.random() * data.length)];
+    }
+
+    const channel = client.channels.cache.get(
+      interaction.channelId
+    ) as TextChannel;
+    if (channel) {
+      channel.send(response.quote);
+    }
+
+    await interaction.reply({ content: "Sent!", ephemeral: true });
+  } else {
+    await interaction.reply({
+      embeds: [
+        {
+          title: "Error",
+          description: "No responses found",
+          color: 0xff0000,
+        },
+      ],
+      ephemeral: true,
+    });
   }
-
-  const channel = client.channels.cache.get(
-    interaction.channelId
-  ) as TextChannel;
-  if (channel) {
-    channel.send(response.quote);
-  }
-
-  await interaction.reply({ content: "Sent!", ephemeral: true });
 });

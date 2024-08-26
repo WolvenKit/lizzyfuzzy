@@ -4,13 +4,7 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import { command } from "utils";
-import client from "prom-client";
 import os from "os";
-
-const gauge = new client.Counter({
-  name: "command_info_usage",
-  help: "Usage of the Info command",
-});
 
 const formatMemoryUsage = (data: any) =>
   `${Math.round((data / 1024 / 1024) * 100) / 100} MB`;
@@ -42,7 +36,6 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
-  gauge.inc(1);
   const uptime = interaction.client.uptime
     ? formatUptime(interaction.client.uptime)
     : "N/A";

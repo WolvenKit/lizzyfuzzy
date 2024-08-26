@@ -1,15 +1,5 @@
-import {
-  PermissionFlagsBits,
-  SlashCommandBuilder,
-  EmbedBuilder,
-} from "discord.js";
-import { command, upserUser } from "utils";
-import client from "prom-client";
-
-const gauge = new client.Counter({
-  name: "command_link_usage",
-  help: "Usage of the link command",
-});
+import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("link")
@@ -19,12 +9,14 @@ const meta = new SlashCommandBuilder()
     option
       .setName("nexusmods")
       .setDescription("NexusMods Username")
+      .setMaxLength(20)
       .setRequired(false)
   )
   .addStringOption((option) =>
     option
       .setName("github")
       .setDescription("GitHub Username")
+      .setMaxLength(20)
       .setRequired(false)
   )
   .addStringOption((option) =>
@@ -36,14 +28,14 @@ const meta = new SlashCommandBuilder()
         { name: "Cyberpunk", value: "cyberpunk" },
         { name: "Witcher", value: "witcher" }
       )
-      .setRequired(true)
+      .setRequired(false)
   )
   .addStringOption((option) =>
     option
       .setName("description")
       .setDescription("Short description about yourself")
       .setMaxLength(2012)
-      .setRequired(true)
+      .setRequired(false)
   )
   .addStringOption((option) =>
     option
@@ -57,7 +49,6 @@ const meta = new SlashCommandBuilder()
   );
 
 export default command(meta, async ({ interaction }) => {
-  gauge.inc(1);
   const info = {
     User: interaction.user.globalName,
     Id: interaction.user.id,
@@ -65,36 +56,17 @@ export default command(meta, async ({ interaction }) => {
     GitHub: interaction.options.getString("github") ?? "None",
     Theme: interaction.options.getString("theme") ?? "default",
     Description: interaction.options.getString("description") ?? "None",
-    Username: interaction.options.getString("username") ?? "uppercase",
+    Style: interaction.options.getString("username") ?? "uppercase",
   };
 
-  await upserUser(interaction, info);
-
-  interaction.reply({
-    embeds: [
-      new EmbedBuilder().addFields(
-        {
-          name: "NexusMods",
-          value: info.NexusMods,
-          inline: true,
-        },
-        {
-          name: "GitHub",
-          value: info.GitHub,
-          inline: true,
-        },
-        {
-          name: "Theme",
-          value: info.Theme,
-          inline: true,
-        },
-        {
-          name: "Description",
-          value: info.Description,
-          inline: true,
-        }
-      ),
-    ],
-    ephemeral: true,
+  const data = fetch(process.env.API_ENDPOINT + "/bot/commands/user", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.BOT_TOKEN}`,
+    },
+    body: JSON.stringify(info),
   });
+
+  return interaction.reply({ content: JSON.stringify(info, null, 2) });
 });
