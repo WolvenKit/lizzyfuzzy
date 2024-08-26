@@ -10,7 +10,8 @@ declare module 'process' {
         LOGS: string;
         API_RATE_WINDOW: string;
         API_MAX_REQUESTS: string;
-        API_TOKEN: string;
+        API_ENDPOINT: string;
+        BOT_TOKEN: string;
       }
 
       interface Process extends EventEmitter {

@@ -13,5 +13,6 @@ export function envCheck() {
   checkEnvVariable("LOGS");
   checkEnvVariable("API_RATE_WINDOW");
   checkEnvVariable("API_MAX_REQUESTS");
-  checkEnvVariable("API_TOKEN");
+  checkEnvVariable("BOT_TOKEN");
+  checkEnvVariable("API_ENDPOINT");
 }
