@@ -37,11 +37,11 @@ const meta = new SlashCommandBuilder()
 export default command(meta, async ({ interaction }) => {
   const subcommand = interaction.options.getSubcommand();
 
-  const question = interaction.options.getString("question");
-  const answer = interaction.options.getString("answer");
+  const question = interaction.options.getString("question")!.replace('\\n','\n');
+  const answer = interaction.options.getString("answer")!.replace('\\n','\n');
 
-  const quote = interaction.options.getString("quote");
-  const responder = interaction.options.getString("responder");
+  const quote = interaction.options.getString("quote")!.replace('\\n','\n');
+  const responder = interaction.options.getString("responder")!.replace('\\n','\n');
 
   if (subcommand === "trivia") {
     if (!question || !answer) {
