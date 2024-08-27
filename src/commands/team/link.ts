@@ -1,5 +1,6 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { command } from "utils";
+import lookup from "country-code-lookup";
 
 const meta = new SlashCommandBuilder()
   .setName("link")
@@ -46,21 +47,35 @@ const meta = new SlashCommandBuilder()
       )
       .setDescription("Choose your username style")
       .setRequired(false)
+  )
+  .addStringOption((option) =>
+    option.setName("country").setDescription("Your country").setRequired(false)
   );
 
 export default command(meta, async ({ interaction }) => {
+  const country =
+    interaction.options.getString("country")!.charAt(0).toUpperCase() +
+    interaction.options.getString("country")!.slice(1);
+
+  const look =
+    lookup.byCountry(country) ??
+    lookup.byInternet(country) ??
+    lookup.byIso(country);
+
   const info = {
     User: interaction.user.globalName,
     Id: interaction.user.id,
     NexusMods: interaction.options.getString("nexusmods") ?? "None",
-    GitHub: interaction.options.getString("github") ?? "None",
+    Github: interaction.options.getString("github") ?? "None",
     Theme: interaction.options.getString("theme") ?? "default",
     Description: interaction.options.getString("description") ?? "None",
     Style: interaction.options.getString("username") ?? "uppercase",
+    Timezone: "None",
+    Country: look?.internet ?? "None",
   };
 
-  const data = fetch(process.env.API_ENDPOINT + "/bot/commands/user", {
-    method: "PUT",
+  const data = await fetch(process.env.API_ENDPOINT + "/bot/commands/user", {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.BOT_TOKEN}`,
@@ -68,5 +83,35 @@ export default command(meta, async ({ interaction }) => {
     body: JSON.stringify(info),
   });
 
-  return interaction.reply({ content: JSON.stringify(info, null, 2) });
+  if (!data.ok) {
+    return interaction.reply({
+      content: "Failed to link your account.",
+      ephemeral: true,
+    });
+  }
+
+  if (!look) {
+    return interaction.reply({
+      embeds: [
+        {
+          title: "Account Linked",
+          description:
+            "Your account has been successfully linked/Updated.\nBut we couldn't find your country.\nTry using an ISO Country Code.",
+          color: 0x00ff00,
+        },
+      ],
+      ephemeral: true,
+    });
+  }
+
+  return interaction.reply({
+    embeds: [
+      {
+        title: "Account Linked",
+        description: "Your account has been successfully linked/Updated.",
+        color: 0x00ff00,
+      },
+    ],
+    ephemeral: true,
+  });
 });
