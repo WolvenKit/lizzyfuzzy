@@ -22,6 +22,30 @@ export default event("messageCreate", async ({ log, client }, Message) => {
       const message = await channel.messages.fetch(messageContent?.[7]!);
 
       if (message.content) {
+        const imageregex = /(https?:\/\/.*\.(?:png|jpg))/g;
+        const image = imageregex.exec(message.content);
+
+        if (image) {
+          return Message.reply({
+            content: image[0],
+            options: {
+              allowedMentions: { parse: [] },
+            },
+          });
+        }
+
+        const videoregex = /(https?:\/\/.*\.(?:mp4|webm))/g;
+        const video = videoregex.exec(message.content);
+
+        if (video) {
+          return Message.reply({
+            content: video[0],
+            options: {
+              allowedMentions: { parse: [] },
+            },
+          });
+        }
+
         const quotedMessage = new EmbedBuilder()
           .setAuthor({
             name: message.author.displayName,
@@ -45,7 +69,7 @@ export default event("messageCreate", async ({ log, client }, Message) => {
           });
         }
 
-        Message.reply({
+        return Message.reply({
           embeds: [quotedMessage],
           options: {
             allowedMentions: { parse: [] },
@@ -66,7 +90,7 @@ export default event("messageCreate", async ({ log, client }, Message) => {
           .setColor(UserHighestRoleColor)
           .setTimestamp(new Date());
 
-        Message.reply({
+        return Message.reply({
           embeds: [quotedMessage],
           options: {
             allowedMentions: { parse: [] },
@@ -77,6 +101,26 @@ export default event("messageCreate", async ({ log, client }, Message) => {
         !message.content &&
         message.attachments.size > 0
       ) {
+        const attachment = Array.from(message.attachments.values())[0];
+
+        if (attachment?.contentType?.includes("image")) {
+          return Message.reply({
+            content: attachment.url,
+            options: {
+              allowedMentions: { parse: [] },
+            },
+          });
+        }
+
+        if (attachment?.contentType?.includes("video")) {
+          return Message.reply({
+            content: attachment.url,
+            options: {
+              allowedMentions: { parse: [] },
+            },
+          });
+        }
+
         const quotedMessage = new EmbedBuilder()
           .setAuthor({
             name: message.author.displayName,
@@ -95,7 +139,7 @@ export default event("messageCreate", async ({ log, client }, Message) => {
           .setColor(UserHighestRoleColor)
           .setTimestamp(new Date());
 
-        Message.reply({
+        return Message.reply({
           embeds: [quotedMessage],
           options: {
             allowedMentions: { parse: [] },
