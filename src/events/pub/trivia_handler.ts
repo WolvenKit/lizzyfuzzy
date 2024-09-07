@@ -27,7 +27,7 @@ export default event("interactionCreate", async ({}, interaction) => {
         });
 
       await interaction.update({
-        content: `Great! Let's start the game! First Question:\n${randomTrivia.question}`,
+        content: `### Great! Let's guess!\n-# You have 30 seconds to answer!\n### First Question:\n\`${randomTrivia.question}\``,
         components: [],
       });
 
@@ -39,7 +39,7 @@ export default event("interactionCreate", async ({}, interaction) => {
 
       collector?.on("collect", async (m) => {
         if (m.content.toLowerCase() === randomTrivia.answer.toLowerCase()) {
-          await m.reply("Correct!");
+          await m.reply({content: "Correct!"});
 
           const nextTrivia = await fetch(
             process.env.API_ENDPOINT + "/bot/commands/trivia",
@@ -57,7 +57,7 @@ export default event("interactionCreate", async ({}, interaction) => {
             });
 
           if (nextTrivia) {
-            await m.reply(`Next Question:\n${nextTrivia.question}`);
+            await m.reply(`### Next Question:\n\`${nextTrivia.question}\``);
           } else {
             await m.reply("No more questions! Game over!");
             collector?.stop();
@@ -70,17 +70,17 @@ export default event("interactionCreate", async ({}, interaction) => {
               "Incorrect! Try again! You have " + tried + " tries left."
             );
           } else {
-            await m.reply(`Incorrect! The answer is ${randomTrivia.answer}`);
+            await m.reply(`Incorrect! The answer is \`${randomTrivia.answer}\``);
             collector?.stop();
           }
         }
       });
 
       collector?.on("end", async () => {
-        await interaction.channel?.send("Time's up! Game over!");
+        return await interaction.channel?.send("Time's up! Game over!");
       });
     } else {
-      await interaction.update({
+      return await interaction.update({
         content: "Maybe next time!",
         components: [],
       });

@@ -3,7 +3,7 @@ import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("pass")
-  .setDescription("Authticate with the API for an API key")
+  .setDescription("Authticate with the API for an API key (deprecated)")
   .addSubcommand((subcommand) =>
     subcommand
       .setName("create")
