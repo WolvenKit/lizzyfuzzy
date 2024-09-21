@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import commands from "commands";
 import { Command } from "types";
-import { EditReply, event, Reply } from "utils";
+import { EditReply, event, Reply, log as LOGGING, errorLog } from "utils";
 
 const allCommands = commands.map(({ commands }) => commands).flat();
 const allCommandsMap = new Map<string, Command>(
@@ -33,9 +33,9 @@ export default event(
         },
       });
 
-      log(`Command "${command.meta.name}" executed`);
+      LOGGING(`Command "${command.meta.name}" executed`);
     } catch (error) {
-      log("[Command Error]", error);
+      errorLog("[Command Error]", error);
 
       if (interaction.deferred)
         return interaction.editReply(EditReply.error("Something went wrong"));

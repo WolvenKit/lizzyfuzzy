@@ -1,8 +1,8 @@
-import { event } from "utils";
+import { errorLog, event, log } from "utils";
 import type { GuildBasedChannel, TextChannel } from "discord.js";
 import { EmbedBuilder } from "discord.js";
 
-export default event("messageCreate", async ({ log, client }, Message) => {
+export default event("messageCreate", async ({ client }, Message) => {
   try {
     if (Message.author.bot) return;
     const regex =
@@ -27,10 +27,23 @@ export default event("messageCreate", async ({ log, client }, Message) => {
 
         if (image) {
           return Message.reply({
-            content: image[0],
-            options: {
-              allowedMentions: { parse: [] },
-            },
+            embeds: [
+              {
+                description: message.content,
+                image: {
+                  url: image[0],
+                },
+                footer: {
+                  text: `Quoted by ${Message.author.tag} from #${channel.name}`,
+                  icon_url: Message.author.displayAvatarURL(),
+                },
+                author: {
+                  name: message.author.displayName,
+                  icon_url: message.author.displayAvatarURL(),
+                  url: messageContent?.[2]!,
+                },
+              },
+            ],
           });
         }
 
@@ -61,8 +74,12 @@ export default event("messageCreate", async ({ log, client }, Message) => {
           .setTimestamp(new Date());
 
         if (message.attachments.size > 0) {
+          quotedMessage.setImage(
+            Array.from(message.attachments.values())[0].url
+          )
+
           quotedMessage.setFields({
-            name: "Attachments",
+            name: "All Attachments",
             value: message.attachments
               .map((attachment) => `[${attachment.name}](${attachment.url})`)
               .join("\n"),
@@ -105,10 +122,22 @@ export default event("messageCreate", async ({ log, client }, Message) => {
 
         if (attachment?.contentType?.includes("image")) {
           return Message.reply({
-            content: attachment.url,
-            options: {
-              allowedMentions: { parse: [] },
-            },
+            embeds: [
+              {
+                image: {
+                  url: attachment.url,
+                },
+                footer: {
+                  text: `Quoted by ${Message.author.tag} from #${channel.name}`,
+                  icon_url: Message.author.displayAvatarURL(),
+                },
+                author: {
+                  name: message.author.displayName,
+                  icon_url: message.author.displayAvatarURL(),
+                  url: messageContent?.[2]!,
+                },
+              },
+            ],
           });
         }
 
@@ -148,6 +177,6 @@ export default event("messageCreate", async ({ log, client }, Message) => {
       }
     }
   } catch (error) {
-    log("[Event Error]", error);
+    errorLog("[Event Error]", error);
   }
 });

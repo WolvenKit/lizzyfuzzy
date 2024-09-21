@@ -62,14 +62,12 @@ export default command(meta, async ({ interaction }) => {
         id: interaction.user.id,
         nexusmods: interaction.options.getString("nexusmods") ?? null,
         github: interaction.options.getString("github") ?? null,
-        theme: interaction.options.getString("theme") ?? "default",
+        theme: interaction.options.getString("theme") ?? null,
         description: interaction.options.getString("description") ?? null,
-        namestyle: interaction.options.getString("username") ?? "uppercase",
+        namestyle: interaction.options.getString("username") ?? null,
       }),
     }
   );
-
-  console.log(data)
 
   if (!data.ok) {
     return interaction.reply({

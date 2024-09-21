@@ -15,3 +15,4 @@ data/scannedUsers.json
 env/bot.env
 
 keys/
+eng.traineddata

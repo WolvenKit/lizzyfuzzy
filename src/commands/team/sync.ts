@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { command } from "utils";
+import { command, errorLog } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("sync")
@@ -8,7 +8,7 @@ const meta = new SlashCommandBuilder()
 
 export default command(meta, async ({ interaction }) => {
   const data = await fetch(
-    process.env.API_ENDPOINT + "/bot/commands/core-versions/update",
+    process.env.API_ENDPOINT_V2 + "/bot/commands/core-versions/update",
     {
       method: "GET",
       headers: {
@@ -28,6 +28,7 @@ export default command(meta, async ({ interaction }) => {
       ephemeral: true,
     });
   } else {
+    errorLog("No data found", "sync.ts", "sync");
     return await interaction.reply({
       embeds: [
         {

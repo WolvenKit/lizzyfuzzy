@@ -1,7 +1,9 @@
-import { event } from "utils";
+import { event, errorLog } from "utils";
 import type { TextChannel } from "discord.js";
 
 export default event("messageCreate", async ({ log, client }, Message) => {
+  if (process.env.MESSAGE === false) return
+
   try {
     const channel = Message.channel as TextChannel;
 
@@ -48,6 +50,6 @@ export default event("messageCreate", async ({ log, client }, Message) => {
       }
     }
   } catch (error) {
-    log(error);
+    errorLog(error);
   }
 });

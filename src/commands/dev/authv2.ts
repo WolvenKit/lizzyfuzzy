@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { command, log } from "utils";
+import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("authnext")
@@ -17,8 +17,6 @@ export default command(meta, async ({ interaction }) => {
     ],
   };
 
-  log(body);
-
   const data = await fetch(process.env.API_ENDPOINT_NEXT + "/dev/user", {
     method: "POST",
     headers: {
@@ -28,8 +26,6 @@ export default command(meta, async ({ interaction }) => {
   });
 
   const returned = await data.json();
-
-  log(returned);
 
   if (!returned) {
     return await interaction.reply({ content: "Error!", ephemeral: true });

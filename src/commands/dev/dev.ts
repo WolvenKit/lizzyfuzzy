@@ -43,7 +43,7 @@ export default command(meta, async ({ interaction }) => {
       });
     }
   } else {
-    const Users = await fetch(process.env.API_ENDPOINT + "/bot/dev/users", {
+    const Users = await fetch(process.env.API_ENDPOINT_V2 + "/bot/dev/users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

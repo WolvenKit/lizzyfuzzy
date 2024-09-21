@@ -65,8 +65,6 @@ export default command(meta, async ({ interaction }) => {
       const key = interaction.options.getString("key");
       const keyName = interaction.options.getString("name");
 
-      console.log(key, keyName);
-
       if (!key && !keyName) {
         return await interaction.reply({
           content: "Key or name are required!",

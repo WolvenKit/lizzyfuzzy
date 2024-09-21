@@ -1,6 +1,6 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import type { TextChannel } from "discord.js";
-import { command } from "utils";
+import { command, errorLog } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("respond")
@@ -10,7 +10,7 @@ const meta = new SlashCommandBuilder()
 export default command(meta, async ({ interaction, client }) => {
   const user = interaction.member?.user.username;
 
-  const data = await fetch(process.env.API_ENDPOINT + "/endpoint/response", {
+  const data = await fetch(process.env.API_ENDPOINT_V2 + "/endpoint/response", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -38,6 +38,7 @@ export default command(meta, async ({ interaction, client }) => {
 
     await interaction.reply({ content: "Sent!", ephemeral: true });
   } else {
+    errorLog("No responses found");
     await interaction.reply({
       embeds: [
         {
