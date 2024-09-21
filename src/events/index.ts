@@ -23,12 +23,15 @@ import suggestion_handle from "./pub/suggestions_handle";
 
 import trivia_handler from "./pub/trivia_handler";
 
+import shitpostNameLog from "./log/shitpostNameLog";
+
 const productionEvents: Event<any>[] = [
   ready,
   quote,
   guildjoin,
   interactionCreate,
   suggestion_handle,
+  shitpostNameLog,
 ];
 
 const developmentEvents: Event<any>[] = [
@@ -49,6 +52,7 @@ const developmentEvents: Event<any>[] = [
   guildjoin,
   suggestion_handle,
   trivia_handler,
+  shitpostNameLog,
 ];
 
 export default process.env.NODE_ENV === "production"

@@ -22,6 +22,8 @@ export function checkENVS(extras: string[] = []) {
     "API_ENDPOINT_NEXT",
     "IMAGE",
     "MESSAGE",
+    "SHITPOST_NAME_LOG_CHANNEL",
+    "SHITPOST",
     ...extras,
   ];
 
