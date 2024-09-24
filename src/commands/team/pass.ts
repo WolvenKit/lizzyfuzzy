@@ -51,7 +51,7 @@ export default command(meta, async ({ interaction }) => {
       }
 
       const data = await fetch(
-        process.env.API_ENDPOINT_V2 + "/bot/team/pass/create",
+        process.env.API_ENDPOINT_NEXT + "/bot/team/pass/create",
         {
           method: "POST",
           headers: {
@@ -104,7 +104,7 @@ export default command(meta, async ({ interaction }) => {
         return;
       }
 
-      const key = await fetch(process.env.API_ENDPOINT_V2 + "/bot/team/pass/key", {
+      const key = await fetch(process.env.API_ENDPOINT_NEXT + "/bot/team/pass/key", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +147,7 @@ export default command(meta, async ({ interaction }) => {
       }
 
       const update = await fetch(
-        process.env.API_ENDPOINT_V2 + "/bot/team/pass/update",
+        process.env.API_ENDPOINT_NEXT + "/bot/team/pass/update",
         {
           method: "POST",
           headers: {
