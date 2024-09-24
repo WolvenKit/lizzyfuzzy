@@ -55,7 +55,7 @@ export default command(meta, async ({ interaction }) => {
     };
 
     const data = await fetch(
-      process.env.API_ENDPOINT + "/bot/commands/trivia",
+      process.env.API_ENDPOINT_NEXT + "/bot/commands/trivia",
       {
         method: "POST",
         headers: {
@@ -92,7 +92,7 @@ export default command(meta, async ({ interaction }) => {
     };
 
     const data = await fetch(
-      process.env.API_ENDPOINT + "/bot/commands/quotes",
+      process.env.API_ENDPOINT_NEXT + "/bot/commands/quotes",
       {
         method: "POST",
         headers: {

@@ -1,8 +1,8 @@
 import { Client, ActivityType, Partials } from "discord.js";
-import { registerEvents, envCheck, keys } from "utils";
+import { registerEvents, checkENVS, keys, errorLog } from "utils";
 import events from "botevents";
 import process from "node:process";
-envCheck();
+checkENVS();
 
 const client = new Client({
   shards: "auto",
@@ -41,7 +41,7 @@ const client = new Client({
 registerEvents(client, events);
 
 client.login(keys.clientToken).catch((err) => {
-  console.error("[Login Error]", err);
+  errorLog("[Login]", err);
   process.exit(1);
 });
 

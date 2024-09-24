@@ -2,8 +2,8 @@ import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
-  .setName("linkv1")
-  .setDescription("Linking information to the website.")
+  .setName("link")
+  .setDescription("Linking information to the website. V2")
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
   .addStringOption((option) =>
     option
@@ -49,24 +49,25 @@ const meta = new SlashCommandBuilder()
   );
 
 export default command(meta, async ({ interaction }) => {
-  const data = await fetch(process.env.API_ENDPOINT_V2 + "/bot/commands/user", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.BOT_TOKEN}`,
-    },
-    body: JSON.stringify({
-      User: interaction.user.globalName,
-      Id: interaction.user.id,
-      NexusMods: interaction.options.getString("nexusmods") ?? "None",
-      Github: interaction.options.getString("github") ?? "None",
-      Theme: interaction.options.getString("theme") ?? "default",
-      Description: interaction.options.getString("description") ?? "None",
-      Style: interaction.options.getString("username") ?? "uppercase",
-      Timezone: "None",
-      Country: "None",
-    }),
-  });
+  const data = await fetch(
+    process.env.API_ENDPOINT_NEXT + "/bot/commands/link",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.BOT_TOKEN}`,
+      },
+      body: JSON.stringify({
+        user: interaction.user.globalName,
+        id: interaction.user.id,
+        nexusmods: interaction.options.getString("nexusmods") ?? null,
+        github: interaction.options.getString("github") ?? null,
+        theme: interaction.options.getString("theme") ?? null,
+        description: interaction.options.getString("description") ?? null,
+        namestyle: interaction.options.getString("username") ?? null,
+      }),
+    }
+  );
 
   if (!data.ok) {
     return interaction.reply({

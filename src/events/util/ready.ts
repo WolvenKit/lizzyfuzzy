@@ -1,8 +1,8 @@
-import { event } from "utils";
+import { event, log, errorLog } from "utils";
 
-export default event("ready", async ({ log }, client) => {
+export default event("ready", async ({}, client) => {
   process.on("uncaughtException", (error) => {
-    log(`uncaughtException:  ${error} `);
+    errorLog(`uncaughtException:  ${error} `);
   });
 
   log(

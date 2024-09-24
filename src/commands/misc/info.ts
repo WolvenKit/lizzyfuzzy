@@ -2,6 +2,7 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
   EmbedBuilder,
+  version,
 } from "discord.js";
 import { command } from "utils";
 import os from "os";
@@ -71,12 +72,12 @@ export default command(meta, async ({ interaction }) => {
       },
       {
         name: "Bot Library",
-        value: "Discord.js@" + process.version,
+        value: "v" + version,
         inline: true,
       },
       {
         name: "Bot Version",
-        value: `1.0.0`,
+        value: "v" + process.env.npm_package_version?.toString() || "N/A",
         inline: true,
       },
       {
@@ -86,12 +87,17 @@ export default command(meta, async ({ interaction }) => {
       },
       {
         name: "CPU Usage",
-        value: `${Math.round(getAverageUsage() * 100)}% (average)` || "N/A",
+        value: `${(getAverageUsage() * 100).toFixed(2)}% (average)` || "N/A",
         inline: true,
       },
       {
         name: "Memory usage",
         value: `RSS: ${memoryUsage.rss}\nHeap Total: ${memoryUsage.heapTotal}\nHeap Used:${memoryUsage.heapUsed}\nExternal:${memoryUsage.external}`,
+        inline: true,
+      },
+      {
+        name: "Stats",
+        value: `Servers: ${interaction.client.guilds.cache.size}\nChannels: ${interaction.client.channels.cache.size}\nUsers: ${interaction.client.users.cache.size}`,
         inline: true,
       }
     )

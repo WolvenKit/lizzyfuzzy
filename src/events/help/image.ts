@@ -1,7 +1,8 @@
-import { event, log } from "utils";
+import { event, errorLog, log } from "utils";
 import { createWorker } from "tesseract.js";
 
 export default event("messageCreate", async ({ client }, Message) => {
+  if (process.env.IMAGE === false) return;
   try {
     if (Message.attachments.size > 0) {
       const worker = await createWorker("eng");
@@ -14,6 +15,6 @@ export default event("messageCreate", async ({ client }, Message) => {
       }
     }
   } catch (error) {
-    log(error);
+    errorLog(error);
   }
 });

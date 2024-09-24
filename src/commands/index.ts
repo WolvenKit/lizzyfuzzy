@@ -5,4 +5,6 @@ import pub from "./public";
 import team from "./team";
 import dev from "./dev";
 
-export default [misc, context, funny, pub, team];
+export default process.env.NODE_ENV === "development"
+  ? [misc, context, funny, pub, team, dev]
+  : [misc, context, funny, pub, team];

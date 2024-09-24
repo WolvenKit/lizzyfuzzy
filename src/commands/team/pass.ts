@@ -1,9 +1,9 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { command } from "utils";
+import { command, errorLog } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("pass")
-  .setDescription("Authticate with the API for an API key")
+  .setDescription("Authticate with the API for an API key (deprecated)")
   .addSubcommand((subcommand) =>
     subcommand
       .setName("create")
@@ -51,7 +51,7 @@ export default command(meta, async ({ interaction }) => {
       }
 
       const data = await fetch(
-        process.env.API_ENDPOINT + "/bot/team/pass/create",
+        process.env.API_ENDPOINT_V2 + "/bot/team/pass/create",
         {
           method: "POST",
           headers: {
@@ -85,6 +85,7 @@ export default command(meta, async ({ interaction }) => {
           ephemeral: true,
         });
       } else {
+        errorLog("Error creating data");
         await interaction.reply({
           embeds: [
             {
@@ -103,7 +104,7 @@ export default command(meta, async ({ interaction }) => {
         return;
       }
 
-      const key = await fetch(process.env.API_ENDPOINT + "/bot/team/pass/key", {
+      const key = await fetch(process.env.API_ENDPOINT_V2 + "/bot/team/pass/key", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,6 +126,7 @@ export default command(meta, async ({ interaction }) => {
           ephemeral: true,
         });
       } else {
+        errorLog("Error getting key");
         await interaction.reply({
           embeds: [
             {
@@ -144,10 +146,8 @@ export default command(meta, async ({ interaction }) => {
         return;
       }
 
-
-
       const update = await fetch(
-        process.env.API_ENDPOINT + "/bot/team/pass/update",
+        process.env.API_ENDPOINT_V2 + "/bot/team/pass/update",
         {
           method: "POST",
           headers: {
@@ -171,6 +171,7 @@ export default command(meta, async ({ interaction }) => {
           ephemeral: true,
         });
       } else {
+        errorLog("Error updating key");
         await interaction.reply({
           embeds: [
             {

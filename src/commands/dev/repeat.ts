@@ -1,5 +1,5 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
-import { command, log } from "utils";
+import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
   .setName("repeat")
@@ -10,7 +10,7 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction, client }) => {
-  const text = interaction.options.getString("text")!.replace('\\n','\n');
+  const text = interaction.options.getString("text")!.replace("\\n", "\n");
 
   return interaction.reply(text);
 });
