@@ -13,7 +13,7 @@ export default event("interactionCreate", async ({}, interaction) => {
     ) {
       if (interaction.customId === "confirmTrivia") {
         const randomTrivia = await fetch(
-          process.env.API_ENDPOINT_V2 + "/bot/commands/trivia",
+          process.env.API_ENDPOINT_NEXT + "/bot/commands/trivia",
           {
             method: "GET",
             headers: {
@@ -43,7 +43,7 @@ export default event("interactionCreate", async ({}, interaction) => {
             await m.reply({ content: "Correct!" });
 
             const nextTrivia = await fetch(
-              process.env.API_ENDPOINT_V2 + "/bot/commands/trivia",
+              process.env.API_ENDPOINT_NEXT + "/bot/commands/trivia",
               {
                 method: "GET",
                 headers: {
