@@ -1,10 +1,14 @@
 import { errorLog, event, log } from "utils";
 import type { GuildBasedChannel, TextChannel } from "discord.js";
 import { EmbedBuilder } from "discord.js";
+import Channels from '../../resources/disabled_channels.json'
+// import Categorys from '../../resources/disabled_categorys.json'
 
 export default event("messageCreate", async ({ client }, Message) => {
   try {
     if (Message.author.bot) return;
+    if (Channels.includes(Message.channelId)) return;
+
     const regex =
       /(.*)((https:\/\/discord.com\/)(channels)\/(\d+)\/(\d+)\/(\d+))(.*)/g;
     const messageContent = regex.exec(Message.content);
