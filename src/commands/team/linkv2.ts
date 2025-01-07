@@ -58,7 +58,7 @@ export default command(meta, async ({ interaction }) => {
         Authorization: `Bearer ${process.env.BOT_TOKEN}`,
       },
       body: JSON.stringify({
-        user: interaction.user.globalName,
+        user: interaction.user.globalName ?? interaction.user.displayName,
         id: interaction.user.id,
         nexusmods: interaction.options.getString("nexusmods") ?? null,
         github: interaction.options.getString("github") ?? null,
