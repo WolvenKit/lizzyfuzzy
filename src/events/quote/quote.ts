@@ -1,10 +1,19 @@
 import { errorLog, event, log } from "utils";
-import type { GuildBasedChannel, TextChannel } from "discord.js";
+import { GuildBasedChannel, TextChannel } from "discord.js";
 import { EmbedBuilder } from "discord.js";
 
 export default event("messageCreate", async ({ client }, Message) => {
   try {
     if (Message.author.bot) return;
+    if ((Message.channel as TextChannel).nsfw === true) return;
+
+    const NoGoChannels = [
+      "786519136833372171", // Moderator Channel
+      "795081899756224572", // Shitpost Channel
+    ]
+
+    if (NoGoChannels.includes(Message.channel.id)) return;
+
     const regex =
       /(.*)((https:\/\/discord.com\/)(channels)\/(\d+)\/(\d+)\/(\d+))(.*)/g;
     const messageContent = regex.exec(Message.content);
@@ -76,7 +85,7 @@ export default event("messageCreate", async ({ client }, Message) => {
         if (message.attachments.size > 0) {
           quotedMessage.setImage(
             Array.from(message.attachments.values())[0].url
-          )
+          );
 
           quotedMessage.setFields({
             name: "All Attachments",
