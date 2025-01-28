@@ -14,9 +14,6 @@ import userUnban from "./log/userUnban";
 
 import quote from "./quote/quote";
 
-import image from "./help/image";
-import message from "./help/message";
-
 import guildjoin from "./util/guildJoin";
 
 import suggestion_handle from "./pub/suggestions_handle";
@@ -25,6 +22,8 @@ import trivia_handler from "./pub/trivia_handler";
 
 import shitpostNameLog from "./log/shitpostNameLog";
 
+import quickCommands from "./quickcommands/quickCommands";
+
 const productionEvents: Event<any>[] = [
   ready,
   quote,
@@ -32,6 +31,7 @@ const productionEvents: Event<any>[] = [
   interactionCreate,
   suggestion_handle,
   shitpostNameLog,
+  quickCommands,
 ];
 
 const developmentEvents: Event<any>[] = [
@@ -47,12 +47,11 @@ const developmentEvents: Event<any>[] = [
   userRemove,
   userUnban,
   quote,
-  image,
-  message,
   guildjoin,
   suggestion_handle,
   trivia_handler,
   shitpostNameLog,
+  quickCommands,
 ];
 
 export default process.env.NODE_ENV === "production"
