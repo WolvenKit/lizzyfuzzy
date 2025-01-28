@@ -16,3 +16,4 @@ env/bot.env
 
 keys/
 eng.traineddata
+*.sqlite
