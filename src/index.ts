@@ -1,5 +1,5 @@
 import { Client, ActivityType, Partials } from "discord.js";
-import { registerEvents, checkENVS, keys, errorLog, prepareStart } from "utils";
+import { registerEvents, checkENVS, keys, errorLog, prepareStart, log } from "utils";
 import events from "botevents";
 import { Database } from "bun:sqlite";
 
@@ -14,8 +14,7 @@ if (APICheck.status !== 200) {
   console.error("API is not available");
   process.exit(1);
 }
-
-prepareStart()
+await prepareStart()
 
 const client = new Client({
   shards: "auto",

@@ -13,5 +13,5 @@ export default command(meta, async ({ interaction, client }) => {
     log(server);
   });
 
-  interaction.reply({ content: "dev", ephemeral: true });
+  interaction.reply({ content: "dev", flags: 64 });
 });

@@ -13,7 +13,7 @@ export default command(meta, async ({ interaction }) => {
   if (messages) {
     if (interaction.channel?.isTextBased()) {
       (interaction.channel as TextChannel).bulkDelete(messages);
-      interaction.reply({ content: "Chat cleared!", ephemeral: true });
+      interaction.reply({ content: "Chat cleared!", flags: 64 });
     }
   }
 });

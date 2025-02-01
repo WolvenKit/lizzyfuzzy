@@ -36,7 +36,7 @@ export default command(meta, async ({ interaction, client }) => {
       channel.send(response.quote);
     }
 
-    await interaction.reply({ content: "Sent!", ephemeral: true });
+    await interaction.reply({ content: "Sent!", flags: 64 });
   } else {
     errorLog("No responses found");
     await interaction.reply({
@@ -47,7 +47,7 @@ export default command(meta, async ({ interaction, client }) => {
           color: 0xff0000,
         },
       ],
-      ephemeral: true,
+      flags: 64,
     });
   }
 });

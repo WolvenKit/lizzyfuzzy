@@ -7,17 +7,6 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
   .addSubcommand((subcommand) =>
     subcommand
-      .setName("trivia")
-      .setDescription("Create a trivia question and answer")
-      .addStringOption((option) =>
-        option.setName("question").setDescription("Question").setRequired(true)
-      )
-      .addStringOption((option) =>
-        option.setName("answer").setDescription("Answer").setRequired(true)
-      )
-  )
-  .addSubcommand((subcommand) =>
-    subcommand
       .setName("response")
       .setDescription("Create a response")
       .addStringOption((option) =>
@@ -37,11 +26,11 @@ const meta = new SlashCommandBuilder()
 export default command(meta, async ({ interaction }) => {
   const subcommand = interaction.options.getSubcommand();
 
-  const question = interaction.options.getString("question")!.replace('\\n','\n');
-  const answer = interaction.options.getString("answer")!.replace('\\n','\n');
+  const question = interaction.options.getString("question")!.replace('\\n', '\n');
+  const answer = interaction.options.getString("answer")!.replace('\\n', '\n');
 
-  const quote = interaction.options.getString("quote")!.replace('\\n','\n');
-  const responder = interaction.options.getString("responder")!.replace('\\n','\n');
+  const quote = interaction.options.getString("quote")!.replace('\\n', '\n');
+  const responder = interaction.options.getString("responder")!.replace('\\n', '\n');
 
   if (subcommand === "trivia") {
     if (!question || !answer) {

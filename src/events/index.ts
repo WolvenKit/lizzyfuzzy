@@ -24,6 +24,8 @@ import shitpostNameLog from "./log/shitpostNameLog";
 
 import quickCommands from "./quickcommands/quickCommands";
 
+import mark from "./team/mark";
+
 const productionEvents: Event<any>[] = [
   ready,
   quote,
@@ -52,6 +54,7 @@ const developmentEvents: Event<any>[] = [
   trivia_handler,
   shitpostNameLog,
   quickCommands,
+  mark
 ];
 
 export default process.env.NODE_ENV === "production"

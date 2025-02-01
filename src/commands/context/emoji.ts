@@ -18,17 +18,15 @@ export default command(meta, async ({ interaction }) => {
   if (match?.[1] === "<a:") {
     interaction.reply({
       content: `https://cdn.discordapp.com/emojis/${match?.[4]}.gif`,
-      ephemeral: false,
     });
   } else if (match?.[1] === "<:") {
     interaction.reply({
       content: `https://cdn.discordapp.com/emojis/${match?.[4]}.webp`,
-      ephemeral: false,
     });
   }
 
   interaction.reply({
     content: "No or more than one emoji found",
-    ephemeral: true,
+    flags: 64,
   });
 });

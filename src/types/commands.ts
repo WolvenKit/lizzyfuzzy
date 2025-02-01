@@ -4,6 +4,7 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   ContextMenuCommandBuilder,
+  UserContextMenuCommandInteraction,
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
@@ -22,7 +23,8 @@ export type CommandMeta =
   | SlashCommandOptionsOnlyBuilder
   | SlashCommandBuilder
   | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
-  | ContextMenuCommandBuilder;
+  | ContextMenuCommandBuilder
+  | UserContextMenuCommandInteraction
 
 export interface Command {
   meta: CommandMeta;
