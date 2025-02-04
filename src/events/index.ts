@@ -31,7 +31,6 @@ const productionEvents: Event<any>[] = [
   guildjoin,
   interactionCreate,
   suggestion_handle,
-  shitpostNameLog,
 ];
 
 const developmentEvents: Event<any>[] = [
@@ -52,7 +51,6 @@ const developmentEvents: Event<any>[] = [
   guildjoin,
   suggestion_handle,
   trivia_handler,
-  shitpostNameLog,
 ];
 
 export default process.env.NODE_ENV === "production"
