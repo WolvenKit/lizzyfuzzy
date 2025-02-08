@@ -19,7 +19,6 @@ export function checkENVS(extras: string[] = []) {
     "API_MAX_REQUESTS",
     "BOT_TOKEN",
     "API_ENDPOINT",
-    "API_ENDPOINT_NEXT",
     "IMAGE",
     "MESSAGE",
     "SHITPOST_NAME_LOG_CHANNEL",
