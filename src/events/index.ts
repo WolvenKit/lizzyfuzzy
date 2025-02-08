@@ -1,7 +1,6 @@
 import { Event } from "types";
 import ready from "./util/ready";
 import interactionCreate from "./util/interactionCreate";
-
 import messageDelete from "./log/messageDelete";
 import messageUpdate from "./log/messageUpdate";
 import threadCreate from "./log/threadCreate";
@@ -11,29 +10,22 @@ import userBan from "./log/userBan";
 import userJoined from "./log/userJoined";
 import userRemove from "./log/userRemove";
 import userUnban from "./log/userUnban";
-
 import quote from "./quote/quote";
-
 import guildjoin from "./util/guildJoin";
-
-import suggestion_handle from "./pub/suggestions_handle";
-
-import trivia_handler from "./pub/trivia_handler";
-
-import shitpostNameLog from "./log/shitpostNameLog";
-
 import quickCommands from "./quickcommands/quickCommands";
-
 import mark from "./team/mark";
+import userCheck from "./util/userCheck";
 
 const productionEvents: Event<any>[] = [
   ready,
   quote,
   guildjoin,
   interactionCreate,
-  suggestion_handle,
-  shitpostNameLog,
   quickCommands,
+];
+const productionEvents2: Event<any>[] = [
+  ready,
+  interactionCreate,
 ];
 
 const developmentEvents: Event<any>[] = [
@@ -50,11 +42,9 @@ const developmentEvents: Event<any>[] = [
   userUnban,
   quote,
   guildjoin,
-  suggestion_handle,
-  trivia_handler,
-  shitpostNameLog,
   quickCommands,
-  mark
+  mark,
+  userCheck,
 ];
 
 export default process.env.NODE_ENV === "production"
