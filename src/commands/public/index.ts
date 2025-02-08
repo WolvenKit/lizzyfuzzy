@@ -6,3 +6,5 @@ import discord from "./discord";
 import remind from "./remind";
 
 export default category("Public", [core, social, wiki, discord, remind]);
+
+// export default category("Public", [core]);

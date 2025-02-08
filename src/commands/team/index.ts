@@ -1,14 +1,11 @@
 import { category } from "utils";
 import who from "./who";
-import create from "./create";
 import link from "./link";
-import keys from "./keys";
 import mark from "./mark";
+import mute from "./mute";
 
-export default category("Team", [
-  who,
-  create,
-  link,
-  keys,
-  mark,
-]);
+export default category("Team", [who, link, mark, mute]);
+
+// export default category("Team", [
+//   mute,
+// ]);

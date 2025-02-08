@@ -63,7 +63,7 @@ export default command(meta, async ({ interaction }) => {
   }) : [];
 
   const data = await fetch(
-    process.env.API_ENDPOINT_NEXT + "/bot",
+    process.env.API_ENDPOINT + "/bot",
     {
       method: "POST",
       headers: {

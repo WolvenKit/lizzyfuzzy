@@ -1,5 +1,5 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder } from "discord.js";
-import type { ChatInputCommandInteraction, ContextMenuCommandType, UserContextMenuCommandInteraction } from "discord.js";
+import type { UserContextMenuCommandInteraction } from "discord.js";
 import { command } from "utils";
 const meta = new ContextMenuCommandBuilder()
   .setName("Get Avatar")
