@@ -1,20 +1,27 @@
 import { Client, ActivityType, Partials } from "discord.js";
-import { registerEvents, checkENVS, keys, errorLog, prepareStart, log } from "utils";
+import {
+  registerEvents,
+  checkENVS,
+  keys,
+  errorLog,
+  prepareStart,
+  log,
+} from "utils";
 import events from "botevents";
-import { Database } from "bun:sqlite";
 
-const db = new Database("settings.sqlite", { create: true });
+try {
+  const APICheck = await fetch("http://localhost:3000/ping", {
+    method: "GET",
+  });
 
-const APICheck = await fetch("http://localhost:3000/ping", {
-  method: "GET",
-});
-
-if (APICheck.status !== 200) {
-  // Kill the Bot if the API is not available.
+  if (APICheck.status !== 200) {
+    // Kill the Bot if the API is not available.
+    console.error("API is not available");
+  }
+} catch (error) {
   console.error("API is not available");
-  process.exit(1);
 }
-await prepareStart()
+await prepareStart();
 
 const client = new Client({
   shards: "auto",
@@ -57,4 +64,4 @@ client.login(keys.clientToken).catch((err) => {
   process.exit(1);
 });
 
-export default [client, db];
+export default [client];
