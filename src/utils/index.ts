@@ -6,3 +6,4 @@ export * from "./envCheck";
 export * from "./keys";
 export * from "./logging";
 export * from "./preparestart";
+export * from "./updateCoremods";
