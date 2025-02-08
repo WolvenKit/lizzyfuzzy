@@ -18,14 +18,17 @@ export interface CommandProps {
 }
 
 export type CommandExec = (props: CommandProps) => Awaitable<unknown>;
-export type CommandMeta =
+export type CommandMeta = (
   | SlashCommandSubcommandsOnlyBuilder
   | SlashCommandOptionsOnlyBuilder
   | SlashCommandBuilder
   | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
-  | ContextMenuCommandBuilder
   | UserContextMenuCommandInteraction
-
+  | ContextMenuCommandBuilder
+) & {
+  name: string;
+  description?: string;
+};
 export interface Command {
   meta: CommandMeta;
   exec: CommandExec;
