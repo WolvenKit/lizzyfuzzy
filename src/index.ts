@@ -1,12 +1,5 @@
 import { Client, ActivityType, Partials } from "discord.js";
-import {
-  registerEvents,
-  checkENVS,
-  keys,
-  errorLog,
-  prepareStart,
-  log,
-} from "utils";
+import { registerEvents, keys, errorLog, prepareStart } from "utils";
 import events from "botevents";
 
 try {
