@@ -15,6 +15,8 @@ import guildjoin from "./utils/guildJoin";
 import quickCommands from "./quickcommands/quickCommands";
 import mark from "./team/mark";
 import userCheck from "./utils/userCheck";
+import kick from "./moderation/kick";
+import ban from "./moderation/ban";
 
 const productionEvents: Event<any>[] = [
   ready,
@@ -22,6 +24,8 @@ const productionEvents: Event<any>[] = [
   guildjoin,
   interactionCreate,
   quickCommands,
+  kick,
+  ban,
 ];
 // const productionEvents2: Event<any>[] = [
 //   ready,
@@ -45,6 +49,8 @@ const developmentEvents: Event<any>[] = [
   quickCommands,
   mark,
   userCheck,
+  kick,
+  ban,
 ];
 
 export default process.env.NODE_ENV === "production"
