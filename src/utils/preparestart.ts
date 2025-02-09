@@ -4,18 +4,36 @@ import { errorLog, log } from "./logging";
 export async function prepareStart() {
   try {
     const db = new Database("settings.sqlite", { create: true });
-    db.run(
-      `CREATE TABLE IF NOT EXISTS "commands" ( "id" INTEGER PRIMARY KEY , "initiator" VARCHAR(255) NOT NULL, "textorjson" BOOLEAN NOT NULL, "command" TEXT NOT NULL)`
+    const run = db.run(
+      `CREATE TABLE IF NOT EXISTS "commands" (
+        "id" INTEGER PRIMARY KEY,
+        "initiator" VARCHAR(255) NOT NULL,
+        "textorjson" BOOLEAN NOT NULL,
+        "command" TEXT NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS "settings" (
+        "id" INTEGER PRIMARY KEY,
+        "key" VARCHAR(255) NOT NULL,
+        "value" TEXT NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS "markedMembers" (
+        "id" INTEGER PRIMARY KEY,
+        "user" VARCHAR(255) NOT NULL UNIQUE,
+        "message" TEXT, "channel" VARCHAR(255) NOT NULL,
+        "messageid" VARCHAR(255) NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS "coremods" (
+        "id" INTEGER PRIMARY KEY,
+        "tagName" TEXT,
+        "version" TEXT,
+        "updatedat" TEXT,
+        "url" TEXT
+      )`
     );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS "settings" ( "id" INTEGER PRIMARY KEY , "key" VARCHAR(255) NOT NULL, "value" TEXT NOT NULL )`
-    );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS "markedMembers" ( "id" INTEGER PRIMARY KEY , "user" VARCHAR(255) NOT NULL, "message" TEXT, "channel" VARCHAR(255) NOT NULL, "messageid" VARCHAR(255) NOT NULL )`
-    );
-    db.run(
-      `CREATE TABLE IF NOT EXISTS "coremods" ( "id" INTEGER PRIMARY KEY, "tagName" TEXT, "version" TEXT, "updatedat" TEXT, "url" TEXT )`
-    );
+
+    if (run) {
+      log("[PrepareStart] Tables Created");
+    }
     // Check if the Tables already have data.
     const CheckCommands = db.query(`SELECT * FROM "commands"`).get();
 
@@ -45,10 +63,6 @@ export async function prepareStart() {
       // If the GET_COMMANDS is set to false, we will not get the commands from the API.
       // Instead we will use the following env variables to populate the settings database.
 
-      const moderationCategory = process.env.moderationCategory as string;
-      const markedMembersChannel = process.env.markedMembersChannel as string;
-      const moderationLogChannel = process.env.moderationLogChannel as string;
-
       // before we insert the data, we need to check if the data already exists.
       const check = db.query(`SELECT key FROM settings`).get();
 
@@ -57,21 +71,25 @@ export async function prepareStart() {
         return;
       }
 
-      // Insert the commands into the Database.
-      db.run(`INSERT INTO settings (key, value) VALUES (?, ?)`, [
-        "moderationCategory",
-        moderationCategory,
+      const prepare = db.prepare(
+        `INSERT INTO settings (key, value) VALUES (?, ?)`
+      );
+      const insertMany = db.transaction((settings) => {
+        for (const setting of settings) prepare.run(setting);
+      });
+
+      insertMany([
+        ["setting_moderationCategory", process.env.moderationCategory],
+        ["setting_markedMembersChannel", process.env.markedMembersChannel],
+        ["setting_LogChannel", process.env.moderationLogChannel],
+        ["setting_markedMemberRole", process.env.settingMarkedMemberRole],
       ]);
 
-      db.run(`INSERT INTO settings (key, value) VALUES (?, ?)`, [
-        "markedMembersChannel",
-        markedMembersChannel,
-      ]);
-
-      db.run(`INSERT INTO settings (key, value) VALUES (?, ?)`, [
-        "moderationLogChannel",
-        moderationLogChannel,
-      ]);
+      db.query(`SELECT * FROM settings`)
+        .all()
+        .forEach((row: any) => {
+          log(`[Settings] ${row.key} = ${row.value}`);
+        });
     }
 
     db.close();
