@@ -32,6 +32,8 @@ export type CommandMeta = (
 export interface Command {
   meta: CommandMeta;
   exec: CommandExec;
+  local: boolean;
+  dev?: boolean;
 }
 
 export interface CommandCategory {

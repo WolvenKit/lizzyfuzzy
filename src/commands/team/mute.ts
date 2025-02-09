@@ -36,4 +36,4 @@ export default command(meta, async ({ interaction }) => {
         content: `User ${User.tag} has been timed out for ${interaction.options.getNumber("time", true)} minute(s).`,
         ephemeral: true
     });
-});
+}, false, false);

@@ -84,4 +84,4 @@ export default command(meta, async ({ interaction }) => {
       flags: 64,
     });
   }
-});
+}, false, false);

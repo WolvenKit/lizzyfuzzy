@@ -14,4 +14,4 @@ export default command(meta, async ({ interaction, client }) => {
   });
 
   interaction.reply({ content: "dev", flags: 64 });
-});
+}, true, true);

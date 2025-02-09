@@ -11,4 +11,4 @@ export default command(meta, async ({ interaction }) => {
 
   await interaction.user.send(text);
   return await interaction.reply("Send! Check your DMs!");
-});
+}, false, false );

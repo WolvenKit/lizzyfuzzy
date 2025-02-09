@@ -86,4 +86,4 @@ export default command(meta, async ({ interaction }) => {
         content: `User has been marked as a Pirate.`,
         ephemeral: true
     });
-});
+}, true, false);

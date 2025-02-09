@@ -36,4 +36,4 @@ export default command(meta, async ({ interaction }) => {
   }, time * 60000);
 
   return interaction.reply({ content: `Reminder set for ${time} minutes`, ephemeral: true });
-});
+}, true, false);

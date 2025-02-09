@@ -64,4 +64,4 @@ export default command(meta, async ({ interaction }) => {
       await interaction.reply({ embeds: [whoEmbed] });
     }
   }
-});
+}, false, false);

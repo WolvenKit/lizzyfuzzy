@@ -12,4 +12,4 @@ export default command(meta, async ({ interaction }) => {
   interaction.reply({
     content: Interaction.targetUser.displayAvatarURL(),
   });
-});
+}, false, false);

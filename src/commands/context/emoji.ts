@@ -29,4 +29,4 @@ export default command(meta, async ({ interaction }) => {
     content: "No or more than one emoji found",
     flags: 64,
   });
-});
+}, false, false);

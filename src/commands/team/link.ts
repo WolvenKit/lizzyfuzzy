@@ -103,4 +103,4 @@ export default command(meta, async ({ interaction }) => {
     ],
     ephemeral: true,
   });
-});
+}, true, false);

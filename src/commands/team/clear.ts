@@ -16,4 +16,4 @@ export default command(meta, async ({ interaction }) => {
       interaction.reply({ content: "Chat cleared!", flags: 64 });
     }
   }
-});
+}, true, false);

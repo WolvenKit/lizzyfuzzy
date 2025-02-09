@@ -1,6 +1,6 @@
 import { Event } from "types";
-import ready from "./util/ready";
-import interactionCreate from "./util/interactionCreate";
+import ready from "./utils/ready";
+import interactionCreate from "./utils/interactionCreate";
 import messageDelete from "./log/messageDelete";
 import messageUpdate from "./log/messageUpdate";
 import threadCreate from "./log/threadCreate";
@@ -11,10 +11,10 @@ import userJoined from "./log/userJoined";
 import userRemove from "./log/userRemove";
 import userUnban from "./log/userUnban";
 import quote from "./quote/quote";
-import guildjoin from "./util/guildJoin";
+import guildjoin from "./utils/guildJoin";
 import quickCommands from "./quickcommands/quickCommands";
 import mark from "./team/mark";
-import userCheck from "./util/userCheck";
+import userCheck from "./utils/userCheck";
 
 const productionEvents: Event<any>[] = [
   ready,
@@ -23,10 +23,10 @@ const productionEvents: Event<any>[] = [
   interactionCreate,
   quickCommands,
 ];
-const productionEvents2: Event<any>[] = [
-  ready,
-  interactionCreate,
-];
+// const productionEvents2: Event<any>[] = [
+//   ready,
+//   interactionCreate,
+// ];
 
 const developmentEvents: Event<any>[] = [
   ready,

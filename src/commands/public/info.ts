@@ -115,4 +115,4 @@ export default command(meta, async ({ interaction }) => {
 } catch (error) {
   errorLog(error);
 }
-});
+}, true, false);

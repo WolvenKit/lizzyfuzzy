@@ -90,4 +90,4 @@ export default command(meta, async ({ interaction }) => {
       ],
     });
   }
-});
+}, false, false);
