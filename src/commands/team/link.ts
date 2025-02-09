@@ -89,7 +89,7 @@ export default command(meta, async ({ interaction }) => {
   if (!data.ok) {
     return interaction.reply({
       content: "Failed to link your account.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -101,6 +101,6 @@ export default command(meta, async ({ interaction }) => {
         color: 0x00ff00,
       },
     ],
-    ephemeral: true,
+    flags: 64,
   });
 }, true, false);

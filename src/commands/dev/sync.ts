@@ -25,7 +25,7 @@ export default command(meta, async ({ interaction }) => {
   if (data) {
     return await interaction.reply({
       content: "Syncing data...",
-      ephemeral: true,
+      flags: 64,
     });
   } else {
     errorLog("No data found", "sync.ts", "sync");
@@ -37,7 +37,7 @@ export default command(meta, async ({ interaction }) => {
           color: 0xff0000,
         },
       ],
-      ephemeral: true,
+      flags: 64,
     });
   }
 }, true, false);

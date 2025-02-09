@@ -17,7 +17,7 @@ export default event(
 
         await modal.reply({
           content: "Thank you for your suggestion!",
-          ephemeral: true,
+          flags: 64,
         });
       }
     } catch (error) {

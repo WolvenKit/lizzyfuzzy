@@ -24,16 +24,16 @@ export default command(meta, async ({ interaction }) => {
   const author = interaction.user as User;
 
   if (message.length > 1000) {
-    return interaction.reply({ content: "Message must be less than 1000 characters", ephemeral: true });
+    return interaction.reply({ content: "Message must be less than 1000 characters", flags: 64 });
   }
 
   if (!message) {
-    return interaction.reply({ content: "No message provided", ephemeral: true });
+    return interaction.reply({ content: "No message provided", flags: 64 });
   }
 
   setTimeout(() => {
     channel.send({ content: `${author}\nReminder: ${message}` });
   }, time * 60000);
 
-  return interaction.reply({ content: `Reminder set for ${time} minutes`, ephemeral: true });
+  return interaction.reply({ content: `Reminder set for ${time} minutes`, flags: 64 });
 }, true, false);
