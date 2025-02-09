@@ -5,5 +5,7 @@ import mark from "./mark";
 import mute from "./mute";
 import clear from "./clear";
 import repeat from "./repeat";
+import info from "./info";
+import clean from "./clean";
 
-export default category("Team", [repeat, clear, who, link, mark, mute]);
+export default category("Team", [info, repeat, clear, who, link, mark, mute, clean]);
