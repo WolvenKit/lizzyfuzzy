@@ -17,6 +17,7 @@ import mark from "./team/mark";
 import userCheck from "./utils/userCheck";
 import kick from "./moderation/kick";
 import ban from "./moderation/ban";
+import checker from "./doublication/checker";
 
 const productionEvents: Event<any>[] = [
   ready,
@@ -51,6 +52,7 @@ const developmentEvents: Event<any>[] = [
   userCheck,
   kick,
   ban,
+  checker
 ];
 
 export default process.env.NODE_ENV === "production"
