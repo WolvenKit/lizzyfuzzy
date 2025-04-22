@@ -1,4 +1,4 @@
-import { errorLog, event, log } from "utils";
+import { errorLog, event } from "utils";
 import { GuildBasedChannel, Message, TextChannel } from "discord.js";
 
 export default event("messageCreate", async ({ client }, Message) => {
@@ -37,6 +37,8 @@ export default event("messageCreate", async ({ client }, Message) => {
       }
     };
     const originalMessage = (await GetOriginalMessage()) as Message;
+
+    if (!originalMessage) return;
 
     if (NoGoChannels.includes(originalMessage.channel.id)) return;
 
