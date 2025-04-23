@@ -15,34 +15,38 @@ const meta = new SlashCommandBuilder()
       .setRequired(false)
   );
 
-export default command(meta, async ({ interaction }) => {
-  try {
-    const quote = interaction.options.getString("quote", true);
-    const responder = interaction.options.getString("responder", false);
+export default command(
+  meta,
+  async ({ interaction }) => {
+    try {
+      const Quote = interaction.options.getString("quote", true);
+      const Responder = interaction.options.getString("responder", false);
 
-    const response = {
-      quote,
-      responder: responder || "everyone",
-    };
+      const response = {
+        Quote,
+        Responder: Responder || "everyone",
+      };
 
-    await fetch(process.env.API_ENDPOINT + "/bot/quotes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${process.env.BOT_TOKEN}`,
-      },
-      body: JSON.stringify(response),
-    });
+      const newQuote = await fetch(process.env.API_ENDPOINT + "/bot/quotes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${process.env.API_KEY}`,
+        },
+        body: JSON.stringify(response),
+      }).then((res) => res.json());
 
-    return interaction.reply({
-      content: "Quote created!",
-      flags: 64,
-    });
-  } catch (e) {
-    console.error(e);
-    return interaction.reply({
-      content: "Failed to create quote",
-      flags: 64,
-    });
-  }
-}, true, false);
+      return interaction.reply({
+        content: `Quote created! With ID: ${newQuote.GlobalId}`,
+        flags: 64,
+      });
+    } catch (e) {
+      return interaction.reply({
+        content: "Failed to create quote",
+        flags: 64,
+      });
+    }
+  },
+  true,
+  false
+);
