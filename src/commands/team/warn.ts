@@ -27,6 +27,7 @@ export default command(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${process.env.API_KEY}`,
         },
         body: JSON.stringify({
           Type: "Warn",

@@ -68,7 +68,7 @@ export default command(meta, async ({ interaction }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${process.env.BOT_TOKEN}`,
+        Authorization: `Bearer ${process.env.API_KEY}`,
       },
       body: JSON.stringify({
         server: interaction.guild?.id,
