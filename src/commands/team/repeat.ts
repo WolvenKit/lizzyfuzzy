@@ -9,8 +9,8 @@ const meta = new SlashCommandBuilder()
   )
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
-export default command(meta, async ({ interaction, client }) => {
+export default command(meta, async ({ interaction }) => {
   const text = interaction.options.getString("text")!.replace("\\n", "\n");
 
   return interaction.reply(text);
-});
+}, false, false);

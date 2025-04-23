@@ -31,7 +31,8 @@
       "types": ["src/types"],
       "utils/*": ["src/utils/*"],
       "utils": ["src/utils"]
-    }
+    },
+    "types": ["bun-types"]
   },
   "include": ["./**/*"],
   "exclude": ["./plugins/**/*", "./typings/**/*", "./dist/**/*"]

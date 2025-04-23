@@ -10,7 +10,7 @@ export const Colors = {
 export const Reply = {
   error(message: string): InteractionReplyOptions {
     return {
-      ephemeral: true,
+      flags: 64,
       embeds: [
         {
           color: Colors.error,

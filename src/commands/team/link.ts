@@ -1,9 +1,10 @@
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import type { GuildMemberRoleManager } from "discord.js";
 import { command } from "utils";
 
 const meta = new SlashCommandBuilder()
-  .setName("linkv1")
-  .setDescription("Linking information to the website.")
+  .setName("link")
+  .setDescription("Linking information to the website. V2")
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
   .addStringOption((option) =>
     option
@@ -49,29 +50,46 @@ const meta = new SlashCommandBuilder()
   );
 
 export default command(meta, async ({ interaction }) => {
-  const data = await fetch(process.env.API_ENDPOINT_NEXT + "/bot/commands/user", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.BOT_TOKEN}`,
-    },
-    body: JSON.stringify({
-      User: interaction.user.globalName,
-      Id: interaction.user.id,
-      NexusMods: interaction.options.getString("nexusmods") ?? "None",
-      Github: interaction.options.getString("github") ?? "None",
-      Theme: interaction.options.getString("theme") ?? "default",
-      Description: interaction.options.getString("description") ?? "None",
-      Style: interaction.options.getString("username") ?? "uppercase",
-      Timezone: "None",
-      Country: "None",
-    }),
-  });
+
+  const Roles = interaction.member ? (interaction.member.roles as GuildMemberRoleManager).cache.map((role) => {
+    return {
+      id: role.id,
+      name: role.name,
+      position: role.position,
+      rawPosition: role.rawPosition,
+      icon: role.icon,
+      iconUrl: role.iconURL(),
+    }
+  }) : [];
+
+  const data = await fetch(
+    process.env.API_ENDPOINT + "/bot",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.API_KEY}`,
+      },
+      body: JSON.stringify({
+        server: interaction.guild?.id,
+        id: interaction.user.id,
+        user: interaction.user.username ?? null,
+        globalname: interaction.user.globalName ?? null,
+        image: interaction.user.displayAvatarURL(),
+        nexusmods: interaction.options.getString("nexusmods") ?? null,
+        github: interaction.options.getString("github") ?? null,
+        theme: interaction.options.getString("theme") ?? null,
+        description: interaction.options.getString("description") ?? null,
+        namestyle: interaction.options.getString("username") ?? null,
+        Roles: Roles ?? null,
+      }),
+    }
+  );
 
   if (!data.ok) {
     return interaction.reply({
       content: "Failed to link your account.",
-      ephemeral: true,
+      flags: 64,
     });
   }
 
@@ -83,6 +101,6 @@ export default command(meta, async ({ interaction }) => {
         color: 0x00ff00,
       },
     ],
-    ephemeral: true,
+    flags: 64,
   });
-});
+}, true, false);

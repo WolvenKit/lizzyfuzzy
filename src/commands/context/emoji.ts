@@ -6,29 +6,42 @@ const meta = new ContextMenuCommandBuilder()
   .setName("Get Single Emoji")
   .setType(ApplicationCommandType.Message);
 
-export default command(meta, async ({ interaction }) => {
-  if (!interaction.isMessageContextMenuCommand) return;
+export default command(
+  meta,
+  async ({ interaction }) => {
+    if (!interaction.isMessageContextMenuCommand) return;
 
-  const Interaction =
-    interaction as unknown as MessageContextMenuCommandInteraction;
+    const Interaction =
+      interaction as unknown as MessageContextMenuCommandInteraction;
 
-  const emojiRegex = /(<:|<a:)([a-zA-Z]+)(:)(\d+)(>)/;
-  const match = emojiRegex.exec(Interaction.targetMessage?.content || "");
+    const match = Interaction.targetMessage?.content
+      .match(/(<a?:\w+:(\d+)>)/g)
+      ?.map((m) => {
+        const match = m.match(/<(a?):\w+:(\d+)>/);
+        if (match) {
+          const isAnimated = match[1] === "a";
+          const id = match[2];
+          return `https://cdn.discordapp.com/emojis/${id}.${
+            isAnimated ? "gif" : "webp"
+          }`;
+        }
+        return null;
+      })
+      .filter((url): url is string => url !== null);
 
-  if (match?.[1] === "<a:") {
-    interaction.reply({
-      content: `https://cdn.discordapp.com/emojis/${match?.[4]}.gif`,
-      ephemeral: false,
+    if (!match) {
+      return await Interaction.reply({
+        content: "No emoji found in the message.",
+        flags: 64,
+      });
+    }
+
+    const emojiUrls = match.join("\n");
+    await Interaction.reply({
+      content: emojiUrls,
+      flags: 64,
     });
-  } else if (match?.[1] === "<:") {
-    interaction.reply({
-      content: `https://cdn.discordapp.com/emojis/${match?.[4]}.webp`,
-      ephemeral: false,
-    });
-  }
-
-  interaction.reply({
-    content: "No or more than one emoji found",
-    ephemeral: true,
-  });
-});
+  },
+  false,
+  false
+);

@@ -7,8 +7,8 @@ const meta = new SlashCommandBuilder()
 
 export default command(meta, async ({ interaction }) => {
   const text =
-    "Cyberpunk 2077 Modding Discord: https://discord.gg/redmodding\nOfficial Test Server: https://discord.gg/BmqHtRFBxg";
+    "Cyberpunk 2077 Modding Discord: https://discord.gg/redmodding\nOfficial";
 
   await interaction.user.send(text);
   return await interaction.reply("Send! Check your DMs!");
-});
+}, false, false );

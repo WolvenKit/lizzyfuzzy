@@ -1,9 +1,9 @@
 import { category } from "utils";
-import dev from "./dev";
-import init from "./init";
 import servers from "./servers";
-import clear from "./clear";
-import repeat from "./repeat";
-import authv2 from "./authv2";
 
-export default category("Dev", [dev, init, servers, clear, repeat, authv2]);
+import localdb from "./localdb";
+import sync from "./sync";
+import dev from "./dev";
+import components from "./component";
+
+export default category("Dev", [localdb, sync, servers, dev, components]);

@@ -6,11 +6,10 @@ const meta = new ContextMenuCommandBuilder()
   .setType(ApplicationCommandType.User);
 
 export default command(meta, async ({ interaction }) => {
-  if ( !interaction.isUserContextMenuCommand ) return;
-  const Interaction = interaction as unknown as UserContextMenuCommandInteraction;
+  if (!interaction.isUserContextMenuCommand) return;
+  const Interaction = interaction as any as UserContextMenuCommandInteraction;
 
   interaction.reply({
     content: Interaction.targetUser.displayAvatarURL(),
-    ephemeral: false,
   });
-});
+}, false, false);

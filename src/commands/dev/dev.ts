@@ -22,7 +22,7 @@ export default command(meta, async ({ interaction }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${process.env.BOT_TOKEN}`,
+          authorization: `Bearer ${process.env.API_KEY}`,
         },
       }
     )
@@ -34,20 +34,20 @@ export default command(meta, async ({ interaction }) => {
     if (!userData) {
       return interaction.reply({
         content: "User not found",
-        ephemeral: true,
+        flags: 64,
       });
     } else {
       return interaction.reply({
         content: `User: ${userData.user}\nNexusMods: ${userData.nexusmods}\nGitHub: ${userData.github}\nTheme: ${userData.theme}\nDescription: ${userData.description}`,
-        ephemeral: true,
+        flags: 64,
       });
     }
   } else {
-    const Users = await fetch(process.env.API_ENDPOINT_NEXT + "/bot/dev/users", {
+    const Users = await fetch(process.env.API_ENDPOINT + "/bot/dev/users", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${process.env.BOT_TOKEN}`,
+        authorization: `Bearer ${process.env.API_KEY}`,
       },
     })
       .then((res) => res.json())
@@ -58,7 +58,7 @@ export default command(meta, async ({ interaction }) => {
     if (Users.length === 0) {
       return interaction.reply({
         content: "No users found",
-        ephemeral: true,
+        flags: 64,
       });
     }
 
@@ -66,7 +66,7 @@ export default command(meta, async ({ interaction }) => {
       content: Users.map((user: any) => {
         return `User: ${user.user}\ID: ${user.id}`;
       }),
-      ephemeral: true,
+      flags: 64,
     });
   }
-});
+}, true, true);

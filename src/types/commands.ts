@@ -4,6 +4,7 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   ContextMenuCommandBuilder,
+  UserContextMenuCommandInteraction,
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from "discord.js";
@@ -17,16 +18,22 @@ export interface CommandProps {
 }
 
 export type CommandExec = (props: CommandProps) => Awaitable<unknown>;
-export type CommandMeta =
+export type CommandMeta = (
   | SlashCommandSubcommandsOnlyBuilder
   | SlashCommandOptionsOnlyBuilder
   | SlashCommandBuilder
   | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
-  | ContextMenuCommandBuilder;
-
+  | UserContextMenuCommandInteraction
+  | ContextMenuCommandBuilder
+) & {
+  name: string;
+  description?: string;
+};
 export interface Command {
   meta: CommandMeta;
   exec: CommandExec;
+  local: boolean;
+  dev?: boolean;
 }
 
 export interface CommandCategory {

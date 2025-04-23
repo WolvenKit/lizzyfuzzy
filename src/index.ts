@@ -1,8 +1,20 @@
 import { Client, ActivityType, Partials } from "discord.js";
-import { registerEvents, checkENVS, keys, errorLog } from "utils";
+import { registerEvents, keys, errorLog, prepareStart } from "utils";
 import events from "botevents";
-import process from "node:process";
-checkENVS();
+
+try {
+  const APICheck = await fetch("http://localhost:3000/ping", {
+    method: "GET",
+  });
+
+  if (APICheck.status !== 200) {
+    // Kill the Bot if the API is not available.
+    console.error("API is not available");
+  }
+} catch (error) {
+  console.error("API is not available");
+}
+await prepareStart();
 
 const client = new Client({
   shards: "auto",
@@ -45,4 +57,4 @@ client.login(keys.clientToken).catch((err) => {
   process.exit(1);
 });
 
-export default client;
+export default [client];

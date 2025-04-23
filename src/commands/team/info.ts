@@ -4,7 +4,7 @@ import {
   EmbedBuilder,
   version,
 } from "discord.js";
-import { command } from "utils";
+import { command, errorLog } from "utils";
 import os from "os";
 
 const formatMemoryUsage = (data: any) =>
@@ -37,6 +37,7 @@ const meta = new SlashCommandBuilder()
   .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild);
 
 export default command(meta, async ({ interaction }) => {
+  try {
   const uptime = interaction.client.uptime
     ? formatUptime(interaction.client.uptime)
     : "N/A";
@@ -111,4 +112,7 @@ export default command(meta, async ({ interaction }) => {
   return interaction.reply({
     embeds: [embed],
   });
-});
+} catch (error) {
+  errorLog(error);
+}
+}, true, false);

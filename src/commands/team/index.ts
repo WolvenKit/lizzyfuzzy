@@ -1,17 +1,12 @@
 import { category } from "utils";
 import who from "./who";
-// import link from "./link";
-import create from "./create";
-import sync from "./sync";
-import linkv2 from "./linkv2";
-import auth from "./auth";
-import keys from "./keys";
+import link from "./link";
+import mark from "./mark";
+import mute from "./mute";
+import clear from "./clear";
+import repeat from "./repeat";
+import info from "./info";
+import clean from "./clean";
+import warn from "./warn";
 
-export default category("Team", [
-  who,
-  create,
-  sync,
-  linkv2,
-  auth,
-  keys,
-]);
+export default category("Team", [warn, info, repeat, clear, who, link, mark, mute, clean]);
