@@ -8,7 +8,7 @@
   "scripts": {
     "commands": "bun run --env-file=.env ./src/scripts/deploy.ts",
     "dev": "bun run --watch ./src/index.ts",
-    "prod": "bun runb --max-old-space-size=8192 ./src/index.ts"
+    "prod": "bun run ./src/index.ts"
   },
   "author": "Sebastian 'Moonded' Danielzik",
   "license": "ISC",

@@ -1,6 +1,6 @@
-FROM node:slim
+FROM oven/bun:slim
+WORKDIR /app
 COPY . .
-RUN apt-get update -y && apt-get install -y openssl
-RUN npm install pnpm -g
-RUN pnpm i
-CMD ["pnpm", "prod"]
+# RUN apt-get update -y && apt-get install -y openssl
+RUN bun install
+CMD ["bun", "prod"]
