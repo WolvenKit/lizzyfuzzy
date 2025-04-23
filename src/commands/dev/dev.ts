@@ -22,7 +22,7 @@ export default command(meta, async ({ interaction }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${process.env.BOT_TOKEN}`,
+          authorization: `Bearer ${process.env.API_KEY}`,
         },
       }
     )
@@ -47,7 +47,7 @@ export default command(meta, async ({ interaction }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${process.env.BOT_TOKEN}`,
+        authorization: `Bearer ${process.env.API_KEY}`,
       },
     })
       .then((res) => res.json())
