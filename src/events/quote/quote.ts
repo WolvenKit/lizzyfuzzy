@@ -16,8 +16,8 @@ export default event("messageCreate", async ({ client }, Message) => {
 
     const NoGoChannels = [
       "786519136833372171", // Moderator Channel
-      "795081899756224572", // Shitpost Channel
-      "1335254657991315476",
+      // "795081899756224572",  Shitpost Channel
+      // "1335254657991315476",
     ];
 
     const GetOriginalMessage = async () => {
