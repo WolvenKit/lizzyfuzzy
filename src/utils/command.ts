@@ -1,11 +1,9 @@
 import { Command, CommandCategory, CommandExec, CommandMeta } from '../types';
 
-export function command(meta: CommandMeta, exec: CommandExec, local: boolean, dev?: boolean): Command {
+export function command(meta: CommandMeta, exec: CommandExec): Command {
   return {
     meta,
-    exec,
-    local,
-    dev
+    exec
   };
 }
 
