@@ -1,0 +1,22 @@
+[
+    {
+        "type": 17,
+        "accent_color": null,
+        "spoiler": false,
+        "components": [
+            {
+                "type": 10,
+                "content": "Socials"
+            },
+            {
+                "type": 14,
+                "divider": true,
+                "spacing": 1
+            },
+            {
+                "type": 10,
+                "content": "- [Github https://github.com/WolvenKit](https://github.com/WolvenKit)\n- [YouTube https://www.youtube.com/@wolvenkit](https://www.youtube.com/@wolvenkit\n- [Twitch https://www.twitch.tv/redmodding](https://www.twitch.tv/redmodding)\n- [Discord https://discord.gg/redmodding](https://discord.gg/redmodding)"
+            }
+        ]
+    }
+]

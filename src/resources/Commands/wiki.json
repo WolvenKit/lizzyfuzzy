@@ -1,0 +1,22 @@
+[
+    {
+        "type": 17,
+        "accent_color": null,
+        "spoiler": false,
+        "components": [
+            {
+                "type": 10,
+                "content": "RedModding Wikis"
+            },
+            {
+                "type": 14,
+                "divider": true,
+                "spacing": 1
+            },
+            {
+                "type": 10,
+                "content": "- [Wiki](https://wiki.redmodding.org)\n- [Cyberpunk Modding](https://wiki.redmodding.org/cyberpunk-2077-modding)\n- [WolvenKit](https://wiki.redmodding.org/wolvenkit)\n- [REDmod](https://wiki.redmodding.org/cyberpunk-2077-modding/modding/redmod)\n- [RED4ext](https://wiki.redmodding.org/red4ext/)\n- [Redscript](https://wiki.redmodding.org/redscript/)\n- [CyberEngineTweaks](https://wiki.redmodding.org/cyber-engine-tweaks/)\n- [Shared Knowledge](https://wiki.redmodding.org/script)"
+            }
+        ]
+    }
+]

@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS "quotes" (
+  "id" INTEGER PRIMARY KEY,
+  "username" TEXT,
+  "globalname" TEXT,
+  "avatar" TEXT,
+  "discordid" TEXT NOT NULL,
+  "theme" TEXT NOT NULL DEFAULT 'default',
+  "style" TEXT NOT NULL DEFAULT 'uppercase',
+  "description" TEXT,
+  "githubusername" TEXT,
+  "nexusmodsusername" TEXT,
+  "nexusmods" TEXT,
+  "github" TEXT,
+  "roles" TEXT,
+);

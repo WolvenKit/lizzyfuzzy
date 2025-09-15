@@ -1,14 +1,11 @@
-import { Interaction } from "discord.js";
-import { event } from "utils";
+import { Interaction } from 'discord.js'
+import { event } from 'utils'
 
-export default event(
-  "interactionCreate",
-  async ({ log, client }, Interaction) => {
+export default event('interactionCreate', async ({ log, client }, Interaction) => {
     try {
-      const interaction = Interaction as Interaction;
-      if (!interaction.isChatInputCommand()) return;
+        const interaction = Interaction as Interaction
+        if (!interaction.isChatInputCommand()) return
     } catch (error) {
-      log("[Event Error]", error);
+        log('[Event Error]', error)
     }
-  }
-);
+})
