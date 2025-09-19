@@ -1,4 +1,8 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import {
+    MessageFlags,
+    PermissionFlagsBits,
+    SlashCommandBuilder,
+} from 'discord.js'
 import type { GuildMemberRoleManager } from 'discord.js'
 import { GithubQuery } from 'src/utils/github'
 import { command, userDB, NexusQuery } from 'utils'
@@ -52,6 +56,10 @@ const meta = new SlashCommandBuilder()
 
 export default command(meta, async ({ interaction }) => {
     if (!interaction.isCommand()) return
+
+    interaction.deferReply({
+        flags: MessageFlags.Ephemeral,
+    })
 
     const nexusmods =
         JSON.stringify(
@@ -133,7 +141,7 @@ ON CONFLICT(id) DO UPDATE SET
         JSON.stringify(object.Roles ?? [])
     )
 
-    return interaction.reply({
+    return interaction.editReply({
         embeds: [
             {
                 title: 'Account Linked',
@@ -142,6 +150,5 @@ ON CONFLICT(id) DO UPDATE SET
                 color: 0x00ff00,
             },
         ],
-        flags: 64,
     })
 })

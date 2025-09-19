@@ -1,37 +1,53 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction } from 'discord.js'
+import {
+    AutocompleteInteraction,
+    ChatInputCommandInteraction,
+} from 'discord.js'
 import commands from 'commands'
 import { Command } from 'types'
 import { EditReply, event, Reply, log as LOGGING, errorLog } from 'utils'
 
 const allCommands = commands
-const allCommandsMap = new Map<string, Command>(allCommands.map((c) => [c.meta.name, c]))
+const allCommandsMap = new Map<string, Command>(
+    allCommands.map((c) => [c.meta.name, c])
+)
 
-export default event('interactionCreate', async ({ log, client }, Interaction) => {
-    if (!Interaction.isCommand()) return
+export default event(
+    'interactionCreate',
+    async ({ log, client }, Interaction) => {
+        if (!Interaction.isCommand()) return
 
-    let interaction = Interaction
-    interaction = (interaction as ChatInputCommandInteraction) || AutocompleteInteraction
+        let interaction = Interaction
+        // console.log(interaction)
+        interaction =
+            (interaction as ChatInputCommandInteraction) ||
+            AutocompleteInteraction
 
-    try {
-        const commandName = interaction.commandName
-        const command = allCommandsMap.get(commandName)
+        try {
+            const commandName = interaction.commandName
+            const command = allCommandsMap.get(commandName)
 
-        if (!command) throw new Error('Command not found')
+            if (!command) throw new Error('Command not found')
 
-        await command.exec({
-            client,
-            interaction,
-            log(...args) {
-                log(...args)
-            },
-        })
+            await command.exec({
+                client,
+                interaction,
+                log(...args) {
+                    log(...args)
+                },
+            })
 
-        LOGGING(`Command "${command.meta.name}" executed`)
-    } catch (error) {
-        errorLog('[Command Error]', error)
+            LOGGING(`Command "${command.meta.name}" executed`)
+        } catch (error) {
+            // console.log(error)
+            console.dir(error, { depth: null })
+            // errorLog('[Command Error]', error)
 
-        if (interaction.deferred) return interaction.editReply(EditReply.error('Something went wrong'))
+            if (interaction.deferred)
+                return interaction.editReply(
+                    EditReply.error('Something went wrong')
+                )
 
-        return interaction.reply(Reply.error('Something went wrong'))
+            return interaction.reply(Reply.error('Something went wrong'))
+        }
     }
-})
+)
