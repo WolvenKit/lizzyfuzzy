@@ -1,16 +1,50 @@
-import http from 'http'
+import type { IncomingMessage, ServerResponse } from 'node:http'
+import { getUser, getUsers, getUserById } from './expoints'
+import http from 'node:http'
 
-const requestListener = (req: any, res: any) => {
-    res.setHeader('Content-Type', 'application/json')
-    switch (req.url) {
-        case '/':
-            res.end(JSON.stringify())
-            break
-        default:
-            res.statusCode = 404
-            res.end(JSON.stringify({ error: 'Not Found' }))
-            break
+export const server = http.createServer(
+    (req: IncomingMessage, res: ServerResponse) => {
+        const url = new URL(req.url!, `http://${req.headers.host}`)
+        const query = new URLSearchParams(url.search)
+        const path = url.pathname
+        const method = req.method?.toLocaleLowerCase()
+
+        const Data = {
+            url: url,
+            query: query,
+            path: path,
+            method: method,
+        }
+
+        const route = `${method}:${path}`
+
+        switch (route) {
+            case 'get:/web':
+                getUsers(req, res, Data)
+                break
+            case 'get:/web/user':
+                getUser(req, res, Data)
+                break
+            case 'get:/web/user/id':
+                getUserById(req, res, Data)
+                break
+            case 'get:/':
+                res.writeHead(302, { Location: '/web' })
+                res.end()
+                break
+            default:
+                if (new RegExp(/\/$/).test(path)) {
+                    res.writeHead(302, {
+                        Location:
+                            path.slice(0, -1) +
+                            (query.toString() ? `?${query.toString()}` : ''),
+                    })
+                    res.end()
+                    return
+                }
+                res.writeHead(404, { 'Content-Type': 'application/json' })
+                res.end(JSON.stringify({ error: 'Not Found' }))
+                break
+        }
     }
-}
-
-export const server = http.createServer(requestListener)
+)

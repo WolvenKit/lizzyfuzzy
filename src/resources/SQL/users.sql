@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "quotes" (
+CREATE TABLE IF NOT EXISTS "users" (
   "id" INTEGER PRIMARY KEY,
   "username" TEXT,
   "globalname" TEXT,
@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS "quotes" (
   "nexusmodsusername" TEXT,
   "nexusmods" TEXT,
   "github" TEXT,
-  "roles" TEXT,
+  "roles" TEXT
 );

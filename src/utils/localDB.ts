@@ -23,6 +23,7 @@ export function prepareDatabase() {
         WHERE type='table' AND name='quotes';`
             )
             .get()
+
         const t2 = commandDB
             .query(
                 `SELECT name
@@ -35,7 +36,7 @@ export function prepareDatabase() {
             `SELECT name
         FROM sqlite_master
         WHERE type='table' AND name='users';`
-        )
+        ).get()
 
         if (!t1 || !t2 || !t3) {
             log('[PrepareDatabase] Running preperation.')
@@ -67,7 +68,7 @@ export function populateDatabase() {
                 const filename = file.split('.')[0]
                 const fileContent = fs.readFileSync(`./src/resources/Commands/${file}`, 'utf-8').toString()
 
-                commandDB.run('INSERT INTO commands (isEmbed, name, content) VALUES ( ?, ?, ?)', true, filename, fileContent)
+                commandDB.run('INSERT INTO commands (isEmbed, name, content) VALUES ( ?, ?, ?)', [true, filename, fileContent])
             })
         }
 
@@ -78,7 +79,7 @@ export function populateDatabase() {
             const quotes = JSON.parse(fs.readFileSync('./src/resources/quotes.json', 'utf-8').toString()) as quotes[]
 
             quotes.forEach((quote) => {
-                localBD.run('INSERT INTO quotes (quote, responde, server) VALUES ( ?, ?, ?) ', quote.quote, quote.responde, quote.server)
+                localBD.run('INSERT INTO quotes (quote, responde, server) VALUES ( ?, ?, ?) ', [quote.quote, quote.responde, quote.server])
             })
             log('Finished populating Quotes')
         }
