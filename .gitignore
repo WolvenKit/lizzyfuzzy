@@ -17,6 +17,6 @@ env/bot.env
 keys/
 eng.traineddata
 *.sqlite
-src/resources/github/*.private-key.pem
-src/resources/github/*.pem:Zone.Identifier
 src/types/generated/
+src/resources/Github/*
+src/resources/Api/*
