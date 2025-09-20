@@ -1,3 +1,4 @@
+import { GraphQL } from './fileRead'
 import { errorLog } from './logging'
 
 export async function NexusQuery(
@@ -11,38 +12,7 @@ export async function NexusQuery(
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                query: `query Query($filter: ModsFilter!, $sort: [ModsSort!], $count: Int, $name: String!) {
-                  mods(filter: $filter, sort: $sort, count: $count) {
-                      nodes {
-                          modId
-                          name
-                          version
-                          downloads
-                          endorsements
-                          adultContent
-                          summary
-                          pictureUrl
-                          game {
-                            domainName
-                          }
-                          status
-                          modCategory {
-                            name
-                          }
-                      }
-                  }
-                  userByName(name: $name) {
-                      name
-                      modCount
-                      avatar
-                      kudos
-                      country
-                      uniqueModDownloads
-                      memberId
-                      about
-                      posts
-                  }
-              }`,
+                query: GraphQL().NexusUserQuery,
                 variables: JSON.stringify({
                     count: 4,
                     name: username,

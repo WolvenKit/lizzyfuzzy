@@ -1,10 +1,7 @@
 import { App } from 'octokit'
-import fs from 'fs'
+import { fromDir, GraphQL } from 'utils'
 
-const key = fs.readFileSync(
-    `./src/resources/github/${process.env.GITHUB_APP_KEY_FILE}`,
-    'utf-8'
-)
+const key = fromDir('./src/resources/github', '.private-key.pem')
 
 export const app = new App({
     appId: process.env.GITHUB_APP_ID,
@@ -22,54 +19,7 @@ export const octokit = await app.getInstallationOctokit(
 )
 
 export async function Updater() {
-    const data = await octokit.graphql(
-        `
-    query {
-red4ext: repository(owner: "WopsS", name: "RED4ext") {
-    latestRelease {
-      tagName
-      updatedAt
-      url
-    }
-  }
-  archivexl: repository(owner: "psiberx", name: "cp2077-archive-xl") {
-    latestRelease {
-      tagName
-      updatedAt
-      url
-    }
-  }
-  tweakxl: repository(owner: "psiberx", name: "cp2077-tweak-xl") {
-    latestRelease {
-      tagName
-      updatedAt
-      url
-    }
-  }
-  codeware: repository(owner: "psiberx", name: "cp2077-codeware") {
-    latestRelease {
-      tagName
-      updatedAt
-      url
-    }
-  }
-  cet: repository(owner: "maximegmd", name: "CyberEngineTweaks") {
-    latestRelease {
-      tagName
-      updatedAt
-      url
-    }
-  }
-  redscript: repository(owner: "jac3km4", name: "redscript") {
-    latestRelease {
-      tagName
-      updatedAt
-      url
-    }
-  }
-}
-   `
-    )
+    const data = await octokit.graphql(GraphQL().Updater)
 
     if (!data) return null
 
@@ -99,27 +49,7 @@ export async function GithubQuery(
 
         const data: GithubQueryReturn =
             await octokit.graphql<GithubQueryReturn>(
-                `
-          query ($repos: [ID!]!, $author: String!, $authorId: ID!) {
-              nodes(ids: $repos) {
-                ... on Repository {
-                  nameWithOwner
-                  issues(filterBy: { createdBy: $author }) {
-                    totalCount
-                  }
-                  defaultBranchRef {
-                    target {
-                      ... on Commit {
-                        history(author: { id: $authorId }) {
-                          totalCount
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          `,
+                GraphQL().GithubUserQuery,
                 {
                     author: author,
                     authorId: GithubUserId,
