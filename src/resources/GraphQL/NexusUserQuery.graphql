@@ -1,0 +1,37 @@
+query Query(
+    $filter: ModsFilter!
+    $sort: [ModsSort!]
+    $count: Int
+    $name: String!
+) {
+    mods(filter: $filter, sort: $sort, count: $count) {
+        nodes {
+            modId
+            name
+            version
+            downloads
+            endorsements
+            adultContent
+            summary
+            pictureUrl
+            game {
+                domainName
+            }
+            status
+            modCategory {
+                name
+            }
+        }
+    }
+    userByName(name: $name) {
+        name
+        modCount
+        avatar
+        kudos
+        country
+        uniqueModDownloads
+        memberId
+        about
+        posts
+    }
+}

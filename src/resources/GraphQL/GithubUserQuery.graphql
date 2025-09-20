@@ -1,0 +1,19 @@
+query ($repos: [ID!]!, $author: String!, $authorId: ID!) {
+    nodes(ids: $repos) {
+        ... on Repository {
+            nameWithOwner
+            issues(filterBy: { createdBy: $author }) {
+                totalCount
+            }
+            defaultBranchRef {
+                target {
+                    ... on Commit {
+                        history(author: { id: $authorId }) {
+                            totalCount
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
