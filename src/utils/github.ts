@@ -1,7 +1,7 @@
 import { App } from 'octokit'
 import { fromDir, GraphQL } from 'utils'
 
-const key = fromDir('./src/resources/github', '.private-key.pem')
+const key = fromDir('./src/resources/Github', '.private-key.pem')
 
 export const app = new App({
     appId: process.env.GITHUB_APP_ID,
