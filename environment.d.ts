@@ -19,7 +19,6 @@ declare module 'process' {
                 NEXUSMODS_URI: string
                 GITHUB_APP_ID: string
                 GITHUB_URI: string
-                GITHUB_APP_KEY_FILE: string
                 GITHUB_INSTALLATION_ID: string
             }
 
