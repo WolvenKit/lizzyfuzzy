@@ -59,8 +59,8 @@ client.login(process.env.CLIENT_TOKEN).catch((err) => {
     process.exit(1)
 })
 
-server.listen(8080, () => {
-    log('Server running at http://localhost:8080/')
+server.listen(8000, () => {
+    log('Server running at https://localhost:8080/')
 })
 
 export default [client]
