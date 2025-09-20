@@ -1,12 +1,22 @@
 import { Client, ActivityType, Partials } from 'discord.js'
-import { registerEvents, errorLog, prepareStart, prepareDatabase, populateDatabase, updateSetting, log } from 'utils'
+import {
+    registerEvents,
+    errorLog,
+    prepareStart,
+    prepareDatabase,
+    populateDatabase,
+    updateSetting,
+    log,
+    generateGraphQLTypes,
+} from 'utils'
 import events from 'botevents'
 import { server } from 'api'
 
 await prepareStart()
-await prepareDatabase()
-await populateDatabase()
+prepareDatabase()
+populateDatabase()
 await updateSetting()
+generateGraphQLTypes()
 
 const client = new Client({
     shards: 'auto',
