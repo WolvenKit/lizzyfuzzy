@@ -1,10 +1,20 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { getUser, getUsers, getUserById } from './expoints'
-import http from 'node:http'
+import { fromDir } from 'utils'
+import https from 'node:https'
 
-export const server = http.createServer(
+const cert = fromDir('./src/resources/Api', '.crt')
+const key = fromDir('./src/resources/Api', '.key')
+
+const options = {
+    key: key,
+    cert: cert,
+}
+
+export const server = https.createServer(
+    options,
     (req: IncomingMessage, res: ServerResponse) => {
-        const url = new URL(req.url!, `http://${req.headers.host}`)
+        const url = new URL(req.url!, `https://${req.headers.host}`)
         const query = new URLSearchParams(url.search)
         const path = url.pathname
         const method = req.method?.toLocaleLowerCase()
