@@ -8,6 +8,8 @@ import {
     updateSetting,
     log,
     generateTypes,
+    db,
+    readSQL,
 } from 'utils'
 import events from 'botevents'
 import { server } from 'api'
@@ -17,6 +19,10 @@ prepareDatabase()
 populateDatabase()
 await updateSetting()
 generateTypes()
+
+const data = readSQL().postgresInit
+
+await db.unsafe(data)
 
 const client = new Client({
     shards: 'auto',

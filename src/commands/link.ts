@@ -5,7 +5,7 @@ import {
 } from 'discord.js'
 import type { GuildMemberRoleManager } from 'discord.js'
 import { GithubQuery } from 'src/utils/github'
-import { command, userDB, NexusQuery } from 'utils'
+import { command, userDB, NexusQuery, db } from 'utils'
 
 const meta = new SlashCommandBuilder()
     .setName('link')
@@ -61,16 +61,6 @@ export default command(meta, async ({ interaction }) => {
         flags: MessageFlags.Ephemeral,
     })
 
-    const nexusmods =
-        JSON.stringify(
-            await NexusQuery(interaction.options.getString('nexusmods') || '')
-        ) || {}
-
-    const github =
-        JSON.stringify(
-            await GithubQuery(interaction.options.getString('github') || '')
-        ) || {}
-
     const Roles = interaction.member
         ? (interaction.member.roles as GuildMemberRoleManager).cache.map(
               (role) => {
@@ -86,60 +76,34 @@ export default command(meta, async ({ interaction }) => {
           )
         : []
 
-    const object = {
-        id: interaction.user.id,
-        username: interaction.user.username ?? null,
-        globalname: interaction.user.globalName ?? null,
-        avatar: interaction.user.displayAvatarURL(),
-        discordid: interaction.user.id,
-        nexusmodsusername: interaction.options.getString('nexusmods') ?? null,
-        githubusername: interaction.options.getString('github') ?? null,
-        theme: interaction.options.getString('theme') ?? null,
-        description: interaction.options.getString('description') ?? null,
-        style: interaction.options.getString('username') ?? null,
-        github: github,
-        nexusmods: nexusmods,
-        Roles: Roles ?? null,
-    }
-
-    const stml = userDB.query(
-        `INSERT INTO users (
-    id, username, globalname, avatar, discordid, theme, style, description, 
-    githubusername, nexusmodsusername, nexusmods, github, roles
+    await db`
+INSERT INTO users (
+    username,
+    globalname,
+    avatar,
+    discordid,
+    theme,
+    style,
+    description,
+    githubusername,
+    nexusmodsusername,
+    nexusmods,
+    github,
+    roles
 ) VALUES (
-    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-)
-ON CONFLICT(id) DO UPDATE SET
-    username = excluded.username,
-    globalname = excluded.globalname,
-    avatar = excluded.avatar,
-    theme = excluded.theme,
-    style = excluded.style,
-    description = excluded.description,
-    githubusername = excluded.githubusername,
-    nexusmodsusername = excluded.nexusmodsusername,
-    nexusmods = excluded.nexusmods,
-    github = excluded.github,
-    roles = excluded.roles;
-
-        `
-    )
-
-    stml.run(
-        object.id ?? null,
-        object.username ?? null,
-        object.globalname ?? null,
-        object.avatar ?? null,
-        object.discordid ?? null,
-        object.theme ?? null,
-        object.style ?? null,
-        object.description ?? null,
-        object.githubusername ?? null,
-        object.nexusmodsusername ?? null,
-        object.nexusmods ?? null,
-        object.github ?? null,
-        JSON.stringify(object.Roles ?? [])
-    )
+    ${interaction.user.username ?? null},
+    ${interaction.user.username ?? null},
+    ${interaction.user.displayAvatarURL() ?? null},
+    ${interaction.user.id ?? null},
+    ${interaction.options.getString('theme') ?? null},
+    ${interaction.options.getString('username') ?? null},
+    ${interaction.options.getString('description') ?? null},
+    ${interaction.options.getString('github') ?? null},
+    ${interaction.options.getString('nexusmods') ?? null},
+    ${NexusQuery(interaction.options.getString('nexusmods') || '') ?? null},
+    ${GithubQuery(interaction.options.getString('github') || '') ?? null},
+    ${Roles ?? null}
+)`
 
     return interaction.editReply({
         embeds: [
