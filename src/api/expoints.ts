@@ -24,9 +24,10 @@ type UserRowRaw = {
     roles: string
 }
 
-type UserRow = Omit<UserRowRaw, 'nexusmods' | 'github'> & {
+type UserRow = Omit<UserRowRaw, 'nexusmods' | 'github' | 'roles'> & {
     nexusmods: Record<string, unknown>
     github: Record<string, unknown>
+    roles: Record<string, unknown>
 }
 
 export function getUsers(
@@ -43,11 +44,12 @@ export function getUsers(
 `)
 
     const result: UserRow[] = stmt
-        .all((parseInt(pageQuery) - 1) * 10) // pass as number, not [number]
+        .all((parseInt(pageQuery) - 1) * 10)
         .map((row) => ({
             ...row,
             nexusmods: JSON.parse(row.nexusmods ?? '{}'),
             github: JSON.parse(row.github ?? '{}'),
+            roles: JSON.parse(row.roles ?? '{}'),
         }))
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -57,8 +59,16 @@ export function getUsers(
 export function getUser(req: IncomingMessage, res: ServerResponse, data: Data) {
     const pageQuery = data.query.get('q')?.toLocaleLowerCase()!
 
-    const stml = userDB.query('SELECT * FROM users WHERE username = ?')
-    const result = stml.all(pageQuery)
+    const stmt = userDB.query<UserRowRaw, [string]>(
+        'SELECT * FROM users WHERE username = ?'
+    )
+
+    const result: UserRow[] = stmt.all(pageQuery).map((row) => ({
+        ...row,
+        nexusmods: JSON.parse(row.nexusmods ?? '{}'),
+        github: JSON.parse(row.github ?? '{}'),
+        roles: JSON.parse(row.roles ?? '{}'),
+    }))
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
     res.end(JSON.stringify(result))
@@ -69,11 +79,19 @@ export function getUserById(
     res: ServerResponse,
     data: Data
 ) {
-    const pageQuery = data.query.get('q')?.toLocaleLowerCase()!
+    const pageQuery = data.query.get('q')?.toLowerCase()!
 
-    const stml = userDB.query('SELECT * FROM users WHERE discordid = ?')
-    const result = stml.all(pageQuery)
+    const stmt = userDB.query<UserRowRaw, [string]>(
+        'SELECT * FROM users WHERE discordid = ?'
+    )
+
+    const result: UserRow[] = stmt.all(pageQuery).map((row) => ({
+        ...row,
+        nexusmods: JSON.parse(row.nexusmods ?? '{}'),
+        github: JSON.parse(row.github ?? '{}'),
+        roles: JSON.parse(row.roles ?? '{}'),
+    }))
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(result)
+    res.end(JSON.stringify(result))
 }
