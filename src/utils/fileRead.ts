@@ -1,7 +1,7 @@
 import { errorLog } from './logging'
 import path from 'path'
 import fs from 'fs'
-import type { GraphQLFileKey } from '../types/generated/graphql'
+import type { GraphQLFileKey, SQLFileKey } from '../types/generated'
 
 export function fromDir(startPath: string, filter: string) {
     if (!fs.existsSync(startPath)) {
@@ -32,6 +32,21 @@ export function GraphQL(): Record<GraphQLFileKey, string> {
     files.forEach((a) => {
         const filename = path.join(Path, a)
         const key = a.split('.')[0] as GraphQLFileKey
+        fileData[key] = fs.readFileSync(filename, 'utf-8')
+    })
+
+    return fileData
+}
+
+export function readSQL(): Record<SQLFileKey, string> {
+    const Path = './src/resources/SQL'
+    const files = fs.readdirSync(Path)
+
+    const fileData = {} as Record<SQLFileKey, string>
+
+    files.forEach((a) => {
+        const filename = path.join(Path, a)
+        const key = a.split('.')[0] as SQLFileKey
         fileData[key] = fs.readFileSync(filename, 'utf-8')
     })
 
