@@ -20,6 +20,10 @@ declare module 'process' {
                 GITHUB_APP_ID: string
                 GITHUB_URI: string
                 GITHUB_INSTALLATION_ID: string
+                POSTGRES_PASSWORD: string
+                POSTGRES_USERNAME: string
+                POSTGRES_URL: string
+                POSTGRES_DATABASE: string
             }
 
             interface Process extends EventEmitter {
