@@ -7,7 +7,7 @@ import {
     populateDatabase,
     updateSetting,
     log,
-    generateGraphQLTypes,
+    generateTypes,
 } from 'utils'
 import events from 'botevents'
 import { server } from 'api'
@@ -16,7 +16,7 @@ await prepareStart()
 prepareDatabase()
 populateDatabase()
 await updateSetting()
-generateGraphQLTypes()
+generateTypes()
 
 const client = new Client({
     shards: 'auto',
