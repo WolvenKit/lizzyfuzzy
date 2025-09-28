@@ -1,4 +1,4 @@
-import { GraphQL } from './fileRead'
+import { GraphQL } from './readFile'
 import { errorLog } from './logging'
 
 export async function NexusQuery(

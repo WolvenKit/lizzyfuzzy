@@ -2,27 +2,23 @@ import { Client, ActivityType, Partials } from 'discord.js'
 import {
     registerEvents,
     errorLog,
-    prepareStart,
-    prepareDatabase,
-    populateDatabase,
-    updateSetting,
     log,
     generateTypes,
     db,
     readSQL,
+    firstStart,
+    fromDir,
 } from 'utils'
 import events from 'botevents'
 import { server } from 'api'
 
-await prepareStart()
-prepareDatabase()
-populateDatabase()
-await updateSetting()
 generateTypes()
 
 const data = readSQL().postgresInit
 
 await db.unsafe(data)
+
+await firstStart()
 
 const client = new Client({
     shards: 'auto',
@@ -65,8 +61,15 @@ client.login(process.env.CLIENT_TOKEN).catch((err) => {
     process.exit(1)
 })
 
-server.listen(8000, () => {
-    log('Server running at https://localhost:8080/')
-})
+const cert = fromDir('./src/resources/Api', '.crt')
+const key = fromDir('./src/resources/Api', '.key')
+
+if (cert && key) {
+    server.listen(8000, () => {
+        log('Server running at https://localhost:8080/')
+    })
+} else {
+    errorLog('API SSL Certificate or Key not found. Server not started.')
+}
 
 export default [client]

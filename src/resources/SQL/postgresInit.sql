@@ -30,15 +30,6 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    IF NOT EXISTS markedMembers (
-        id SERIAL PRIMARY KEY,
-        "user" VARCHAR(255) NOT NULL UNIQUE,
-        message TEXT,
-        channel VARCHAR(255) NOT NULL,
-        messageid VARCHAR(255) NOT NULL
-    );
-
-CREATE TABLE
     IF NOT EXISTS coremods (
         id SERIAL PRIMARY KEY,
         tagName TEXT,

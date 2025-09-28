@@ -1,5 +1,5 @@
 import { errorLog, event } from 'utils'
-import crypto from 'crypto'
+import crypto from 'node:crypto'
 
 interface message {
     memberId: string
@@ -9,11 +9,11 @@ interface message {
     timestampNewMessage: number
 }
 
+const messageMap = new Map()
+
 export default event('messageCreate', async ({ client }, Message) => {
     try {
         if (Message.author.bot) return
-
-        const messageMap = new Map()
 
         const Hash = crypto.createHash('sha512', {
             encoding: 'utf8',
@@ -23,22 +23,26 @@ export default event('messageCreate', async ({ client }, Message) => {
         const findMessage = messageMap.get(Message.member?.id) as message
 
         if (!findMessage) {
-            messageMap.set(Message.member?.id, {
-                memberId: Message.member?.id,
-                lastMessage: Hash.update(Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')).digest('hex'),
-                timestampLastMessage: Message.createdTimestamp,
-                newMessage: null,
-                timestampNewMessage: null,
-            })
+            const message = Hash.update(
+                Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')
+            ).digest('hex')
 
-            return
+            return messageMap.set(Message.member?.id, {
+                memberId: Message.member?.id,
+                lastMessage: message,
+                timestampLastMessage: Message.createdTimestamp,
+                newMessage: message,
+                timestampNewMessage: Message.createdTimestamp,
+            })
         }
 
         messageMap.set(Message.member?.id, {
             memberId: Message.member?.id,
-            lastMessage: findMessage.lastMessage,
+            lastMessage: findMessage.newMessage,
             timestampLastMesage: findMessage.timestampLastMessage,
-            newMessage: Hash.update(Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')).digest('hex'),
+            newMessage: Hash.update(
+                Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')
+            ).digest('hex'),
             timestampNewMessage: Message.createdTimestamp,
         })
 
@@ -48,7 +52,10 @@ export default event('messageCreate', async ({ client }, Message) => {
         const isSameMessage = newMessage.lastMessage === newMessage.newMessage
 
         const isTimeRange =
-            Math.abs(new Date(newMessage.timestampNewMessage ?? 0).getTime() - new Date(newMessage.timestampLastMessage ?? 0).getTime()) <
+            Math.abs(
+                new Date(newMessage.timestampNewMessage ?? 0).getTime() -
+                    new Date(newMessage.timestampLastMessage ?? 0).getTime()
+            ) >
             TimeRangeInMinutes * 60 * 1000
 
         if (isSameMessage && isTimeRange) {

@@ -1,45 +1,30 @@
-import who from './who'
-import link from './link'
-import mark from './mark'
-import mute from './mute'
-import clear from './clear'
-import repeat from './repeat'
-// import info from "./info";
-import omit from './omit'
-import warn from './warn'
+//
+// CONTEXT COMMANDS
+//
 
-import core from './core'
-// import social from "./social";
-// import wiki from "./wiki";
-import discord from './discord'
+import who from './context/who'
+import emoji from './context/emoji'
+import avatar from './context/avatar'
 
-import quotes from './quotes'
-import createquotes from './createQuote'
+//
+// SLASH COMMANDS
+//
 
-import avatar from './avatar'
-import emoji from './emoji'
-
-import tag from './tag'
-
-import contextMark from './contextMark'
-import contextOmitPirate from './contextOmitPirate'
+import link from './slash/link'
+import clear from './slash/clear'
+import tag from './slash/tag'
+import createquotes from './slash/createQuote'
+import quotes from './slash/quotes'
+import core from './slash/core'
 
 export default [
     who,
     link,
-    mark,
-    mute,
     clear,
-    repeat,
-    omit,
-    warn,
     core,
-    discord,
     quotes,
     createquotes,
     avatar,
     emoji,
     tag,
-    contextMark,
-    contextOmitPirate,
 ]

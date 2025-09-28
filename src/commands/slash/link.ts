@@ -5,7 +5,7 @@ import {
 } from 'discord.js'
 import type { GuildMemberRoleManager } from 'discord.js'
 import { GithubQuery } from 'src/utils/github'
-import { command, userDB, NexusQuery, db } from 'utils'
+import { command, NexusQuery, db } from 'utils'
 
 const meta = new SlashCommandBuilder()
     .setName('link')

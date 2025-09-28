@@ -21,7 +21,7 @@ const meta = new SlashCommandBuilder()
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 
 function isOlderThan14Days(timestamp: any) {
-    const now = Date.now() // current time in ms
+    const now = Date.now()
     const fourteenDays = 14 * 24 * 60 * 60 * 1000 // 14 days in ms
     return now - timestamp > fourteenDays
 }

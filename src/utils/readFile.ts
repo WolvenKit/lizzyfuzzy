@@ -5,8 +5,7 @@ import type { GraphQLFileKey, SQLFileKey } from '../types/generated'
 
 export function fromDir(startPath: string, filter: string) {
     if (!fs.existsSync(startPath)) {
-        errorLog('no dir ', startPath)
-        return ''
+        return
     }
 
     var files = fs.readdirSync(startPath)
@@ -20,7 +19,7 @@ export function fromDir(startPath: string, filter: string) {
         }
     }
 
-    return ''
+    return
 }
 
 export function GraphQL(): Record<GraphQLFileKey, string> {
