@@ -1,13 +1,26 @@
-import { EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import {
+    EmbedBuilder,
+    PermissionFlagsBits,
+    SlashCommandBuilder,
+} from 'discord.js'
 import { command } from 'utils'
 
 const meta = new SlashCommandBuilder()
     .setName('who')
     .setDescription('Provides information about the user.')
-    .addUserOption((option) => option.setName('target').setDescription('The user to provide information about.').setRequired(true))
+    .addUserOption((option) =>
+        option
+            .setName('target')
+            .setDescription('The user to provide information about.')
+            .setRequired(true)
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 
 export default command(meta, async ({ interaction }) => {
+    if (!interaction.isChatInputCommand()) return
+    if (!interaction.guild) return
+    if (interaction.user.bot) return
+
     const target = interaction.options.getUser('target')
 
     if (target) {
@@ -40,11 +53,16 @@ export default command(meta, async ({ interaction }) => {
                     },
                     {
                         name: 'Roles',
-                        value: `${guildMemberData.roles.cache.map((role) => role.name)}`,
+                        value: `${guildMemberData.roles.cache.map(
+                            (role) => role.name
+                        )}`,
                     },
                     {
                         name: 'Permissions',
-                        value: `${guildMemberData.permissions.toArray().toString().replace(/,/g, ', ')}`,
+                        value: `${guildMemberData.permissions
+                            .toArray()
+                            .toString()
+                            .replace(/,/g, ', ')}`,
                     }
                 )
                 .setTimestamp()

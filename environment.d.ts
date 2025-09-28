@@ -5,9 +5,6 @@ declare module 'process' {
                 CLIENT_TOKEN: string
                 GUILD: string
                 API_ENDPOINT: string
-                API_KEY: string
-                API_RATE_WINDOW: number
-                API_MAX_REQUESTS: number
                 NODE_ENV: 'development' | 'production'
                 markedMembersChannel: string
                 moderationCategory: string

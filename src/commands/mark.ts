@@ -5,27 +5,40 @@ import { Database } from 'bun:sqlite'
 const meta = new SlashCommandBuilder()
     .setName('mark')
     .setDescription('Mark a user as a Pirate for the moderation team to verify')
-    .addUserOption((option) => option.setName('user').setDescription('The user to mark as a Pirate').setRequired(true))
+    .addUserOption((option) =>
+        option
+            .setName('user')
+            .setDescription('The user to mark as a Pirate')
+            .setRequired(true)
+    )
 
 export default command(meta, async ({ interaction }) => {
+    if (!interaction.isChatInputCommand()) return
     if (!interaction.guild) return
     if (interaction.user.bot) return
-    if (!interaction.isContextMenuCommand) return
 
     const User = interaction.options.getUser('user', true)
     const Message = interaction.options.getString('message', false)
 
     // const db = new Database("settings.sqlite");
 
-    const setting_markedMembersChannel = settingsDB.query(`SELECT value FROM settings WHERE key = 'markedMembersChannel'`).get() as { value: string }
+    const setting_markedMembersChannel = settingsDB
+        .query(`SELECT value FROM settings WHERE key = 'markedMembersChannel'`)
+        .get() as { value: string }
 
-    const channel = interaction.guild.channels.cache.get(setting_markedMembersChannel.value) as TextChannel
+    const channel = interaction.guild.channels.cache.get(
+        setting_markedMembersChannel.value
+    ) as TextChannel
 
     if (!channel) {
-        return interaction.reply('The Marked Members Channel is not set up yet.')
+        return interaction.reply(
+            'The Marked Members Channel is not set up yet.'
+        )
     }
 
-    const getUserFromDB = settingsDB.query(`SELECT * FROM markedMembers WHERE user = '${User.id}'`).get()
+    const getUserFromDB = settingsDB
+        .query(`SELECT * FROM markedMembers WHERE user = '${User.id}'`)
+        .get()
     if (getUserFromDB) {
         settingsDB.close()
         return interaction.reply({
@@ -75,7 +88,9 @@ export default command(meta, async ({ interaction }) => {
     })
 
     settingsDB
-        .query(`INSERT OR IGNORE INTO markedMembers (user, message, channel, messageid) VALUES (?, ?, ?, ?)`)
+        .query(
+            `INSERT OR IGNORE INTO markedMembers (user, message, channel, messageid) VALUES (?, ?, ?, ?)`
+        )
         .all(User.id, Message, channel.id, message.id)
 
     return interaction.reply({

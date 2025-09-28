@@ -55,28 +55,31 @@ const meta = new SlashCommandBuilder()
     )
 
 export default command(meta, async ({ interaction }) => {
-    if (!interaction.isCommand()) return
+    if (!interaction.isChatInputCommand()) return
+    if (!interaction.guild) return
+    if (interaction.user.bot) return
 
-    interaction.deferReply({
-        flags: MessageFlags.Ephemeral,
-    })
+    interaction
+        .deferReply({
+            flags: MessageFlags.Ephemeral,
+        })
+        .then(async () => {
+            const Roles = interaction.member
+                ? (
+                      interaction.member.roles as GuildMemberRoleManager
+                  ).cache.map((role) => {
+                      return {
+                          id: role.id,
+                          name: role.name,
+                          position: role.position,
+                          rawPosition: role.rawPosition,
+                          icon: role.icon,
+                          iconUrl: role.iconURL(),
+                      }
+                  })
+                : []
 
-    const Roles = interaction.member
-        ? (interaction.member.roles as GuildMemberRoleManager).cache.map(
-              (role) => {
-                  return {
-                      id: role.id,
-                      name: role.name,
-                      position: role.position,
-                      rawPosition: role.rawPosition,
-                      icon: role.icon,
-                      iconUrl: role.iconURL(),
-                  }
-              }
-          )
-        : []
-
-    await db`
+            await db`
 INSERT INTO users (
     username,
     globalname,
@@ -95,24 +98,31 @@ INSERT INTO users (
     ${interaction.user.username ?? null},
     ${interaction.user.displayAvatarURL() ?? null},
     ${interaction.user.id ?? null},
-    ${interaction.options.getString('theme') ?? null},
-    ${interaction.options.getString('username') ?? null},
+    ${interaction.options.getString('theme') ?? 'default'},
+    ${interaction.options.getString('username') ?? 'uppercase'},
     ${interaction.options.getString('description') ?? null},
     ${interaction.options.getString('github') ?? null},
     ${interaction.options.getString('nexusmods') ?? null},
-    ${NexusQuery(interaction.options.getString('nexusmods') || '') ?? null},
-    ${GithubQuery(interaction.options.getString('github') || '') ?? null},
+    ${
+        (await NexusQuery(interaction.options.getString('nexusmods') || '')) ??
+        null
+    },
+    ${
+        (await GithubQuery(interaction.options.getString('github') || '')) ??
+        null
+    },
     ${Roles ?? null}
-)`
-
-    return interaction.editReply({
-        embeds: [
-            {
-                title: 'Account Linked',
-                description:
-                    'Your account has been successfully linked/Updated.',
-                color: 0x00ff00,
-            },
-        ],
-    })
+)`.then(async () => {
+                return interaction.editReply({
+                    embeds: [
+                        {
+                            title: 'Account Linked',
+                            description:
+                                'Your account has been successfully linked/Updated.',
+                            color: 0x00ff00,
+                        },
+                    ],
+                })
+            })
+        })
 })

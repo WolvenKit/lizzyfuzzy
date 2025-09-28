@@ -1,7 +1,9 @@
-import { ApplicationCommandType, ContextMenuCommandBuilder, Colors } from 'discord.js'
-import type { UserContextMenuCommandInteraction } from 'discord.js'
+import { ApplicationCommandType, ContextMenuCommandBuilder } from 'discord.js'
+import type { TextChannel } from 'discord.js'
 import { command, settingsDB } from 'utils'
-const meta = new ContextMenuCommandBuilder().setName('Tag as Pirate').setType(ApplicationCommandType.User)
+const meta = new ContextMenuCommandBuilder()
+    .setName('Tag as Pirate')
+    .setType(ApplicationCommandType.User)
 
 export default command(meta, async ({ interaction }) => {
     if (!interaction.isContextMenuCommand) return
@@ -9,15 +11,23 @@ export default command(meta, async ({ interaction }) => {
 
     const User = interaction.targetUser
 
-    const setting_markedMembersChannel = settingsDB.query(`SELECT value FROM settings WHERE key = 'markedMembersChannel'`).get() as { value: string }
+    const setting_markedMembersChannel = settingsDB
+        .query(`SELECT value FROM settings WHERE key = 'markedMembersChannel'`)
+        .get() as { value: string }
 
-    const channel = interaction.guild.channels.cache.get(setting_markedMembersChannel.value) as TextChannel
+    const channel = interaction.guild!.channels.cache.get(
+        setting_markedMembersChannel.value
+    ) as TextChannel
 
     if (!channel) {
-        return interaction.reply('The Marked Members Channel is not set up yet.')
+        return interaction.reply(
+            'The Marked Members Channel is not set up yet.'
+        )
     }
 
-    const getUserFromDB = settingsDB.query(`SELECT * FROM markedMembers WHERE user = '${User.id}'`).get()
+    const getUserFromDB = settingsDB
+        .query(`SELECT * FROM markedMembers WHERE user = '${User.id}'`)
+        .get()
     if (getUserFromDB) {
         settingsDB.close()
         return interaction.reply({
@@ -67,7 +77,9 @@ export default command(meta, async ({ interaction }) => {
     })
 
     settingsDB
-        .query(`INSERT OR IGNORE INTO markedMembers (user, message, channel, messageid) VALUES (?, ?, ?, ?)`)
+        .query(
+            `INSERT OR IGNORE INTO markedMembers (user, message, channel, messageid) VALUES (?, ?, ?, ?)`
+        )
         .all(User.id, '', channel.id, message.id)
 
     return interaction.reply({

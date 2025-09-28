@@ -8,12 +8,25 @@ import {
     SlashCommandOptionsOnlyBuilder,
     SlashCommandSubcommandsOnlyBuilder,
     AutocompleteInteraction,
+    MessageContextMenuCommandInteraction,
+    PrimaryEntryPointCommandInteraction,
+    AnySelectMenuInteraction,
+    ButtonInteraction,
+    ModalMessageModalSubmitInteraction,
 } from 'discord.js'
 
 type LoggerFunction = (...args: any[]) => void
 
 export interface CommandProps {
-    interaction: ChatInputCommandInteraction | AutocompleteInteraction
+    interaction:
+        | ChatInputCommandInteraction
+        | MessageContextMenuCommandInteraction
+        | UserContextMenuCommandInteraction
+        | PrimaryEntryPointCommandInteraction
+        | AnySelectMenuInteraction
+        | ButtonInteraction
+        | AutocompleteInteraction
+        | ModalMessageModalSubmitInteraction
     client: Client
     log: LoggerFunction
 }

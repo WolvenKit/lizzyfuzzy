@@ -2,9 +2,15 @@ import { SlashCommandBuilder } from 'discord.js'
 import { command, update } from 'utils'
 import { Database } from 'bun:sqlite'
 
-const meta = new SlashCommandBuilder().setName('core-versions').setDescription('Display the core Mods and their latest versions')
+const meta = new SlashCommandBuilder()
+    .setName('core-versions')
+    .setDescription('Display the core Mods and their latest versions')
 
 export default command(meta, async ({ interaction }) => {
+    if (!interaction.isChatInputCommand()) return
+    if (!interaction.guild) return
+    if (interaction.user.bot) return
+
     const db = new Database('settings.sqlite')
 
     const query = db.query(`SELECT * FROM 'coremods'`).all()

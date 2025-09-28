@@ -1,8 +1,14 @@
-import { PermissionFlagsBits, SlashCommandBuilder, EmbedBuilder, version } from 'discord.js'
+import {
+    PermissionFlagsBits,
+    SlashCommandBuilder,
+    EmbedBuilder,
+    version,
+} from 'discord.js'
 import { command, errorLog } from 'utils'
 import os from 'os'
 
-const formatMemoryUsage = (data: any) => `${Math.round((data / 1024 / 1024) * 100) / 100} MB`
+const formatMemoryUsage = (data: any) =>
+    `${Math.round((data / 1024 / 1024) * 100) / 100} MB`
 
 const memoryData = process.memoryUsage()
 
@@ -18,7 +24,14 @@ function getAverageUsage() {
 
     timesBefore = timesAfter
 
-    return timeDeltas.map((times) => 1 - times.idle / (times.user + times.sys + times.idle)).reduce((l1, l2) => l1 + l2) / timeDeltas.length
+    return (
+        timeDeltas
+            .map(
+                (times) =>
+                    1 - times.idle / (times.user + times.sys + times.idle)
+            )
+            .reduce((l1, l2) => l1 + l2) / timeDeltas.length
+    )
 }
 
 const meta = new SlashCommandBuilder()
@@ -27,8 +40,13 @@ const meta = new SlashCommandBuilder()
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 
 export default command(meta, async ({ interaction }) => {
+    if (!interaction.isChatInputCommand()) return
+    if (!interaction.guild) return
+
     try {
-        const uptime = interaction.client.uptime ? formatUptime(interaction.client.uptime) : 'N/A'
+        const uptime = interaction.client.uptime
+            ? formatUptime(interaction.client.uptime)
+            : 'N/A'
         function formatUptime(uptime: number): string {
             const seconds = Math.floor((uptime / 1000) % 60)
             const minutes = Math.floor((uptime / (1000 * 60)) % 60)
@@ -66,7 +84,9 @@ export default command(meta, async ({ interaction }) => {
                 },
                 {
                     name: 'Bot Version',
-                    value: 'v' + process.env.npm_package_version?.toString() || 'N/A',
+                    value:
+                        'v' + process.env.npm_package_version?.toString() ||
+                        'N/A',
                     inline: true,
                 },
                 {
@@ -76,7 +96,9 @@ export default command(meta, async ({ interaction }) => {
                 },
                 {
                     name: 'CPU Usage',
-                    value: `${(getAverageUsage() * 100).toFixed(2)}% (average)` || 'N/A',
+                    value:
+                        `${(getAverageUsage() * 100).toFixed(2)}% (average)` ||
+                        'N/A',
                     inline: true,
                 },
                 {

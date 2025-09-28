@@ -1,11 +1,21 @@
-import { MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import {
+    MessageFlags,
+    PermissionFlagsBits,
+    SlashCommandBuilder,
+} from 'discord.js'
 import type { TextChannel } from 'discord.js'
 import { command, errorLog, localBD, log } from 'utils'
 
 const meta = new SlashCommandBuilder()
     .setName('quote')
     .setDescription('quotes')
-    .addNumberOption((option) => option.setName('quote').setDescription('Fetch a Quote by its Global ID').setRequired(false).setMinValue(1))
+    .addNumberOption((option) =>
+        option
+            .setName('quote')
+            .setDescription('Fetch a Quote by its Global ID')
+            .setRequired(false)
+            .setMinValue(1)
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 
 interface quote {
@@ -16,6 +26,10 @@ interface quote {
 }
 
 export default command(meta, async ({ interaction }) => {
+    if (!interaction.isChatInputCommand()) return
+    if (!interaction.guild) return
+    if (interaction.user.bot) return
+
     try {
         const quoteId = interaction.options.getNumber('quote')
         if (!quoteId) {
@@ -76,7 +90,8 @@ export default command(meta, async ({ interaction }) => {
                 })
             default:
                 return interaction.reply({
-                    content: 'Unauthorized to use this Quote. Search for another one.',
+                    content:
+                        'Unauthorized to use this Quote. Search for another one.',
                     flags: MessageFlags.Ephemeral,
                 })
         }

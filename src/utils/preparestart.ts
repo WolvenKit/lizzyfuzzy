@@ -24,7 +24,7 @@ export async function prepareStart() {
             // Check if the Tables already have data.
             const CheckCommands = settingsDB.query(`SELECT * FROM "commands"`).get()
 
-            if (!CheckCommands && process.env.GET_COMMANDS === 'true') {
+            if (!CheckCommands && process.env.GET_COMMANDS === true) {
                 // Get the current commands from the API Global.
                 try {
                     const data = await fetch('http://localhost:3000/commands', {
@@ -47,7 +47,7 @@ export async function prepareStart() {
                 }
             }
 
-            if (process.env.GET_COMMANDS === 'false') {
+            if (process.env.GET_COMMANDS === false) {
                 // If the GET_COMMANDS is disabled, we will not get the commands from the API.
                 // Instead we will use the following env variables to populate the settings database.
 

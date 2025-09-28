@@ -1,25 +1,44 @@
-import { PermissionFlagsBits, SlashCommandBuilder, TextChannel } from 'discord.js'
+import {
+    PermissionFlagsBits,
+    SlashCommandBuilder,
+    TextChannel,
+} from 'discord.js'
 import { command, settingsDB } from 'utils'
 import { Database } from 'bun:sqlite'
 
 const meta = new SlashCommandBuilder()
     .setName('omit')
-    .setDescription('Clean a Users Marked Status fromt the Database and Removed the role.')
-    .addUserOption((option) => option.setName('user').setDescription('The user to mark as a Pirate').setRequired(true))
+    .setDescription(
+        'Clean a Users Marked Status fromt the Database and Removed the role.'
+    )
+    .addUserOption((option) =>
+        option
+            .setName('user')
+            .setDescription('The user to mark as a Pirate')
+            .setRequired(true)
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
 
 export default command(meta, async ({ interaction }) => {
+    if (!interaction.isChatInputCommand()) return
     if (!interaction.guild) return
     if (interaction.user.bot) return
-    if (!interaction.isContextMenuCommand) return
 
     const User = interaction.options.getUser('user', true)
 
-    const getUser = settingsDB.query(`SELECT * FROM markedMembers WHERE user = '${User.id}'`).get()
+    const getUser = settingsDB
+        .query(`SELECT * FROM markedMembers WHERE user = '${User.id}'`)
+        .get()
 
     if (!getUser) {
         const role = interaction.guild.roles.cache.get(
-            (settingsDB.query(`SELECT value FROM settings WHERE key = 'setting_markedMemberRole'`).get() as { value: string }).value
+            (
+                settingsDB
+                    .query(
+                        `SELECT value FROM settings WHERE key = 'setting_markedMemberRole'`
+                    )
+                    .get() as { value: string }
+            ).value
         )
 
         if (!role) {
@@ -56,7 +75,13 @@ export default command(meta, async ({ interaction }) => {
     }
 
     const role = interaction.guild.roles.cache.get(
-        (settingsDB.query(`SELECT value FROM settings WHERE key = 'setting_markedMemberRole'`).get() as { value: string }).value
+        (
+            settingsDB
+                .query(
+                    `SELECT value FROM settings WHERE key = 'setting_markedMemberRole'`
+                )
+                .get() as { value: string }
+        ).value
     )
 
     if (!role) {
@@ -68,7 +93,9 @@ export default command(meta, async ({ interaction }) => {
 
     guildMember.roles.remove(role)
 
-    settingsDB.query(`DELETE FROM markedMembers WHERE user = '${User.id}'`).run()
+    settingsDB
+        .query(`DELETE FROM markedMembers WHERE user = '${User.id}'`)
+        .run()
 
     interaction.reply({
         content: `User ${User.tag} has been cleared from the database.`,
