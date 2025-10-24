@@ -23,10 +23,7 @@ function autoExport() {
 ${files.map((k) => `export * from "./${k}"`).join('\n')}`
     createDir('./src/types/generated')
 
-    fs.writeFileSync(
-        path.resolve(__dirname, '../types/generated/index.d.ts'),
-        exportDef
-    )
+    fs.writeFileSync(path.resolve(__dirname, '../types/generated/index.d.ts'), exportDef)
 }
 
 function generateGraphQLTypes() {
@@ -42,10 +39,7 @@ export type GraphQLFileKey =
 `
     createDir('./src/types/generated')
 
-    fs.writeFileSync(
-        path.resolve(__dirname, '../types/generated/graphql.d.ts'),
-        typeDef
-    )
+    fs.writeFileSync(path.resolve(__dirname, '../types/generated/graphql.d.ts'), typeDef)
 }
 
 function generateSQLTypes() {
@@ -61,8 +55,5 @@ export type SQLFileKey =
 `
     createDir('./src/types/generated')
 
-    fs.writeFileSync(
-        path.resolve(__dirname, '../types/generated/sql.d.ts'),
-        typeDef
-    )
+    fs.writeFileSync(path.resolve(__dirname, '../types/generated/sql.d.ts'), typeDef)
 }

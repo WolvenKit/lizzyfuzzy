@@ -23,9 +23,7 @@ export default event('messageCreate', async ({ client }, Message) => {
         const findMessage = messageMap.get(Message.member?.id) as message
 
         if (!findMessage) {
-            const message = Hash.update(
-                Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')
-            ).digest('hex')
+            const message = Hash.update(Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')).digest('hex')
 
             return messageMap.set(Message.member?.id, {
                 memberId: Message.member?.id,
@@ -40,9 +38,7 @@ export default event('messageCreate', async ({ client }, Message) => {
             memberId: Message.member?.id,
             lastMessage: findMessage.newMessage,
             timestampLastMesage: findMessage.timestampLastMessage,
-            newMessage: Hash.update(
-                Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')
-            ).digest('hex'),
+            newMessage: Hash.update(Message.content.toLocaleLowerCase().trim().replace(/\s/g, '')).digest('hex'),
             timestampNewMessage: Message.createdTimestamp,
         })
 
@@ -52,10 +48,7 @@ export default event('messageCreate', async ({ client }, Message) => {
         const isSameMessage = newMessage.lastMessage === newMessage.newMessage
 
         const isTimeRange =
-            Math.abs(
-                new Date(newMessage.timestampNewMessage ?? 0).getTime() -
-                    new Date(newMessage.timestampLastMessage ?? 0).getTime()
-            ) >
+            Math.abs(new Date(newMessage.timestampNewMessage ?? 0).getTime() - new Date(newMessage.timestampLastMessage ?? 0).getTime()) >
             TimeRangeInMinutes * 60 * 1000
 
         if (isSameMessage && isTimeRange) {

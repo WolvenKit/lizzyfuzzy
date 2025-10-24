@@ -1,33 +1,14 @@
-import {
-    SlashCommandBuilder,
-    TextBasedChannel,
-    TextChannel,
-    User,
-} from 'discord.js'
+import { SlashCommandBuilder, TextBasedChannel, TextChannel, User } from 'discord.js'
 import { command } from 'utils'
 
 const meta = new SlashCommandBuilder()
     .setName('reminder')
-    .addStringOption((option) =>
-        option
-            .setName('message')
-            .setDescription('The message to remind you about')
-            .setRequired(true)
-    )
-    .addNumberOption((option) =>
-        option
-            .setName('time')
-            .setDescription('The time in minutes to remind you')
-            .setRequired(true)
-    )
-    .setDescription(
-        "Reminder Function, works if the bot is online and hasn't restarted/crashed"
-    )
+    .addStringOption((option) => option.setName('message').setDescription('The message to remind you about').setRequired(true))
+    .addNumberOption((option) => option.setName('time').setDescription('The time in minutes to remind you').setRequired(true))
+    .setDescription("Reminder Function, works if the bot is online and hasn't restarted/crashed")
 
 export default command(meta, async ({ interaction }) => {
-    if (!interaction.isChatInputCommand()) return
-    if (!interaction.guild) return
-    if (interaction.user.bot) return
+    if (!interaction.isChatInputCommand() || !interaction.guild || interaction.user.bot) return
 
     const message = interaction.options.getString('message', true)
     const time = interaction.options.getNumber('time', true)

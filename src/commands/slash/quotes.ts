@@ -11,9 +11,7 @@ interface quote {
 }
 
 export default command(meta, async ({ interaction }) => {
-    if (!interaction.isChatInputCommand()) return
-    if (!interaction.guild) return
-    if (interaction.user.bot) return
+    if (!interaction.isChatInputCommand() || !interaction.guild || interaction.user.bot) return
 
     await db`
        SELECT * FROM quotes WHERE server = ${interaction.guild.id} AND responde = ${interaction.user.id} OR responde = 'everyone' ORDER BY RANDOM() LIMIT 1;

@@ -16,6 +16,7 @@ import tag from './slash/tag'
 import createquotes from './slash/createQuote'
 import quotes from './slash/quotes'
 import core from './slash/core'
+import admin from './slash/admin'
 
 export default [
     who,
@@ -27,4 +28,5 @@ export default [
     avatar,
     emoji,
     tag,
+    admin,
 ]

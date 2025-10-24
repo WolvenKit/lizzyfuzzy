@@ -1,14 +1,5 @@
 import { Client, ActivityType, Partials } from 'discord.js'
-import {
-    registerEvents,
-    errorLog,
-    log,
-    generateTypes,
-    db,
-    readSQL,
-    firstStart,
-    fromDir,
-} from 'utils'
+import { registerEvents, errorLog, log, generateTypes, db, readSQL, firstStart, fromDir } from 'utils'
 import events from 'botevents'
 import { server } from 'api'
 

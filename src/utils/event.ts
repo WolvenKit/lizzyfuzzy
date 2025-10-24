@@ -1,10 +1,7 @@
 import { Event, EventExec, EventKeys } from 'types'
 import { Client } from 'discord.js'
 
-export function event<T extends EventKeys>(
-    id: T,
-    exec: EventExec<T>
-): Event<T> {
+export function event<T extends EventKeys>(id: T, exec: EventExec<T>): Event<T> {
     return {
         id,
         exec,

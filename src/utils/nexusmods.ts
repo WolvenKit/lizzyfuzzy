@@ -1,9 +1,7 @@
 import { GraphQL } from './readFile'
 import { errorLog } from './logging'
 
-export async function NexusQuery(
-    username: string | null
-): Promise<NexusQueryResult | undefined> {
+export async function NexusQuery(username: string | null): Promise<NexusQueryResult | undefined> {
     try {
         if (!username) return undefined
         const UserData = await fetch(process.env.NEXUSMODS_URI, {

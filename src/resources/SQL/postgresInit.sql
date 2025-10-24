@@ -54,3 +54,10 @@ CREATE TABLE
         github JSONB,
         roles JSONB
     );
+
+CREATE TABLE
+    IF NOT EXISTS quotesblock (
+        id SERIAL PRIMARY KEY,
+        channelname TEXT NOT NULL,
+        channelid TEXT NOT NULL
+    );

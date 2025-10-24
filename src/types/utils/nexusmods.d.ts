@@ -18,7 +18,7 @@ type NexusQuery =
                       game: {
                           domainName: string
                       }
-                  }
+                  },
               ]
           }
           userByName: {

@@ -5,10 +5,7 @@ import path from 'node:path'
 export async function firstStart() {
     await db.unsafe(readSQL().postgresInit)
 
-    const quotesData = fs.readFileSync(
-        path.join(__dirname, '../resources/quotes.json'),
-        'utf-8'
-    )
+    const quotesData = fs.readFileSync(path.join(__dirname, '../resources/quotes.json'), 'utf-8')
 
     const quotesCount = await db`SELECT * FROM quotes`
     if (quotesCount.length > 0) {

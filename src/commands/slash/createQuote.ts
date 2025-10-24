@@ -1,31 +1,15 @@
-import {
-    MessageFlags,
-    PermissionFlagsBits,
-    SlashCommandBuilder,
-} from 'discord.js'
+import { MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import { command, db, log } from 'utils'
 
 const meta = new SlashCommandBuilder()
     .setName('create-quote')
     .setDescription('Create data for the Database!')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-    .addStringOption((option) =>
-        option
-            .setName('quote')
-            .setDescription('The quote itself')
-            .setRequired(true)
-    )
-    .addBooleanOption((option) =>
-        option
-            .setName('private')
-            .setDescription('Whether the response should be private')
-            .setRequired(false)
-    )
+    .addStringOption((option) => option.setName('quote').setDescription('The quote itself').setRequired(true))
+    .addBooleanOption((option) => option.setName('private').setDescription('Whether the response should be private').setRequired(false))
 
 export default command(meta, async ({ interaction }) => {
-    if (!interaction.isChatInputCommand()) return
-    if (!interaction.guild) return
-    if (interaction.user.bot) return
+    if (!interaction.isChatInputCommand() || interaction.user.bot || !interaction.guild) return
 
     const quote = interaction.options.getString('quote', true)
     const isPrivate = interaction.options.getBoolean('private', false) || false
@@ -37,9 +21,7 @@ export default command(meta, async ({ interaction }) => {
         VALUES (${quote}, ${respondeId}, ${interaction.guild.id});
     `
         .then(() => {
-            log(
-                `New quote added in server ${interaction.guild?.name} (${interaction.guild?.id}) by ${interaction.user.tag} (${interaction.user.id})`
-            )
+            log(`New quote added in server ${interaction.guild?.name} (${interaction.guild?.id}) by ${interaction.user.tag} (${interaction.user.id})`)
             return interaction.reply({
                 content: 'Quote added successfully!',
                 flags: MessageFlags.Ephemeral,

@@ -5,7 +5,5 @@ export default event('clientReady', async ({}, client) => {
         errorLog(`uncaughtException:  ${error} `)
     })
 
-    log(
-        `Logged as ${client.user.tag} | Running ${client.guilds.cache.size} server(s)!`
-    )
+    log(`Logged as ${client.user.tag} | Running ${client.guilds.cache.size} server(s)!`)
 })

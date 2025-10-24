@@ -8,11 +8,7 @@ interface Data {
     method: string | undefined
 }
 
-export async function getUsers(
-    req: IncomingMessage,
-    res: ServerResponse,
-    data: Data
-) {
+export async function getUsers(req: IncomingMessage, res: ServerResponse, data: Data) {
     const pageQuery = data.query.get('page') || '1'
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -26,11 +22,7 @@ export async function getUsers(
     )
 }
 
-export async function getUser(
-    req: IncomingMessage,
-    res: ServerResponse,
-    data: Data
-) {
+export async function getUser(req: IncomingMessage, res: ServerResponse, data: Data) {
     const pageQuery = data.query.get('q')?.toLocaleLowerCase()!
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -41,11 +33,7 @@ export async function getUser(
     )
 }
 
-export async function getUserById(
-    req: IncomingMessage,
-    res: ServerResponse,
-    data: Data
-) {
+export async function getUserById(req: IncomingMessage, res: ServerResponse, data: Data) {
     const pageQuery = data.query.get('q')?.toLowerCase()!
 
     res.writeHead(200, { 'Content-Type': 'application/json' })

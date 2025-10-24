@@ -14,9 +14,7 @@ export const app = new App({
     installationId: process.env.GITHUB_INSTALLATION_ID,
 })
 
-export const octokit = await app.getInstallationOctokit(
-    Number(process.env.GITHUB_INSTALLATION_ID)
-)
+export const octokit = await app.getInstallationOctokit(Number(process.env.GITHUB_INSTALLATION_ID))
 
 export async function Updater() {
     const data = await octokit.graphql(GraphQL().Updater)
@@ -26,9 +24,7 @@ export async function Updater() {
     return data
 }
 
-export async function GithubQuery(
-    author: string | null
-): Promise<GithubQuery | undefined> {
+export async function GithubQuery(author: string | null): Promise<GithubQuery | undefined> {
     try {
         if (!author) return undefined
 
@@ -47,15 +43,11 @@ export async function GithubQuery(
         const GithubUserId = GithubUserByName.data.node_id
         if (!author) return null
 
-        const data: GithubQueryReturn =
-            await octokit.graphql<GithubQueryReturn>(
-                GraphQL().GithubUserQuery,
-                {
-                    author: author,
-                    authorId: GithubUserId,
-                    repos: RepoIds,
-                }
-            )
+        const data: GithubQueryReturn = await octokit.graphql<GithubQueryReturn>(GraphQL().GithubUserQuery, {
+            author: author,
+            authorId: GithubUserId,
+            repos: RepoIds,
+        })
 
         if (!data) {
             return null
@@ -66,17 +58,10 @@ export async function GithubQuery(
                 const returnData = {
                     Name: node.nameWithOwner,
                     Issues: node.issues.totalCount,
-                    Commits: node.defaultBranchRef
-                        ? node.defaultBranchRef.target.history.totalCount
-                        : null,
+                    Commits: node.defaultBranchRef ? node.defaultBranchRef.target.history.totalCount : null,
                 }
 
-                if (
-                    node.issues.totalCount === 0 &&
-                    (node.defaultBranchRef
-                        ? node.defaultBranchRef.target.history.totalCount === 0
-                        : true)
-                ) {
+                if (node.issues.totalCount === 0 && (node.defaultBranchRef ? node.defaultBranchRef.target.history.totalCount === 0 : true)) {
                     return null
                 }
 

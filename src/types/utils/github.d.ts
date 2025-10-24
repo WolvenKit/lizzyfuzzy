@@ -1,6 +1,4 @@
-type GithubQuery =
-    | { Name: string; Issues: number; Commits: number | null }[]
-    | null
+type GithubQuery = { Name: string; Issues: number; Commits: number | null }[] | null
 
 type GithubQueryReturn = {
     nodes: [
@@ -14,7 +12,7 @@ type GithubQueryReturn = {
                     totalCount: number
                 }
             }
-        } | null
+        } | null,
     ]
 } | null
 

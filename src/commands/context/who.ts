@@ -1,18 +1,10 @@
-import {
-    ContextMenuCommandBuilder,
-    EmbedBuilder,
-    MessageFlags,
-    PermissionFlagsBits,
-    SlashCommandBuilder,
-} from 'discord.js'
+import { ContextMenuCommandBuilder, EmbedBuilder, MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import { command } from 'utils'
 
 const meta = new ContextMenuCommandBuilder().setName('User Info').setType(2) // 2 is for user context menu
 
 export default command(meta, async ({ interaction }) => {
-    if (!interaction.isUserContextMenuCommand()) return
-    if (!interaction.guild) return
-    if (interaction.user.bot) return
+    if (!interaction.isUserContextMenuCommand() || interaction.user.bot || !interaction.guild) return
 
     const member = await interaction.guild.members.fetch(interaction.targetId)
     if (!member) return interaction.reply('Member not found')
@@ -34,16 +26,12 @@ export default command(meta, async ({ interaction }) => {
             },
             {
                 name: 'Account Created',
-                value: `<t:${Math.floor(
-                    member.user.createdTimestamp / 1000
-                )}:F>`,
+                value: `<t:${Math.floor(member.user.createdTimestamp / 1000)}:F>`,
                 inline: false,
             },
             {
                 name: 'Roles',
-                value:
-                    member.roles.cache.map((role) => role.name).join(', ') ||
-                    'None',
+                value: member.roles.cache.map((role) => role.name).join(', ') || 'None',
                 inline: false,
             }
         )
