@@ -1,7 +1,7 @@
-import { errorLog, event, db } from 'utils'
+import { errorLog, event } from 'utils'
 import { GuildBasedChannel, Message, TextChannel } from 'discord.js'
 
-export default event('messageCreate', async ({ client }, Message) => {
+export default event('messageCreate', async ({},Message) => {
     try {
         const message = Message as Message
 
@@ -34,11 +34,7 @@ export default event('messageCreate', async ({ client }, Message) => {
 
         if (!originalMessage) return
 
-        const NoGoChannels: string[] = await db`
-            SELECT channelid FROM quotesblock;
-        `.then((res: { channelid: string }[]) =>
-            res.map((row) => row.channelid)
-        )
+        const NoGoChannels: string[] = ['786519136833372171'] 
 
         if (NoGoChannels.includes(originalMessage.channel.id)) return
 

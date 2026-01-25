@@ -1,5 +1,4 @@
 import { ApplicationCommandType, ContextMenuCommandBuilder, MessageFlags } from 'discord.js'
-import type { UserContextMenuCommandInteraction } from 'discord.js'
 import { command } from 'utils'
 const meta = new ContextMenuCommandBuilder().setName('Get Avatar').setType(ApplicationCommandType.User)
 

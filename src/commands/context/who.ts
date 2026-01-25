@@ -1,4 +1,4 @@
-import { ContextMenuCommandBuilder, EmbedBuilder, MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import { ContextMenuCommandBuilder, EmbedBuilder, MessageFlags } from 'discord.js'
 import { command } from 'utils'
 
 const meta = new ContextMenuCommandBuilder().setName('User Info').setType(2) // 2 is for user context menu
