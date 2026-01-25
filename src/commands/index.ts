@@ -12,21 +12,9 @@ import avatar from './context/avatar'
 
 import link from './slash/link'
 import clear from './slash/clear'
-import tag from './slash/tag'
 import createquotes from './slash/createQuote'
 import quotes from './slash/quotes'
-import core from './slash/core'
 import admin from './slash/admin'
+// import stats from './slash/stats'
 
-export default [
-    who,
-    link,
-    clear,
-    core,
-    quotes,
-    createquotes,
-    avatar,
-    emoji,
-    tag,
-    admin,
-]
+export default [who, link, clear, quotes, createquotes, avatar, emoji, admin]

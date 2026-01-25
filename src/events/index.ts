@@ -4,12 +4,14 @@ import interactionCreate from './interactionCreate'
 import quote from './quote'
 import repeat from './checker'
 import tag from './tag'
+import stats from './minnie/stats'
 
 const productionEvents: Event<any>[] = [
     ready,
     quote,
     interactionCreate,
     repeat,
+    stats,
     // tag,
 ]
 
@@ -18,6 +20,7 @@ const developmentEvents: Event<any>[] = [
     interactionCreate,
     quote,
     repeat,
+    stats,
     // tag,
 ]
 

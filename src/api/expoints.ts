@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
-import { userDB, db } from 'src/utils'
+import { db } from 'src/utils'
 
 interface Data {
     url: URL
@@ -8,7 +8,11 @@ interface Data {
     method: string | undefined
 }
 
-export async function getUsers(req: IncomingMessage, res: ServerResponse, data: Data) {
+export async function getUsers(
+    req: IncomingMessage,
+    res: ServerResponse,
+    data: Data
+) {
     const pageQuery = data.query.get('page') || '1'
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -22,7 +26,11 @@ export async function getUsers(req: IncomingMessage, res: ServerResponse, data: 
     )
 }
 
-export async function getUser(req: IncomingMessage, res: ServerResponse, data: Data) {
+export async function getUser(
+    req: IncomingMessage,
+    res: ServerResponse,
+    data: Data
+) {
     const pageQuery = data.query.get('q')?.toLocaleLowerCase()!
 
     res.writeHead(200, { 'Content-Type': 'application/json' })
@@ -33,7 +41,11 @@ export async function getUser(req: IncomingMessage, res: ServerResponse, data: D
     )
 }
 
-export async function getUserById(req: IncomingMessage, res: ServerResponse, data: Data) {
+export async function getUserById(
+    req: IncomingMessage,
+    res: ServerResponse,
+    data: Data
+) {
     const pageQuery = data.query.get('q')?.toLowerCase()!
 
     res.writeHead(200, { 'Content-Type': 'application/json' })

@@ -41,6 +41,30 @@ const meta = new SlashCommandBuilder()
                     .setDescription('List all blocked quote channels')
             )
     )
+    .addSubcommandGroup((group) =>
+        group
+            .setName('db')
+            .setDescription('Database related admin commands')
+            .addSubcommand((subcommand) =>
+                subcommand
+                    .setName('quote-list')
+                    .setDescription('List all quotes in the database')
+            )
+            .addSubcommand((subcommand) =>
+                subcommand.setName('link-data').setDescription('Link data')
+            )
+            .addSubcommand((subcommand) =>
+                subcommand
+                    .setName('link-data-user')
+                    .setDescription('Link data User')
+                    .addStringOption((option) =>
+                        option
+                            .setName('userid')
+                            .setDescription('The Discord User ID')
+                            .setRequired(true)
+                    )
+            )
+    )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 
 export default command(meta, async ({ interaction }) => {
@@ -102,6 +126,70 @@ export default command(meta, async ({ interaction }) => {
 
                 return interaction.reply({
                     content: `Blocked Quote Channels:\n${channelList}`,
+                    flags: MessageFlags.Ephemeral,
+                })
+            }
+        } else if (subcommandGroup === 'db') {
+            if (subcommand === 'quote-list') {
+                const quotes = await db`SELECT * FROM quotes;`
+
+                if (quotes.length === 0) {
+                    return interaction.reply({
+                        content: 'No quotes found in the database.',
+                        flags: MessageFlags.Ephemeral,
+                    })
+                }
+
+                return interaction.reply({
+                    content: `Quotes ammount in DB: ${quotes.length}`,
+                    flags: MessageFlags.Ephemeral,
+                })
+            } else if (subcommand === 'link-data') {
+                const users = await db`SELECT * FROM users;`
+
+                if (users.length === 0) {
+                    return interaction.reply({
+                        content: 'No linked users found in the database.',
+                        flags: MessageFlags.Ephemeral,
+                    })
+                }
+
+                // Username and Discord ID list
+                const userList = users
+                    .map(
+                        (user: { username: any; discordid: any }) =>
+                            `• ${user.username} (Discord ID: ${user.discordid})`
+                    )
+                    .join('\n')
+
+                // if 2000 characters exceeded, truncate
+                if (userList.length > 2000) {
+                    return interaction.reply({
+                        content:
+                            'The list of linked users is too long to display.',
+                        flags: MessageFlags.Ephemeral,
+                    })
+                }
+
+                return interaction.reply({
+                    content: `Linked Users:\n${userList}`,
+                    flags: MessageFlags.Ephemeral,
+                })
+            } else if (subcommand === 'link-data-user') {
+                const userId = interaction.options.getString('userid')
+
+                const user =
+                    await db`SELECT * FROM users WHERE discordid = ${userId};`
+
+                if (user.length === 0) {
+                    return interaction.reply({
+                        content: `No linked user found with Discord ID: ${userId}.`,
+                        flags: MessageFlags.Ephemeral,
+                    })
+                }
+
+                return interaction.reply({
+                    content: `User Data for Discord ID ${userId}:\nUsername: ${user[0].username}\nGitHub: ${user[0].githubusername}\nNexus Mods: ${user[0].nexusmodsusername}`,
                     flags: MessageFlags.Ephemeral,
                 })
             }

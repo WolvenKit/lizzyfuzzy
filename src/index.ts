@@ -1,5 +1,14 @@
 import { Client, ActivityType, Partials } from 'discord.js'
-import { registerEvents, errorLog, log, generateTypes, db, readSQL, firstStart, fromDir } from 'utils'
+import {
+    registerEvents,
+    errorLog,
+    log,
+    generateTypes,
+    db,
+    readSQL,
+    firstStart,
+    fromDir,
+} from 'utils'
 import events from 'botevents'
 import { server } from 'api'
 
@@ -57,10 +66,13 @@ const key = fromDir('./src/resources/Api', '.key')
 
 if (cert && key) {
     server.listen(8000, () => {
-        log('Server running at https://localhost:8080/')
+        log('Server running at https://localhost:8000/')
     })
 } else {
-    errorLog('API SSL Certificate or Key not found. Server not started.')
+    server.listen(8000, () => {
+        log('Server running at http://localhost:8000/')
+    })
+    // errorLog('API SSL Certificate or Key not found. Server not started.')
 }
 
 export default [client]
