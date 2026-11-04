@@ -3,7 +3,7 @@ import { errorLog, event } from 'utils'
 export default event('guildMemberAdd', async ({ client }, User) => {
     try {
         const supportServer = client.guilds.cache.get(process.env.SUPPORT_GUILD) || (await client.guilds.fetch(process.env.SUPPORT_GUILD))
-        const user = supportServer.members.cache.find((user) => user.id == User.id) || (await supportServer.members.fetch(User.id))
+        const user = await supportServer.members.fetch(User.id)
 
         if (!user) return
 
