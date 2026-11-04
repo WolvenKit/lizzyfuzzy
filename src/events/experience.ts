@@ -56,6 +56,10 @@ async function calcLevel(userId: string, guildId: string, result: XPCalculation)
     }
 
     db.prepare(`update experience set level = ${level} where discordid = ${userId} AND guildid = ${guildId}`).run()
+
+    return {
+        level,
+    }
 }
 
 export default event('messageCreate', async ({ client }, Message) => {
@@ -70,13 +74,18 @@ export default event('messageCreate', async ({ client }, Message) => {
 
         if (result.xp <= 0) return
 
-        calcLevel(Message.author.id, Message.guild.id, result)
+        const newLevel = await calcLevel(Message.author.id, Message.guild.id, result)
 
         await setData(Message.author.id, Message.guild.id, result)
 
         await getData(Message.author.id, Message.guild.id)
 
-        log(`${Message.author.tag} earned ${result.xp} XP ` + `(${result.words} words, ` + `${result.attachments} attachments)`)
+        log(
+            `${Message.author.tag} earned ${result.xp} XP ` +
+                `(${result.words} words, ` +
+                `${result.attachments} attachments), ` +
+                `${newLevel.level} level`
+        )
     } catch (e) {
         errorLog(e)
     }
