@@ -6,21 +6,11 @@ declare module 'process' {
                 GUILD: string
                 API_ENDPOINT: string
                 NODE_ENV: 'development' | 'production'
-                markedMembersChannel: string
-                moderationCategory: string
-                moderationLogChannel: string
-                settingMarkedMemberRole: string
-                CREATOR: string
-                GET_COMMANDS: boolean
-                USER_CHECKS: boolean
-                NEXUSMODS_URI: string
-                GITHUB_APP_ID: string
-                GITHUB_URI: string
-                GITHUB_INSTALLATION_ID: string
-                POSTGRES_PASSWORD: string
-                POSTGRES_USERNAME: string
-                POSTGRES_URL: string
-                POSTGRES_DATABASE: string
+                SUPPORT_MODERATOR_ROLE: string
+                PRIMARY_GUILD: string
+                SUPPORT_GUILD: string
+                OPEN_TICKET_CATEGORY: string
+                CLOSED_TICKET_CATEGORY: string
             }
 
             interface Process extends EventEmitter {
