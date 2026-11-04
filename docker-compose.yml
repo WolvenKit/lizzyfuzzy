@@ -6,4 +6,4 @@ services:
     #   dockerfile: Dockerfile
     volumes:
       - './.env:/.env'
-      - './database:/src/database:rw'
+      - './database:/app/database:rw'
