@@ -20,7 +20,6 @@ const client = new Client({
         'GuildWebhooks',
         'GuildInvites',
         'GuildVoiceStates',
-        'GuildPresences',
         'GuildMessages',
         'GuildMessageReactions',
         'GuildMessageTyping',
