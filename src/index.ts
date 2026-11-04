@@ -5,7 +5,7 @@ import { Database } from 'bun:sqlite'
 
 import { createTable } from './scripts/database'
 
-export const db = new Database('database.sqlite')
+export const db = new Database('src/database/database.sqlite')
 
 createTable()
 
