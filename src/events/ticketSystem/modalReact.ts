@@ -116,7 +116,7 @@ export default event('interactionCreate', async ({ client }, Interaction) => {
 
             await Interaction.deferUpdate()
         } catch (error) {
-            console.log(error)
+            errorLog(error)
 
             await Interaction.reply({
                 content: 'Looks like something has gone wrong. Please try again. If this issue persists, feel free to DM <@220278978898821121>',

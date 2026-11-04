@@ -221,7 +221,7 @@ export default event('interactionCreate', async ({ client }, Interaction) => {
                     flags: MessageFlags.IsComponentsV2,
                 })
             } catch (e) {
-                console.log(e)
+                errorLog(e)
             }
 
             const DMChannel = await Interaction.user.createDM()

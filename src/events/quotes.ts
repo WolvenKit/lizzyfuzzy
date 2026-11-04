@@ -8,11 +8,8 @@ export default event('messageCreate', async ({}, Message) => {
         if (message.author.bot) return
         if ((message.channel as TextChannel).nsfw === true) return
         const regex = /(.*)((https:\/\/discord.com\/)(channels)\/(\d+)\/(\d+)\/(\d+))(.*)/g
-        console.log(Message)
 
         const messageContent = regex.exec(Message.content)
-
-        console.log(messageContent)
 
         if (!messageContent) return
 
