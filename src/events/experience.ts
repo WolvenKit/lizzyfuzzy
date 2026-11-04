@@ -81,7 +81,7 @@ export default event('messageCreate', async ({ client }, Message) => {
         await getData(Message.author.id, Message.guild.id)
 
         log(
-            `${Message.author.displayName} earned ${result.xp} XP ` +
+            `${Message.author.tag} (${Message.author.id}) earned ${result.xp} XP ` +
                 `(${result.words} words, ` +
                 `${result.attachments} attachments), ` +
                 `${newLevel.level} level`
