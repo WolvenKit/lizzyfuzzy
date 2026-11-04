@@ -6,4 +6,6 @@ services:
     #   dockerfile: Dockerfile
     volumes:
       - './.env:/.env'
-      - './database:/app/database:rw'
+      - type: bind
+        source: ./database
+        target: /app/database
