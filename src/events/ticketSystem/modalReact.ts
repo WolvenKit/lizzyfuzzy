@@ -124,6 +124,6 @@ export default event('interactionCreate', async ({ client }, Interaction) => {
             })
         }
     } catch (e) {
-        errorLog(e)
+        errorLog('modalReact ' + e)
     }
 })

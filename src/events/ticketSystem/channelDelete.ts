@@ -6,6 +6,6 @@ export default event('channelDelete', async ({ client }, Interaction) => {
         const channel = Interaction.id
         db.prepare(`DELETE FROM channels WHERE channelid = ${channel}`).run()
     } catch (e) {
-        errorLog(e)
+        errorLog('channelDelete ' + e)
     }
 })

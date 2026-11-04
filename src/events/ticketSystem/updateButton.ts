@@ -50,6 +50,6 @@ export default event('interactionCreate', async ({ client }, Interaction) => {
             flags: MessageFlags.IsComponentsV2,
         })
     } catch (e) {
-        errorLog(e)
+        errorLog('updateButton ' + e)
     }
 })

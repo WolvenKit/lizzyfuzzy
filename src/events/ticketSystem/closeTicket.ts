@@ -280,6 +280,6 @@ export default event('interactionCreate', async ({ client }, Interaction) => {
             channel.setParent(process.env.CLOSED_TICKET_CATEGORY)
         }
     } catch (e) {
-        errorLog(e)
+        errorLog('closeTicket ' + e)
     }
 })

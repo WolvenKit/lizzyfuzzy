@@ -26,6 +26,6 @@ export default event('interactionCreate', async ({ client }, Interaction) => {
             Interaction.showModal(modal)
         }
     } catch (e) {
-        errorLog(e)
+        errorLog('modalCreate ' + e)
     }
 })

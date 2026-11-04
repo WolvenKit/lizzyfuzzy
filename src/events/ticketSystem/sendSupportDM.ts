@@ -23,6 +23,6 @@ export default event('messageCreate', async ({ client }, Interaction) => {
             content: `${Interaction.author.displayName}: ${Interaction.content}`,
         })
     } catch (e) {
-        errorLog(e)
+        errorLog('sendSupportDM ' + e)
     }
 })

@@ -87,6 +87,6 @@ export default event('messageCreate', async ({ client }, Message) => {
                 `${newLevel.level} level`
         )
     } catch (e) {
-        errorLog(e)
+        errorLog('experience ' + e)
     }
 })

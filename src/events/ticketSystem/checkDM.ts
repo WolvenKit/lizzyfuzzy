@@ -81,6 +81,6 @@ export default event('messageCreate', async ({ client }, Interaction) => {
             }
         }
     } catch (e) {
-        errorLog(e)
+        errorLog('checkDM ' + e)
     }
 })
