@@ -7,5 +7,3 @@ services:
     volumes:
       - './.env:/.env'
       - './database.sqlite:/database.sqlite'
-    depends_on:
-      - api
