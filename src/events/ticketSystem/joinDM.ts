@@ -2,6 +2,7 @@ import { errorLog, event } from 'utils'
 
 export default event('guildMemberAdd', async ({ client }, User) => {
     try {
+        console.log(User.guild.id)
         const supportServer = client.guilds.cache.get(process.env.SUPPORT_GUILD) || (await client.guilds.fetch(process.env.SUPPORT_GUILD))
         const user = (await supportServer.members.fetch(User.id)) || null
 
