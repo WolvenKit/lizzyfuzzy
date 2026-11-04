@@ -7,7 +7,7 @@ import quotes from './quotes'
 import { ticketSystem } from './ticketSystem'
 import experience from './experience'
 
-const productionEvents: Event<any>[] = [ready, interactionCreate, repeat, quotes, experience]
+const productionEvents: Event<any>[] = [ready, interactionCreate, repeat, quotes, experience, ...ticketSystem]
 
 const developmentEvents: Event<any>[] = [ready, interactionCreate, repeat, ...ticketSystem, buttonReact, experience, quotes]
 
