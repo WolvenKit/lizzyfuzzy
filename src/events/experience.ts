@@ -66,7 +66,7 @@ export default event('messageCreate', async ({ client }, Message) => {
     try {
         // Ignore bots and DMs
         if (!Message.guild || Message.author.bot) return
-        if (Message.guildId === process.env.SUPPORT_GUILD) return
+        if (Message.guild.id == process.env.SUPPORT_GUILD) return
 
         const level = await getUserLevel(Message.author.id, Message.guild.id)
 
@@ -81,7 +81,7 @@ export default event('messageCreate', async ({ client }, Message) => {
         await getData(Message.author.id, Message.guild.id)
 
         log(
-            `${Message.author.tag} earned ${result.xp} XP ` +
+            `${Message.author.displayName} earned ${result.xp} XP ` +
                 `(${result.words} words, ` +
                 `${result.attachments} attachments), ` +
                 `${newLevel.level} level`
