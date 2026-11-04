@@ -1,10 +1,11 @@
 services:
-    lizzy:
-        image: moonded/lizzyfuzzy:latest
-        # build:
-        #   context: .
-        #   dockerfile: Dockerfile
-        volumes:
-            - './.env:/.env'
-        depends_on:
-            - api
+  lizzy:
+    image: moonded/lizzyfuzzy:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    volumes:
+      - './.env:/.env'
+      - './database.sqlite:/database.sqlite'
+    depends_on:
+      - api
