@@ -8,4 +8,4 @@ services:
       - './.env:/.env'
       - type: bind
         source: ./database
-        target: /app/database
+        target: /database
