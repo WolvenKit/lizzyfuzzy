@@ -7,3 +7,7 @@ services:
     volumes:
       - './.env:/.env'
       - './database:/database:rw'
+
+volumes:
+  database:
+    external: true
