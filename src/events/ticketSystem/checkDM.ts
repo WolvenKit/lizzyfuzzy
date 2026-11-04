@@ -53,7 +53,7 @@ export default event('messageCreate', async ({ client }, Interaction) => {
         if (!Interaction.channel.isDMBased()) return
 
         const supportServer = client.guilds.cache.get(process.env.SUPPORT_GUILD) || (await client.guilds.fetch(process.env.SUPPORT_GUILD))
-        const user = await supportServer.members.fetch(Interaction.author.id)
+        const user = (await supportServer.members.fetch(Interaction.author.id)) || null
         if (!user) return
 
         const discordid = Interaction.author.id
