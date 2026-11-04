@@ -24,7 +24,8 @@ async function main() {
         log('Development mode')
         const endpoint = {
             global: Routes.applicationCommands(currentUser.id),
-            local: Routes.applicationGuildCommands(currentUser.id, '1278051511087399114'),
+            // local: Routes.applicationGuildCommands(currentUser.id, '1278051511087399114'),
+            local: Routes.applicationGuildCommands(currentUser.id, '1565733038909034658'),
         }
         await rest.put(endpoint.local, {
             body: body.map((cmd) => cmd),

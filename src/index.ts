@@ -1,10 +1,13 @@
 import { Client, ActivityType, Partials } from 'discord.js'
-import {
-    registerEvents,
-    errorLog,
-} from 'utils'
+import { registerEvents, errorLog } from 'utils'
 import events from 'botevents'
+import { Database } from 'bun:sqlite'
 
+import { createTable } from './scripts/database'
+
+export const db = new Database('database.sqlite')
+
+createTable()
 
 const client = new Client({
     shards: 'auto',
