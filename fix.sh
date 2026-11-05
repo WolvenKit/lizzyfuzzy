@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker cp lizzy:/app/database/database.sqlite ./database/databas.sqlite
+docker cp lizzy:/app/database/database.sqlite ./database/database.sqlite
