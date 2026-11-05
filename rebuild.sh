@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker compose up -d --force-rebuild
+docker compose up -d --force-recreate
