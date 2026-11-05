@@ -1,11 +1,11 @@
+name: 'lizzy'
 services:
   lizzy:
-    image: moonded/lizzyfuzzy:latest
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
+    # image: moonded/lizzyfuzzy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - './.env:/.env'
-      - type: bind
-        source: ./database
-        target: /database
+      - './.env:/app/.env'
+      - './database:/app/database:rw'
+    hostname: 'bot'
