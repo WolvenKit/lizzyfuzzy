@@ -1,4 +1,4 @@
-import { errorLog, event } from 'utils'
+import { errorLog, event, warnLog } from 'utils'
 import { db } from 'src/index'
 import type { OmitPartialGroupDMChannel, Message, Guild, DMChannel, TextChannel } from 'discord.js'
 import {
@@ -9,7 +9,6 @@ import {
     MessageFlags,
     TextDisplayBuilder,
     MessageActionRowComponentBuilder,
-    Attachment,
 } from 'discord.js'
 import type Database from 'bun:sqlite'
 import type { Channel } from 'src/types/database'
@@ -54,7 +53,10 @@ export default event('messageCreate', async ({ client }, Interaction) => {
 
         const supportServer = client.guilds.cache.get(process.env.SUPPORT_GUILD) || (await client.guilds.fetch(process.env.SUPPORT_GUILD))
         const user = (await supportServer.members.fetch(Interaction.author.id)) || null
-        if (!user) return
+        if (!user) {
+            warnLog(Interaction.author.id + ' tried to use the ticket system without being on the support server.')
+            return
+        }
 
         const discordid = Interaction.author.id
         const channel = db.query(`SELECT * FROM channels WHERE discordid = ${discordid} AND active = 1`).get() as Channel | null
