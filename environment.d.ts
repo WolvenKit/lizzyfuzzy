@@ -11,6 +11,7 @@ declare module 'process' {
                 SUPPORT_GUILD: string
                 OPEN_TICKET_CATEGORY: string
                 CLOSED_TICKET_CATEGORY: string
+                XP_COEFFICIANT: number
             }
 
             interface Process extends EventEmitter {

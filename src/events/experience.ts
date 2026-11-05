@@ -50,8 +50,8 @@ async function calcLevel(userId: string, guildId: string, result: XPCalculation)
     let totalXP = xp.experience
     let level = xp.level
 
-    while (totalXP >= (level + 1) * 500) {
-        totalXP -= (level + 1) * 500
+    while (totalXP >= (level + 1) * process.env.XP_COEFFICIANT) {
+        totalXP -= (level + 1) * process.env.XP_COEFFICIANT
         level++
     }
 
