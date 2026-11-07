@@ -10,6 +10,6 @@ import { speechSystem } from './speech'
 
 const productionEvents: Event<any>[] = [ready, interactionCreate, quotes, experience, ...ticketSystem]
 
-const developmentEvents: Event<any>[] = [ready, interactionCreate, repeat, ...speechSystem, buttonReact, quotes]
+const developmentEvents: Event<any>[] = [ready, interactionCreate, ...speechSystem, buttonReact, quotes]
 
 export default process.env.NODE_ENV === 'production' ? productionEvents : developmentEvents
