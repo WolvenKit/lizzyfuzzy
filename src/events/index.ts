@@ -6,9 +6,10 @@ import buttonReact from './init/buttonReact'
 import quotes from './quotes'
 import { ticketSystem } from './ticketSystem'
 import experience from './experience'
+import { speechSystem } from './speech'
 
-const productionEvents: Event<any>[] = [ready, interactionCreate, repeat, quotes, experience, ...ticketSystem]
+const productionEvents: Event<any>[] = [ready, interactionCreate, quotes, experience, ...ticketSystem]
 
-const developmentEvents: Event<any>[] = [ready, interactionCreate, repeat, ...ticketSystem, buttonReact, experience, quotes]
+const developmentEvents: Event<any>[] = [ready, interactionCreate, repeat, ...speechSystem, buttonReact, quotes]
 
 export default process.env.NODE_ENV === 'production' ? productionEvents : developmentEvents
