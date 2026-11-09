@@ -6,6 +6,7 @@ export default event('guildMemberRemove', async ({}, Member) => {
     try {
         if (Member.user.bot) return
         if (Member.partial) return
+        if (Member.guild.id != process.env.SUPPORT_GUILD) return
 
         const channel = (await secondaryGuild.channels.fetch(process.env.JOIN_LEAVE_CHANNEL)) as TextChannel
 
