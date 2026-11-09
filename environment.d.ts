@@ -12,6 +12,7 @@ declare module 'process' {
                 OPEN_TICKET_CATEGORY: string
                 CLOSED_TICKET_CATEGORY: string
                 XP_COEFFICIANT: number
+                JOIN_LEAVE_CHANNEL: string
             }
 
             interface Process extends EventEmitter {

@@ -7,8 +7,9 @@ import quotes from './quotes'
 import { ticketSystem } from './ticketSystem'
 import experience from './experience'
 import { speechSystem } from './speech'
+import { moderation } from './moderation'
 
-const productionEvents: Event<any>[] = [ready, interactionCreate, quotes, experience, ...ticketSystem]
+const productionEvents: Event<any>[] = [ready, interactionCreate, quotes, experience, ...ticketSystem, ...moderation]
 
 const developmentEvents: Event<any>[] = [ready, interactionCreate, ...speechSystem, buttonReact, quotes]
 

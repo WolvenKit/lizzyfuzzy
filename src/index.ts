@@ -48,3 +48,6 @@ client.login(process.env.CLIENT_TOKEN).catch((err) => {
     errorLog('[Login]', err)
     process.exit(1)
 })
+
+export const primaryGuild = await client.guilds.fetch(process.env.PRIMARY_GUILD)
+export const secondaryGuild = await client.guilds.fetch(process.env.SUPPORT_GUILD)
