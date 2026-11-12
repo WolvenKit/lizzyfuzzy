@@ -58,6 +58,8 @@ export default command(meta, async ({ interaction }) => {
         const discordUserData = await getUserData(guild, leaderboardData, interaction)
         if (!discordUserData) return
 
+        console.log(discordUserData)
+
         const container = new ContainerBuilder()
             .addTextDisplayComponents(new TextDisplayBuilder().setContent('## **Leveling Leaderboard**'))
             .addSeparatorComponents(new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Large))
