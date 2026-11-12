@@ -25,7 +25,11 @@ async function getUserData(guild: Guild, leaderboardData: Experience[], interact
         leaderboardData.map(async (User) => {
             if (!interaction.guild) return
 
+            console.log('database user', User)
+
             const user = await guild.members.fetch(User.discordid)
+            console.log('discord user', user)
+
             if (!user) return
 
             const userData = {
