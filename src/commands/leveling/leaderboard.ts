@@ -1,38 +1,20 @@
 import {
     ContainerBuilder,
-    MessageFlags,
     SeparatorBuilder,
     SeparatorSpacingSize,
     TextDisplayBuilder,
-    PermissionFlagsBits,
     SlashCommandBuilder,
-    Guild,
-    ChatInputApplicationCommandData,
-    ChatInputCommandInteraction,
+    ThumbnailBuilder,
+    SectionBuilder,
 } from 'discord.js'
 import { command } from 'utils'
-import { LeaderboardQuerry } from 'src/scripts/interactionQuerries'
-import { Experience } from 'src/types/database'
+import { LeaderboardQuerry, personalLeaderboard } from 'src/scripts/interactionQuerries'
 
-async function getUserData(leaderboardData: Experience[], interaction: ChatInputCommandInteraction) {
-    leaderboardData.map((User) => {
-        if (!interaction.guild) return
-
-        const userData = {
-            username: User.discordid,
-            level: User.level,
-            experience: User.experience,
-        }
-
-        if (!userData) return
-
-        return userData
-    })
-}
 const meta = new SlashCommandBuilder()
     .setName('leaderboard')
     .setDescription('Leaderboard for the internal leveling System.')
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+    .addBooleanOption((i) => i.setName('me').setDescription('Find out your data.'))
+    .addBooleanOption((i) => i.setName('show').setDescription('Show the message everyone.'))
 
 export default command(meta, async ({ interaction }) => {
     try {
@@ -41,10 +23,55 @@ export default command(meta, async ({ interaction }) => {
 
         if (!interaction.guildId) return
 
+        const personaised = interaction.options.getBoolean('me', false) || false
+        const show = interaction.options.getBoolean('show', false) || false
+
+        if (personaised) {
+            const meData = personalLeaderboard(interaction.guildId, interaction.user.id)
+
+            const container = new ContainerBuilder().addSectionComponents(
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder().setContent(
+                            [
+                                `## **Hello <@${meData.discordid}>**`,
+                                '',
+                                `You are currently level: ${meData.level}`,
+                                '---------------------------------',
+                                `- Total messages written: ${meData.messagecount}`,
+                                `- Total experience gathers: ${meData.experience}`,
+                            ].join('\n')
+                        )
+                    )
+                    .setThumbnailAccessory(
+                        new ThumbnailBuilder().setURL(
+                            interaction.user.avatarURL() || 'https://dweeb.faizo.net/media/defaults/dweeb-default-thumbnail.jpg'
+                        )
+                    )
+            )
+            if (show) {
+                return await interaction.reply({
+                    components: [container],
+                    flags: ['IsComponentsV2', 'SuppressNotifications'],
+                    allowedMentions: {
+                        users: [],
+                    },
+                })
+            }
+
+            return await interaction.reply({
+                components: [container],
+                flags: ['IsComponentsV2', 'SuppressNotifications', 'Ephemeral'],
+                allowedMentions: {
+                    users: [],
+                },
+            })
+        }
+
         const leaderboardData = LeaderboardQuerry(interaction.guildId)
 
         const container = new ContainerBuilder()
-            .addTextDisplayComponents(new TextDisplayBuilder().setContent('## **Leveling Leaderboard**'))
+            .addTextDisplayComponents(new TextDisplayBuilder().setContent('## **Leveling  Leaderboard**'))
             .addSeparatorComponents(new SeparatorBuilder().setDivider(true).setSpacing(SeparatorSpacingSize.Large))
             .addTextDisplayComponents(
                 new TextDisplayBuilder().setContent(
@@ -63,9 +90,19 @@ export default command(meta, async ({ interaction }) => {
                 )
             )
 
-        await interaction.reply({
+        if (show) {
+            return await interaction.reply({
+                components: [container],
+                flags: ['IsComponentsV2', 'SuppressNotifications'],
+                allowedMentions: {
+                    users: [],
+                },
+            })
+        }
+
+        return await interaction.reply({
             components: [container],
-            flags: ['IsComponentsV2', 'SuppressNotifications'],
+            flags: ['IsComponentsV2', 'SuppressNotifications', 'Ephemeral'],
             allowedMentions: {
                 users: [],
             },

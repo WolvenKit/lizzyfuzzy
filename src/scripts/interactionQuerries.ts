@@ -46,7 +46,7 @@ export function registerVoiceChatController(guildid: string, messageid: string, 
 }
 
 export function LeaderboardQuerry(guildid: string) {
-    const date = db
+    const data = db
         .query(
             `SELECT *
     FROM (
@@ -66,5 +66,35 @@ export function LeaderboardQuerry(guildid: string) {
         )
         .all() as Experience[]
 
-    return date
+    return data
+}
+
+export function personalLeaderboard(guildid: string, userid: string) {
+    const data = db
+        .query(
+            `SELECT
+                discordid,
+                guildid,
+                level,
+                experience,
+                messagecount,
+                (
+                    SELECT COUNT(*) + 1
+                    FROM experience AS other
+                    WHERE other.guildid = e.guildid
+                      AND (
+                          other.level > e.level
+                          OR (
+                              other.level = e.level
+                              AND other.experience > e.experience
+                          )
+                      )
+                ) AS rank
+            FROM experience AS e
+            WHERE e.guildid = ${guildid}
+              AND e.discordid = ${userid};`
+        )
+        .get() as Experience
+
+    return data
 }
