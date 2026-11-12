@@ -39,7 +39,7 @@ export default command(meta, async ({ interaction }) => {
                                 `You are currently level: ${meData.level}`,
                                 '---------------------------------',
                                 `- Total messages written: ${meData.messagecount}`,
-                                `- Total experience gathers: ${meData.experience}`,
+                                `- Total experience gathered: ${meData.experience}`,
                             ].join('\n')
                         )
                     )
