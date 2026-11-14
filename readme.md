@@ -1,45 +1,50 @@
+![Banner](https://files.moonded.com/share/github_banner_2.png)
+
 # LizzyFuzzy
 
-A simple discord bot for the Cyberpunk Modding Community discord server written in Typescript using [https://discord.js.org/](https://discord.js.org/).
+LizzyFuzzy is the custom Discord bot for the [REDmodding](https://redmodding.org) community [disocrd](https://discord.app/redmodding).
+It is designed around the features and requirements the discord needs.
+Made using [Typescript](https://www.typescriptlang.org/) and [Bun](https://bun.com/).
 
-## Slash Commands
+## Features
 
-### Modding
+LizzyFuzzy containes the following features:
 
-| Command | Description                                        | Requirements |
-| ------- | -------------------------------------------------- | ------------ |
-| `who`   | Admin command for getting information about a user | ManageServer |
+**Type Event**
 
-### Common
+| Name                      | Description                                                                                | Type              |
+| ------------------------- | ------------------------------------------------------------------------------------------ | ----------------- |
+| Ticket System             | A ticket system to recieve and send messages to users through the bot's DM functionalliy.  | Support           |
+| Moderation                | Moderative logging.                                                                        | Moderation        |
+| Voice Channel Creation    | Custom, per user, Voice channel creation with locking and Ownership functionality.         | User Experience   |
+| Speech System             | A custom system to let the Bot talk, on propability of specifies words.                    | Server Experience |
+| Leveling                  | Custom Experience and leveling System                                                      | User Experience   |
+| Quoting                   | Automatically resend messages for an easier quoting experience using a message link        | User Experience   |
+| Dublication Message Check | Checks for the sending of two messages with the same content to prevent multi channel spam | Server Experience |
 
-| Command | Description                             | Requirements |
-| ------- | --------------------------------------- | ------------ |
-| `meme`  | Generate a meme from a memegen template |              |
+**Type Command**
 
-## Message Commands
+| Name                | Description                                                   | Type               |
+| ------------------- | ------------------------------------------------------------- | ------------------ |
+| Leaderboard         | View your position on the leaderboard for the Leveling system | User               |
+| Avatar              | Get a Users avatar                                            | Context/User       |
+| Emoji               | Get the Emoji image as an image file                          | Context/User       |
+| Who                 | Get user information                                          | Context/User/Admin |
+| VoiceChatController | Initate the Voice Chat Controller per server                  | Admin              |
+| Speech              | Add speaking lines for the bot to use in the Speech System    | Admin              |
 
-| Command              | Description                                                 | Requirements |
-| -------------------- | ----------------------------------------------------------- | ------------ |
-| Check DDS Format     | Right click on an uploaded .dds file to get the DXGI format |              |
-| Get custom emote url | Right click on a single emote message to get the emote url  |              |
+## How to run this bot?
 
-## User Commands
+1. Download the repository as a ZIP file then extract it or use GIT.
+2. Setup ./database as an empty folder for the database.
+3. Setup a ./.env file using the example ENV file.
+4. Run ./rebuild.sh for linux or ./rebuild.bat for windows.
 
-| Command         | Description                                 | Requirements |
-| --------------- | ------------------------------------------- | ------------ |
-| Get user avatar | Right click on a user to get the avatar url |              |
+## Requirements
 
-## API
+- Docker & Docker Compose
+- Bun
 
-| Endpoint           | Description                                                      | Requirements                                                         |
-| ------------------ | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
-| /api/discord/user  | Provides information of a user/users                             | Needs search params of `server=server_ID` and json array of user ids |
-| /api/discord/roles | Provides information about all the available roles on the Server | Needs search params of `server=server_ID`                            |
-| /\*                | All Routes                                                       | Every Request requires Authorization via Bearer + Token              |
+## I want to help out!
 
-## Help Functions
-
-| Function            | Description                                                                                      | Requirements |
-| ------------------- | ------------------------------------------------------------------------------------------------ | ------------ |
-| Image to Text       | Convers screenshot images to text and checks for support query reason                            |              |
-| Message File Upload | Checks an uploaded file, specifically log file for their type and information about the problems |              |
+Perfect! Any help is appreciated! Head to out discord server [HERE](https://discord.gg/redmodding) and ask @Moonded for helping out. They then give you any more information required for the project.
