@@ -16,7 +16,7 @@ async function main() {
         log('Production mode')
         const endpoint = {
             global: Routes.applicationCommands(currentUser.id),
-            local: Routes.applicationGuildCommands(currentUser.id, process.env.GUILD),
+            local: Routes.applicationGuildCommands(currentUser.id, process.env.PRIMARY_GUILD),
         }
 
         return currentUser
@@ -24,7 +24,7 @@ async function main() {
         log('Development mode')
         const endpoint = {
             global: Routes.applicationCommands(currentUser.id),
-            local: Routes.applicationGuildCommands(currentUser.id, '1278051511087399114'),
+            local: Routes.applicationGuildCommands(currentUser.id, process.env.PRIMARY_GUILD),
             // local: Routes.applicationGuildCommands(currentUser.id, '1565733038909034658'),
         }
         await rest.put(endpoint.local, {

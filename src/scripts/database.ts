@@ -17,7 +17,7 @@ export async function createTable() {
 
             db.run(content)
 
-            log('Run ' + i + ' without failure.')
+            return log('Run ' + i + ' without failure.')
         } catch (error) {
             errorLog(error)
         }

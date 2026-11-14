@@ -9,6 +9,8 @@ export const db = new Database('./database/database.sqlite')
 
 createTable()
 
+// console.log(new Date(Date.now()).getTime())
+
 const client = new Client({
     shards: 'auto',
     intents: [

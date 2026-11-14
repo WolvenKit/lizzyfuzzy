@@ -7,4 +7,4 @@ import modalCreate from './modalCreate'
 import sendSupportDM from './sendSupportDM'
 import updateButton from './updateButton'
 
-export const ticketSystem = [channelDelete, checkDM, closeTicket, joinDM, modalCreate, modalReact, sendSupportDM, updateButton]
+export default [channelDelete, checkDM, closeTicket, joinDM, modalCreate, modalReact, sendSupportDM, updateButton]

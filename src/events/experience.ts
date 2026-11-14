@@ -8,11 +8,6 @@ interface XPCalculation {
     words: number
     attachments: number
 }
-
-interface LevelCalc {
-    level: number
-}
-
 interface Level {
     level: number
 }
@@ -66,7 +61,7 @@ export default event('messageCreate', async ({ client }, Message) => {
     try {
         // Ignore bots and DMs
         if (!Message.guild || Message.author.bot) return
-        if (Message.guild.id == process.env.SUPPORT_GUILD) return
+        // if (Message.guild.id == process.env.SUPPORT_GUILD) return
 
         const level = await getUserLevel(Message.author.id, Message.guild.id)
 
