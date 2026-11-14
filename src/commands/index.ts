@@ -1,7 +1,8 @@
-import context from "./context";
-import funny from "./funny";
-import pub from "./public";
-import team from "./team";
-import dev from "./dev";
+import who from './context/who'
+import emoji from './context/emoji'
+import avatar from './context/avatar'
+import speech from './speech'
+import admin from './admin'
+import leaderboard from './leveling/leaderboard'
 
-export default [context, funny, pub, team, dev];
+export default [who, avatar, emoji, leaderboard]

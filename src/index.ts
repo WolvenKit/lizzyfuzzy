@@ -1,60 +1,55 @@
-import { Client, ActivityType, Partials } from "discord.js";
-import { registerEvents, keys, errorLog, prepareStart } from "utils";
-import events from "botevents";
+import { Client, ActivityType, Partials } from 'discord.js'
+import { registerEvents, errorLog } from 'utils'
+import events from 'botevents'
+import { Database } from 'bun:sqlite'
 
-try {
-  const APICheck = await fetch("http://localhost:3000/ping", {
-    method: "GET",
-  });
+import { createTable } from './scripts/database'
 
-  if (APICheck.status !== 200) {
-    // Kill the Bot if the API is not available.
-    console.error("API is not available");
-  }
-} catch (error) {
-  console.error("API is not available");
-}
-await prepareStart();
+export const db = new Database('./database/database.sqlite')
+
+createTable()
+
+// console.log(new Date(Date.now()).getTime())
 
 const client = new Client({
-  shards: "auto",
-  intents: [
-    "Guilds",
-    "GuildMembers",
-    "GuildBans",
-    "GuildEmojisAndStickers",
-    "GuildIntegrations",
-    "GuildWebhooks",
-    "GuildInvites",
-    "GuildVoiceStates",
-    "GuildPresences",
-    "GuildMessages",
-    "GuildMessageReactions",
-    "GuildMessageTyping",
-    "DirectMessages",
-    "DirectMessageReactions",
-    "DirectMessageTyping",
-    "MessageContent",
-    "GuildScheduledEvents",
-    "AutoModerationConfiguration",
-    "AutoModerationExecution",
-  ],
-  presence: {
-    activities: [
-      {
-        name: "I put the bin into the bin.",
-        type: ActivityType.Custom,
-      },
+    shards: 'auto',
+    intents: [
+        'Guilds',
+        'GuildMembers',
+        'GuildBans',
+        'GuildEmojisAndStickers',
+        'GuildIntegrations',
+        'GuildWebhooks',
+        'GuildInvites',
+        'GuildVoiceStates',
+        'GuildMessages',
+        'GuildMessageReactions',
+        'GuildMessageTyping',
+        'DirectMessages',
+        'DirectMessageReactions',
+        'DirectMessageTyping',
+        'MessageContent',
+        'GuildScheduledEvents',
+        'AutoModerationConfiguration',
+        'AutoModerationExecution',
     ],
-  },
-  partials: [Partials.Channel],
-});
+    presence: {
+        activities: [
+            {
+                name: 'I put the bin into the bin.',
+                type: ActivityType.Custom,
+            },
+        ],
+    },
+    partials: [Partials.Channel],
+})
 
-registerEvents(client, events);
+registerEvents(client, events)
 
-client.login(keys.clientToken).catch((err) => {
-  errorLog("[Login]", err);
-  process.exit(1);
-});
+client.login(process.env.CLIENT_TOKEN).catch((err) => {
+    errorLog('[Login]', err)
+    process.exit(1)
+})
 
-export default [client];
+export const primaryGuild = await client.guilds.fetch(process.env.PRIMARY_GUILD)
+export const secondaryGuild = await client.guilds.fetch(process.env.SUPPORT_GUILD)

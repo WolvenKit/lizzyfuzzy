@@ -17,3 +17,6 @@ env/bot.env
 keys/
 eng.traineddata
 *.sqlite
+src/types/generated/
+src/resources/Github/*
+src/resources/Api/*

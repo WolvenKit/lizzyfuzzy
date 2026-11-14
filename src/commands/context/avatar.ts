@@ -1,15 +1,12 @@
-import { ApplicationCommandType, ContextMenuCommandBuilder } from "discord.js";
-import type { UserContextMenuCommandInteraction } from "discord.js";
-import { command } from "utils";
-const meta = new ContextMenuCommandBuilder()
-  .setName("Get Avatar")
-  .setType(ApplicationCommandType.User);
+import { ApplicationCommandType, ContextMenuCommandBuilder, MessageFlags } from 'discord.js'
+import { command } from 'utils'
+const meta = new ContextMenuCommandBuilder().setName('Get Avatar').setType(ApplicationCommandType.User)
 
 export default command(meta, async ({ interaction }) => {
-  if (!interaction.isUserContextMenuCommand) return;
-  const Interaction = interaction as any as UserContextMenuCommandInteraction;
+    if (!interaction.isUserContextMenuCommand() || !interaction.guild || interaction.user.bot) return
 
-  interaction.reply({
-    content: Interaction.targetUser.displayAvatarURL(),
-  });
-}, false, false);
+    interaction.reply({
+        content: interaction.targetUser.displayAvatarURL(),
+        flags: MessageFlags.Ephemeral,
+    })
+})

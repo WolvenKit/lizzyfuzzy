@@ -1,47 +1,36 @@
-import { ApplicationCommandType, ContextMenuCommandBuilder } from "discord.js";
-import type { MessageContextMenuCommandInteraction } from "discord.js";
-import { command } from "utils";
+import { ApplicationCommandType, ContextMenuCommandBuilder, MessageContextMenuCommandInteraction, MessageFlags } from 'discord.js'
+import { command } from 'utils'
 
-const meta = new ContextMenuCommandBuilder()
-  .setName("Get Single Emoji")
-  .setType(ApplicationCommandType.Message);
+const meta = new ContextMenuCommandBuilder().setName('Get Single Emoji').setType(ApplicationCommandType.Message)
 
-export default command(
-  meta,
-  async ({ interaction }) => {
-    if (!interaction.isMessageContextMenuCommand) return;
+export default command(meta, async ({ interaction }) => {
+    if (!interaction.isContextMenuCommand() || !interaction.isMessageContextMenuCommand || !interaction.guild) return
 
-    const Interaction =
-      interaction as unknown as MessageContextMenuCommandInteraction;
+    const Interaction = interaction as unknown as MessageContextMenuCommandInteraction
 
     const match = Interaction.targetMessage?.content
-      .match(/(<a?:\w+:(\d+)>)/g)
-      ?.map((m) => {
-        const match = m.match(/<(a?):\w+:(\d+)>/);
-        if (match) {
-          const isAnimated = match[1] === "a";
-          const id = match[2];
-          return `https://cdn.discordapp.com/emojis/${id}.${
-            isAnimated ? "gif" : "webp"
-          }`;
-        }
-        return null;
-      })
-      .filter((url): url is string => url !== null);
+        .match(/(<a?:\w+:(\d+)>)/g)
+        ?.map((m) => {
+            const match = m.match(/<(a?):\w+:(\d+)>/)
+            if (match) {
+                const isAnimated = match[1] === 'a'
+                const id = match[2]
+                return `https://cdn.discordapp.com/emojis/${id}.${isAnimated ? 'gif' : 'webp'}`
+            }
+            return null
+        })
+        .filter((url): url is string => url !== null)
 
     if (!match) {
-      return await Interaction.reply({
-        content: "No emoji found in the message.",
-        flags: 64,
-      });
+        return await Interaction.reply({
+            content: 'No emoji found in the message.',
+            flags: MessageFlags.Ephemeral,
+        })
     }
 
-    const emojiUrls = match.join("\n");
+    const emojiUrls = match.join('\n')
     await Interaction.reply({
-      content: emojiUrls,
-      flags: 64,
-    });
-  },
-  false,
-  false
-);
+        content: emojiUrls,
+        flags: MessageFlags.Ephemeral,
+    })
+})
